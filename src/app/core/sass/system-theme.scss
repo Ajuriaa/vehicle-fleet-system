@@ -1,0 +1,105 @@
+@use '@angular/material' as mat;
+@import '@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+
+$system-typography: mat.define-typography-config($font-family: "Noto Sans, sans-serif");
+
+@include mat.core();
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$system-primary: mat.define-palette(mat.$gray-palette, 800);
+$system-accent:  mat.define-palette(mat.$blue-palette, 800, 900, 700);
+
+// The warn palette is optional (defaults to red).
+$system-warn:    mat.define-palette(mat.$red-palette);
+
+$system-dark-theme-foreground: (
+  divider: #4B4B4B
+);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$system-theme: mat.define-light-theme((
+  color: (
+    primary: $system-primary,
+    accent: $system-accent,
+    warn: $system-warn
+  ),
+  typography: $system-typography,
+  density: 0,
+));
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-colors($system-theme);
+@include mat.all-component-typographies($system-typography);
+
+// For themes and scoping styles check:
+// https://material.angular.io/guide/theming#multiple-themes-in-one-file
+// https://material.angular.io/guide/theming#scoping-style-customizations
+.alternative-theme {
+  $alternative-system-primary: mat.define-palette(mat.$blue-palette, 500);
+  $alternative-system-accent: mat.define-palette(mat.$gray-palette);
+  $alternative-system-warn: mat.define-palette(mat.$red-palette, 600);
+
+  $system-dark-theme-foreground: (
+    divider: #4B4B4B
+  );
+
+  $alternative-system-theme: mat.define-light-theme((
+    color: (
+      primary: $alternative-system-primary,
+      accent: $alternative-system-accent,
+      warn: $alternative-system-warn
+    ),
+    typography: $system-typography,
+    density: 0,
+  ));
+
+  @include mat.progress-bar-color($alternative-system-theme);
+  @include mat.progress-spinner-color($alternative-system-theme);
+}
+
+.input-alternative-theme {
+  $input-system-primary: mat.define-palette(mat.$light-blue-palette, 600);
+  $input-system-accent: mat.define-palette(mat.$gray-palette);
+  $input-system-warn: mat.define-palette(mat.$red-palette, 500);
+
+  $input-system-theme: mat.define-light-theme((
+    color: (
+      primary: $input-system-primary,
+      accent: $input-system-accent,
+      warn: $input-system-warn
+    ),
+    typography: $system-typography,
+    density: 0,
+  ));
+
+  @include mat.radio-theme($input-system-theme);
+  @include mat.form-field-theme($input-system-theme);
+  @include mat.tabs-theme($input-system-theme);
+}
+
+.timer-bar-theme {
+  $timer-system-accent: mat.define-palette(mat.$yellow-palette, 600);
+
+  $timer-system-dark-theme-foreground: (
+    divider: #4B4B4B
+  );
+
+  $timer-system-theme: mat.define-light-theme((
+    color: (
+      primary: $timer-system-accent,
+      accent: $timer-system-accent,
+      warn: $timer-system-accent
+    ),
+    typography: $system-typography,
+    density: 0,
+  ));
+
+  @include mat.progress-bar-color($timer-system-theme);
+}

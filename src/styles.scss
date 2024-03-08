@@ -1,0 +1,38 @@
+@import './app/core/sass/global';
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+@font-face {
+  font-family: 'S';
+  src: url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+}
+
+:root,
+html {
+  font-size: 62.5%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Noto Sans', sans-serif;
+  letter-spacing: 0.05rem;
+}
+
+* {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.pointer { cursor: pointer; }
+
+.inter {
+  font-family: 'Inter', sans-serif;
+}
