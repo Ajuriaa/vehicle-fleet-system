@@ -1,6 +1,38 @@
 <div class="container">
   <div class="form-wrapper">
     <section class="login-info">
+      <div>
+        <h1 class="form-header">Log in.</h1>
+        <p class="header-label">Ingresa tus credenciales</p>
+      </div>
+      <form [formGroup]="loginForm" class="login-form">
+        <p class="form-label">Ingresa tu nombre de usuario:</p>
+        <div class="form-field">
+          <i class="uil uil-user icon"></i>
+          <input
+            class="input"
+            formControlName="username"
+            maxlength="50"
+            minlength="1"
+            required
+          >
+        </div>
+        <p class="form-label">Ingresa tu contraseña:</p>
+        <div class="form-field">
+          <i class="uil uil-lock icon"></i>
+          <input
+            class="input"
+            formControlName="password"
+            maxlength="50"
+            minlength="1"
+            [type]="passwordType"
+            required
+          >
+          <i (click)="togglePasswordVisibility()" *ngIf="showPassword" class="uil uil-eye-slash icon password"></i>
+          <i (click)="togglePasswordVisibility()" *ngIf="!showPassword" class="uil uil-eye icon password"></i>
+        </div>
+      </form>
+      <app-primary-button class="button">LOG IN</app-primary-button>
     </section>
     <section class="login-panel">
       <img class="image" src="assets/login-banner.png"/>
