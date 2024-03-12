@@ -1,8 +1,7 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, ElementRef, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {ErrorStateMatcher} from '@angular/material/core';
 import { PrimaryButtonComponent } from 'src/app/shared';
 import { CommonModule } from '@angular/common';
 
