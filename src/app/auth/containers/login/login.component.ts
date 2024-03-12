@@ -4,6 +4,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { PrimaryButtonComponent } from 'src/app/shared';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
   public showPassword = false;
 
 
-  constructor(private _formBuilder: FormBuilder) {
+  constructor(private _formBuilder: FormBuilder, private _router: Router) {
   }
 
   ngOnInit(): void {
@@ -39,5 +40,9 @@ export class LoginComponent implements OnInit {
   public togglePasswordVisibility(): void {
     this.passwordType === 'password' ? this.passwordType = 'text' : this.passwordType = 'password';
     this.showPassword = !this.showPassword;
+  }
+
+  public test(): void {
+    this._router.navigate([`/admin/home`]);
   }
 }
