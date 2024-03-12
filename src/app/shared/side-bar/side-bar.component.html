@@ -1,0 +1,68 @@
+<div class="container" [ngClass]="{'mini-bar': toggleBar}">
+  <i *ngIf="!toggleBar" class="uil uil-arrow-left toggle" (click)="toggleSideNav()"></i>
+  <i *ngIf="toggleBar" class="uil uil-arrow-right toggle" (click)="toggleSideNav()"></i>
+  <div class="bar-header" [ngClass]="{'mini-logo': toggleBar}">
+    <img
+      class="image" alt="logo"
+      [src]="toggleBar ? 'assets/mini-logo.png' : 'assets/logo.png'"
+    />
+  </div>
+  <div class="bar-menu">
+    <app-side-nav-button
+      [icon]="'create-dashboard'"
+      [label]="'Dashboard'"
+      [selected]="selectedOption === 'dashboard'"
+      [toggle]="toggleBar"
+      (click)="selectOption('dashboard')"
+    >
+    </app-side-nav-button>
+    <app-side-nav-button
+      [icon]="'streering'"
+      [label]="'Conductores'"
+      [selected]="selectedOption === 'drivers'"
+      [toggle]="toggleBar"
+      (click)="selectOption('drivers')"
+    >
+    </app-side-nav-button>
+    <app-side-nav-button
+      [icon]="'pump'"
+      [label]="'Combustible'"
+      [selected]="selectedOption === 'gas'"
+      [toggle]="toggleBar"
+      (click)="selectOption('gas')"
+    >
+    </app-side-nav-button>
+    <app-side-nav-button
+      [icon]="'car-sideview'"
+      [label]="'Vehículos'"
+      [selected]="selectedOption === 'vehicles'"
+      [toggle]="toggleBar"
+      (click)="selectOption('vehicles')"
+    >
+    </app-side-nav-button>
+    <app-side-nav-button
+      [icon]="'diary'"
+      [label]="'Bitácora'"
+      [selected]="selectedOption === 'log'"
+      [toggle]="toggleBar"
+      (click)="selectOption('log')"
+    >
+    </app-side-nav-button>
+    <app-side-nav-button
+      [icon]="'wrench'"
+      [label]="'Mantenimiento'"
+      [selected]="selectedOption === 'maintenance'"
+      [toggle]="toggleBar"
+      (click)="selectOption('maintenance')"
+    >
+    </app-side-nav-button>
+  </div>
+  <div class="bar-footer">
+    <img *ngIf="!toggleBar" class="profile" alt="profile" src="assets/profile.png"/>
+    <span *ngIf="!toggleBar">
+      <p class="name"> José Ajuria </p>
+      <p class="position"> Analista de sistemas </p>
+    </span>
+    <i class="uil uil-signout logout" (click)="logout()"></i>
+  </div>
+</div>

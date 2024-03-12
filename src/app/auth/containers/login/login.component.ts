@@ -43,6 +43,6 @@ export class LoginComponent implements OnInit {
   }
 
   public test(): void {
-    this._router.navigate([`/admin/home`]);
+    this._router.navigate([`/admin/dashboard`]);
   }
 }

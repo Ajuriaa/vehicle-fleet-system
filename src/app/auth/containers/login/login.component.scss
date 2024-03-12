@@ -55,6 +55,7 @@
 .form-header {
   font-size: 3rem;
   font-weight: bold;
+  color: $black;
 }
 
 .login-form {
@@ -98,7 +99,7 @@
 }
 
 .header-label, .form-label {
-  color: setColor(firm-gray);
+  color: $gray;
   margin: 0;
 }
 
