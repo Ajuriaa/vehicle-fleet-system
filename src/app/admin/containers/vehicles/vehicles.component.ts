@@ -2,27 +2,31 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subject, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { DeleteVehicleComponent } from '../../components';
 import { VehicleQueries } from '../../services';
 import { IVehicle } from '../../interfaces';
 import { SearchService } from 'src/app/core/services';
+import { PrimaryButtonComponent } from 'src/app/shared';
+import { EMPTY_VEHICLE } from 'src/app/core/helpers';
 
 const TABLE_COLUMNS = [ 'plate', 'model', 'type','status', 'edit'];
 @Component({
   selector: 'app-vehicles',
   standalone: true,
-  imports: [CommonModule, MatTableModule, FormsModule],
+  imports: [CommonModule, MatTableModule, FormsModule, PrimaryButtonComponent],
   providers: [VehicleQueries],
   templateUrl: './vehicles.component.html',
   styleUrl: './vehicles.component.scss'
 })
 
 export class VehiclesComponent implements OnInit {
+  public searchInput = '';
+  public availableVehicles = 0;
+  public maintenance =  { id: 0, kms: 0 };
   public vehicles: IVehicle[] = [];
   public filteredVehicles: IVehicle[] = [];
-  public searchInput = '';
+  public maintenanceVehicle: IVehicle = EMPTY_VEHICLE;
   public displayedColumns: string[] = TABLE_COLUMNS;
 
   constructor(
@@ -65,10 +69,21 @@ export class VehiclesComponent implements OnInit {
     });
   }
 
+  public getVehicleStatus(vehicle: IVehicle): string {
+    return vehicle.TB_Estado_Vehiculo.Estado_Vehiculo;
+  }
+
+  private getMaintenanceInfo(maintenance: { id: number, kms: number }): void {
+    this.maintenance = maintenance;
+    this.maintenanceVehicle = this.vehicles.find(vehicle => vehicle.ID_Vehiculo === maintenance.id) || EMPTY_VEHICLE;
+  }
+
   private getAllVehicles(): void {
-    this.vehicleQuery.getAllVehicles().subscribe(({data}) => {
+    this.vehicleQuery.getAllVehicles().subscribe(({data, maintenance}) => {
       if(data){
         this.vehicles = data;
+        this.availableVehicles = this.vehicles.filter(vehicle => this.getVehicleStatus(vehicle) === 'Disponible').length;
+        this.getMaintenanceInfo(maintenance);
         this.filteredVehicles = this.vehicles;
       }
     });

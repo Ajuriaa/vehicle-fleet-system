@@ -11,6 +11,7 @@ export interface IVehicle {
   Color: string;
   TB_Estado_Vehiculo: IVehicleState;
   TB_Modelo: IModel;
+  Siguiente_Mantenimiento?: number;
 }
 
 export interface IModel {
@@ -37,4 +38,5 @@ export interface IVehicleType {
 
 export interface IVehicleResponse {
   data: IVehicle[];
+  maintenance: { id: number, kms: number };
 }
