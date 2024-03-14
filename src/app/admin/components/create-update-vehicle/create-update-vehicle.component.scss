@@ -2,20 +2,16 @@
 
 .container {
   @include flex-center-column;
-  justify-content: space-between;
   gap: 2rem;
-  height: 25rem;
   padding: 4rem;
+  width: 85rem;
+  height: 60rem;
   border-radius: 2rem;
   color: $dark-blue;
 
   .title {
     font-size: 3rem;
     font-weight: bold;
-  }
-
-  .label {
-    font-size: 2rem;
   }
 
   .buttons {
@@ -26,5 +22,9 @@
 
   .btn {
     width: 100%;
+  }
+
+  .form-label {
+    margin: 0;
   }
 }

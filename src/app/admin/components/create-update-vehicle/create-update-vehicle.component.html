@@ -1,0 +1,19 @@
+<div class="container">
+  <p class="title" *ngIf="isCreate">Crear Vehículo</p>
+  <p class="title" *ngIf="!isCreate">Editar Vehículo</p>
+
+  <form [formGroup]="vehicleForm" class="login-form">
+    <p class="form-label">Ingresa tu nombre de usuario:</p>
+    <input
+      class="input"
+      formControlName="plate"
+      maxlength="50"
+      minlength="1"
+      required
+    >
+  </form>
+  <div class="buttons">
+    <app-primary-button styleClass="btn-red" class="btn" (btnClick)="onCancel()">Cancelar</app-primary-button>
+    <app-primary-button class="btn" (btnClick)="deleteVehicle()">Confirmar</app-primary-button>
+  </div>
+</div>

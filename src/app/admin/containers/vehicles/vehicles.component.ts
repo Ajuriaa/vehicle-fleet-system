@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
-import { DeleteVehicleComponent } from '../../components';
+import { CreateUpdateVehicleComponent, DeleteVehicleComponent } from '../../components';
 import { VehicleQueries } from '../../services';
 import { IVehicle } from '../../interfaces';
 import { SearchService } from 'src/app/core/services';
@@ -62,6 +62,17 @@ export class VehiclesComponent implements OnInit {
         plate: vehicle.Placa,
         model: this.getModel(vehicle)
       }
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.getAllVehicles();
+      }
+    });
+  }
+
+  public openCreateUpdateVehicleModal(modalType: string = 'create', vehicle: IVehicle = EMPTY_VEHICLE): void {
+    this.dialog.open(CreateUpdateVehicleComponent, {
+      panelClass: 'dialog-style',
+      data: { vehicle, modalType }
     }).afterClosed().subscribe((result) => {
       if(result) {
         this.getAllVehicles();
