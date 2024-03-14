@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { DeleteVehicleComponent } from '../../components';
 import { VehicleQueries } from '../../services';
 import { IVehicle } from '../../interfaces';
+import { SearchService } from 'src/app/core/services';
 
 const TABLE_COLUMNS = [ 'plate', 'model', 'type','status', 'edit'];
 @Component({
@@ -22,18 +23,20 @@ export class VehiclesComponent implements OnInit {
   public vehicles: IVehicle[] = [];
   public filteredVehicles: IVehicle[] = [];
   public searchInput = '';
-  public searchSubject: Subject<string> = new Subject<string>();
   public displayedColumns: string[] = TABLE_COLUMNS;
 
-  constructor(private vehicleQuery: VehicleQueries, private dialog: MatDialog) {}
+  constructor(
+    private vehicleQuery: VehicleQueries,
+    private dialog: MatDialog,
+    private searchEngine: SearchService
+  ) {}
 
   ngOnInit(): void {
     this.getAllVehicles();
-    this.startSearchListener();
   }
 
-  onSearch(searchString: string): void {
-    this.searchSubject.next(searchString);
+  public onSearch(term: string): void {
+    this.filteredVehicles = this.searchEngine.filterData(this.vehicles, term, 'vehicles');
   }
 
   public getModel(vehicle: IVehicle): string {
@@ -68,25 +71,6 @@ export class VehiclesComponent implements OnInit {
         this.vehicles = data;
         this.filteredVehicles = this.vehicles;
       }
-    });
-  }
-
-  private filterVehicles(term: string): Observable<any[]> {
-    const filtered = this.vehicles.filter(vehicle =>
-      vehicle.Placa.toLowerCase().includes(term.toLowerCase()) ||
-      this.getModel(vehicle).toLowerCase().includes(term.toLowerCase()) ||
-      vehicle.TB_Estado_Vehiculo.Estado_Vehiculo.toLowerCase().includes(term.toLowerCase())
-    );
-    return of(filtered);
-  }
-
-  private startSearchListener(): void {
-    this.searchSubject.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap(term => this.filterVehicles(term))
-    ).subscribe((filteredVehicles: IVehicle[]) => {
-      this.filteredVehicles = filteredVehicles;
     });
   }
 }
