@@ -1,7 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { Router, RouterModule } from '@angular/router';
-import { scrollHelper } from 'src/app/core/helpers';
+import { RouterModule } from '@angular/router';
 import { SideBarComponent } from 'src/app/shared';
 
 @Component({

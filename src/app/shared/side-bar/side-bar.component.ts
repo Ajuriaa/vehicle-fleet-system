@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { SideNavButtonComponent } from '../buttons';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { SideNavButtonComponent } from '../buttons';
 
 @Component({
   selector: 'app-side-bar',

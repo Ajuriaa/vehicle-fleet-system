@@ -17,6 +17,11 @@
   color: $white;
 }
 
+.btn-red {
+  background-color: $red;
+  color: $white;
+}
+
 .button-content {
   @include flex-center;
 }

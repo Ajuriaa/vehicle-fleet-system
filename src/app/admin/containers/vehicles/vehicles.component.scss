@@ -1,0 +1,46 @@
+@import 'global';
+
+.container {
+  @include flex-center-column;
+  width: 100%;
+
+  .panel {
+    height: 20rem;
+    width: 90%;
+    margin: 2rem;
+    border: 0.2rem solid $gray;
+    border-radius: 2rem;
+  }
+
+  .table-container {
+    width: 90%;
+
+    .table-cell {
+      text-align: center;
+      font-size: 2rem;
+      color: $dark-blue;
+    }
+
+    .title {
+      font-weight: bold;
+      font-size: 2.5rem;
+    }
+
+    .uil {
+      font-size: 3rem;
+    }
+
+    .uil-edit {
+      color: $warning;
+      margin-right: 2rem;
+    }
+
+    .uil-trash-alt {
+      color: $red;
+    }
+  }
+
+  tr:nth-child(even) {
+    background-color: $light-gray;
+  }
+}

@@ -5,17 +5,13 @@ $blue: #52CCDE;
 $dark-blue: #1B2A41;
 $red: #db473c;
 $gray: #0C1821;
+$light-gray: #f2f2f2;
+$warning: #E7B549;
 
 $scheme: (
-    system-blue: (
-        default: #88cfe0
-    ),
-    firm-gray: (
-        default: #8B8F92,
-        100: #ACAFB1,
-        200: #BDBFC1,
-        300: #E0E1E2
-    )
+  system-blue: (
+      default: #88cfe0
+  )
 );
 //
 // @param $hue The color
