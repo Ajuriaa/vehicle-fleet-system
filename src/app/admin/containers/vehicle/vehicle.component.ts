@@ -4,11 +4,14 @@ import { EMPTY_VEHICLE } from 'src/app/core/helpers';
 import { IVehicle } from '../../interfaces';
 import { VehicleQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-vehicle',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, MatInputModule, MatFormFieldModule],
   providers: [vehicleInfoHelper],
   templateUrl: './vehicle.component.html',
   styleUrl: './vehicle.component.scss'

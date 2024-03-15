@@ -2,11 +2,75 @@
   <p class="title" *ngIf="isCreate">Crear Vehículo</p>
   <p class="title" *ngIf="!isCreate">Editar Vehículo</p>
 
-  <form [formGroup]="vehicleForm" class="login-form">
-    <p class="form-label">Ingresa tu nombre de usuario:</p>
+  <form [formGroup]="vehicleForm" class="vehicle-form">
+    <p class="form-label">Ingresa la placa:</p>
     <input
       class="input"
       formControlName="plate"
+      maxlength="50"
+      minlength="1"
+      required
+    >
+    <p class="form-label">Ingresa el kilometraje:</p>
+    <input
+      class="input"
+      formControlName="kms"
+      maxlength="50"
+      minlength="1"
+      required
+    >
+    <p class="form-label">Ingresa el chasis:</p>
+    <input
+      class="input"
+      formControlName="chasis"
+      maxlength="50"
+      minlength="1"
+      required
+    >
+    <p class="form-label">Ingresa el motor:</p>
+    <input
+      class="input"
+      formControlName="motor"
+      maxlength="50"
+      minlength="1"
+      required
+    >
+    <p class="form-label">Ingresa el KPG:</p>
+    <input
+      class="input"
+      formControlName="kpg"
+      maxlength="50"
+      minlength="1"
+      required
+    >
+    <p class="form-label">Ingresa el img:</p>
+    <input
+      class="input"
+      formControlName="img"
+      maxlength="50"
+      minlength="1"
+      required
+    >
+    <p class="form-label">Ingresa el año:</p>
+    <input
+      class="input"
+      formControlName="year"
+      maxlength="50"
+      minlength="1"
+      required
+    >
+    <p class="form-label">Ingresa el color:</p>
+    <input
+      class="input"
+      formControlName="color"
+      maxlength="50"
+      minlength="1"
+      required
+    >
+    <p class="form-label">Ingresa el kms del mantenimiento:</p>
+    <input
+      class="input"
+      formControlName="maintenanceKms"
       maxlength="50"
       minlength="1"
       required

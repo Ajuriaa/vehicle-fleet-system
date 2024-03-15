@@ -3,10 +3,9 @@ import { PrimaryButtonComponent } from 'src/app/shared';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { IVehicle } from '../../interfaces';
-import { VehicleMutations } from '../../services';
+import { IBrand, IModel, IVehicle, IVehicleType } from '../../interfaces';
+import { VehicleMutations, VehicleQueries } from '../../services';
+import { MatCommonModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-create-update-vehicle',
@@ -15,9 +14,7 @@ import { VehicleMutations } from '../../services';
     PrimaryButtonComponent,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule
+    ReactiveFormsModule
   ],
   providers: [VehicleMutations],
   templateUrl: './create-update-vehicle.component.html',
@@ -26,10 +23,14 @@ import { VehicleMutations } from '../../services';
 export class CreateUpdateVehicleComponent implements OnInit{
   public isCreate = false;
   public vehicleForm!: FormGroup;
+  public brands: IBrand[] = [];
+  public models: IModel[] = [];
+  public vehicleTypes: IVehicleType[] = [];
 
   constructor(
     private _formBuilder: FormBuilder,
-    public vehicleMutation: VehicleMutations,
+    private vehicleMutation: VehicleMutations,
+    private vehicleQuery: VehicleQueries,
     public dialogRef: MatDialogRef<CreateUpdateVehicleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { vehicle: IVehicle, modalType: string }
   ){}
@@ -48,8 +49,10 @@ export class CreateUpdateVehicleComponent implements OnInit{
       color: ['', [Validators.required]],
       model: ['', [Validators.required]],
       brand: ['', [Validators.required]],
-      vehicleStatus:[0, [Validators.required]]
+      vehicleStatus:['', [Validators.required]]
     });
+
+    this.fillForm();
   }
 
   public onCancel(): void {
@@ -58,23 +61,46 @@ export class CreateUpdateVehicleComponent implements OnInit{
 
   public async deleteVehicle(): Promise<void> {
     const data = {
-      Placa: '',
-      Kilometraje: '',
-      Chasis: '',
-      Motor: '',
-      KPG: '',
-      Imagen_URL: '',
-      Anio: '',
-      Kilometraje_Mantenimiento: '',
-      Color: '',
-      ID_Modelo: '',
-      ID_Estado_Vehiculo: ''
+      ID_Vehiculo: this.data.vehicle.ID_Vehiculo,
+      Placa: this.vehicleForm.controls['plate'].value,
+      Kilometraje: this.vehicleForm.controls['kms'].value,
+      Chasis: this.vehicleForm.controls['chasis'].value,
+      Motor: this.vehicleForm.controls['motor'].value,
+      KPG: this.vehicleForm.controls['kpg'].value,
+      Imagen_URL: this.vehicleForm.controls['img'].value,
+      Anio: this.vehicleForm.controls['year'].value,
+      Kilometraje_Mantenimiento: this.vehicleForm.controls['maintenanceKms'].value,
+      Color: this.vehicleForm.controls['color'].value,
+      ID_Modelo: this.vehicleForm.controls['model'].value,
+      ID_Marca: this.vehicleForm.controls['brand'].value,
+      ID_Estado_Vehiculo: this.vehicleForm.controls['brand'].value
     };
 
-    //const mutationResponse = await this.vehicleMutation.deleteVehicle(+this.id);
+    const mutationResponse = this.isCreate ? await this.vehicleMutation.createVehicle(data) : true;
 
-    if (true) {
+    if (mutationResponse) {
       this.onCancel();
     }
+  }
+
+  private fillForm(): void {
+    if(this.isCreate) {
+      return;
+    }
+
+    this.vehicleForm.patchValue({
+      plate: this.data.vehicle.Placa,
+      kms: this.data.vehicle.Kilometraje,
+      chasis: this.data.vehicle.Chasis,
+      motor: this.data.vehicle.Motor,
+      kpg: this.data.vehicle.KPG,
+      img: this.data.vehicle.Imagen_URL,
+      year: this.data.vehicle.Anio,
+      maintenanceKms: this.data.vehicle.Kilometraje_Mantenimiento,
+      color: this.data.vehicle.Color,
+      model: this.data.vehicle.TB_Modelo.Modelo,
+      brand: this.data.vehicle.TB_Modelo.TB_Marca_Vehiculo.Marca,
+      vehicleStatus: this.data.vehicle.TB_Estado_Vehiculo.Estado_Vehiculo
+    });
   }
 }

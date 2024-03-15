@@ -32,7 +32,7 @@ export class VehicleMutations {
     });
   }
 
-  public createVehicle(data: IVehicle): Promise<boolean> {
+  public createVehicle(data: any): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       this.http.post<boolean>(`${environment.apiUrl}/create-vehicle`, data).subscribe(
         (response: boolean) => {
@@ -41,6 +41,25 @@ export class VehicleMutations {
             resolve(response);
           }
           this.toaster.success('Ocurrió un error durante la creación', 'Error!');
+          resolve(response);
+        },
+        (error) => {
+          this.toaster.error(error, 'Error!');
+          reject(error);
+        }
+      );
+    });
+  }
+
+  public editVehicle(data: any): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.http.post<boolean>(`${environment.apiUrl}/edit-vehicle`, data).subscribe(
+        (response: boolean) => {
+          if (response) {
+            this.toaster.success('Vehículo creado correctamente', 'Listo!');
+            resolve(response);
+          }
+          this.toaster.success('Ocurrió un error', 'Error!');
           resolve(response);
         },
         (error) => {
