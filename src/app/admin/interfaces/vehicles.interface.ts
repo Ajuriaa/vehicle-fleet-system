@@ -11,7 +11,7 @@ export interface IVehicle {
   Anio: number;
   Kilometraje_Mantenimiento: number;
   Color: string;
-  TB_Estado_Vehiculo: IVehicleState;
+  TB_Estado_Vehiculo: IVehicleStatus;
   TB_Modelo: IModel;
   TB_Bitacoras: ILog[];
   Siguiente_Mantenimiento?: number;
@@ -29,7 +29,7 @@ export interface IBrand {
   Marca: string;
 }
 
-export interface IVehicleState {
+export interface IVehicleStatus {
   ID_Estado_Vehiculo: number;
   Estado_Vehiculo: string;
 }
@@ -46,4 +46,20 @@ export interface IVehicleResponse {
 export interface IVehiclesResponse {
   data: IVehicle[];
   maintenance: { id: number, kms: number };
+}
+
+export interface IBrandsResponse {
+  data: IBrand[];
+}
+
+export interface IModelResponse {
+  data: IModel[];
+}
+
+export interface IStatusesReponse {
+  data: IVehicleStatus[];
+}
+
+export interface ITypeResponse {
+  data: IVehicleType[];
 }

@@ -1,11 +1,11 @@
-import { IVehicle, IModel, IBrand, IVehicleState, IVehicleType, IGasRefill, IGasUnit, ILog } from "src/app/admin/interfaces";
+import { IVehicle, IModel, IBrand, IVehicleStatus, IVehicleType, IGasRefill, IGasUnit, ILog } from "src/app/admin/interfaces";
 
 export const EMPTY_BRAND: IBrand = {
   ID_Marca_Vehiculo: 0,
   Marca: ''
 };
 
-export const EMPTY_VEHICLE_STATE: IVehicleState = {
+export const EMPTY_VEHICLE_STATE: IVehicleStatus = {
   ID_Estado_Vehiculo: 0,
   Estado_Vehiculo: ''
 };

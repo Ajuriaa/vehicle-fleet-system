@@ -3,81 +3,141 @@
   <p class="title" *ngIf="!isCreate">Editar Vehículo</p>
 
   <form [formGroup]="vehicleForm" class="vehicle-form">
-    <p class="form-label">Ingresa la placa:</p>
-    <input
-      class="input"
-      formControlName="plate"
-      maxlength="50"
-      minlength="1"
-      required
-    >
-    <p class="form-label">Ingresa el kilometraje:</p>
-    <input
-      class="input"
-      formControlName="kms"
-      maxlength="50"
-      minlength="1"
-      required
-    >
-    <p class="form-label">Ingresa el chasis:</p>
-    <input
-      class="input"
-      formControlName="chasis"
-      maxlength="50"
-      minlength="1"
-      required
-    >
-    <p class="form-label">Ingresa el motor:</p>
-    <input
-      class="input"
-      formControlName="motor"
-      maxlength="50"
-      minlength="1"
-      required
-    >
-    <p class="form-label">Ingresa el KPG:</p>
-    <input
-      class="input"
-      formControlName="kpg"
-      maxlength="50"
-      minlength="1"
-      required
-    >
-    <p class="form-label">Ingresa el img:</p>
-    <input
-      class="input"
-      formControlName="img"
-      maxlength="50"
-      minlength="1"
-      required
-    >
-    <p class="form-label">Ingresa el año:</p>
-    <input
-      class="input"
-      formControlName="year"
-      maxlength="50"
-      minlength="1"
-      required
-    >
-    <p class="form-label">Ingresa el color:</p>
-    <input
-      class="input"
-      formControlName="color"
-      maxlength="50"
-      minlength="1"
-      required
-    >
-    <p class="form-label">Ingresa el kms del mantenimiento:</p>
-    <input
-      class="input"
-      formControlName="maintenanceKms"
-      maxlength="50"
-      minlength="1"
-      required
-    >
+    <div class="form-half">
+      <mat-form-field class="field">
+        <mat-label class="label">Placa</mat-label>
+        <input
+          matInput
+          required
+          class="input"
+          formControlName="plate"
+          placeholder="Ingrese la placa del vehículo"
+        >
+      </mat-form-field>
+      <mat-form-field class="field">
+        <mat-label class="label">Kilometraje</mat-label>
+        <input
+          matInput
+          type="number"
+          required
+          class="input"
+          formControlName="kms"
+          placeholder="Ingrese el kilometraje del vehículo"
+        >
+      </mat-form-field>
+      <mat-form-field class="field">
+        <mat-label class="label">Chasis</mat-label>
+        <input
+          matInput
+          required
+          class="input"
+          formControlName="chasis"
+          placeholder="Ingrese el chasis del vehículo"
+        >
+      </mat-form-field>
+      <mat-form-field class="field">
+        <mat-label class="label">Motor</mat-label>
+        <input
+          matInput
+          required
+          class="input"
+          formControlName="motor"
+          placeholder="Ingrese el motor del vehículo"
+        >
+      </mat-form-field>
+      <mat-form-field class="field">
+        <mat-label class="label">Marca</mat-label>
+        <mat-select formControlName="brand">
+          <mat-option
+            *ngFor="let brand of brands"
+            [value]="brand.ID_Marca_Vehiculo"
+            (click)="filterModels(brand.ID_Marca_Vehiculo)"
+          >
+            {{ brand.Marca }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="field">
+        <mat-label class="label">Tipo</mat-label>
+        <input matInput formControlName="vehicleType" readonly [value]="vehicleType">
+      </mat-form-field>
+    </div>
+    <div class="form-half">
+      <mat-form-field class="field">
+        <mat-label class="label">KPG</mat-label>
+        <input
+          matInput
+          required
+          type="number"
+          class="input"
+          formControlName="kpg"
+          placeholder="Ingrese el rendimiento del vehículo"
+        >
+      </mat-form-field>
+      <mat-form-field class="field">
+        <mat-label class="label">Imagen</mat-label>
+        <input
+          matInput
+          required
+          class="input"
+          formControlName="img"
+          placeholder="Ingrese el URL de la imagen del vehículo"
+        >
+      </mat-form-field>
+      <mat-form-field class="field">
+        <mat-label class="label">Año</mat-label>
+        <input
+          matInput
+          type="number"
+          [max]="currentYear"
+          required
+          class="input"
+          formControlName="year"
+          placeholder="Ingrese el año del vehículo"
+        >
+      </mat-form-field>
+      <mat-form-field class="field">
+        <mat-label class="label">Kilometraje último mantenimiento</mat-label>
+        <input
+          matInput
+          type="number"
+          [max]="vehicleForm.controls.kms.value"
+          required
+          class="input"
+          formControlName="maintenanceKms"
+          placeholder="Ingrese el kilometraje del último mantenimiento del vehículo"
+        >
+      </mat-form-field>
+      <mat-form-field class="field">
+        <mat-label class="label">Color</mat-label>
+        <input
+          matInput
+          required
+          class="input"
+          formControlName="color"
+          placeholder="Ingrese el color del vehículo"
+        >
+      </mat-form-field>
+      <mat-form-field class="field">
+        <mat-label class="label">Modelo</mat-label>
+        <mat-select formControlName="model">
+          <mat-option (click)="setType(model)" *ngFor="let model of filteredModels" [value]="model.ID_Modelo">
+            {{ model.Modelo }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="field">
+        <mat-label class="label">Estado</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let status of statuses" [value]="status.ID_Estado_Vehiculo">
+            {{ status.Estado_Vehiculo }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   </form>
   <div class="buttons">
     <app-primary-button styleClass="btn-red" class="btn" (btnClick)="onCancel()">Cancelar</app-primary-button>
-    <app-primary-button class="btn" (btnClick)="deleteVehicle()">Confirmar</app-primary-button>
+    <app-primary-button class="btn" (btnClick)="onSubmit()">Confirmar</app-primary-button>
   </div>
 </div>

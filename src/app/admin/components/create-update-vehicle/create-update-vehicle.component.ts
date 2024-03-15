@@ -3,18 +3,21 @@ import { PrimaryButtonComponent } from 'src/app/shared';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IBrand, IModel, IVehicle, IVehicleType } from '../../interfaces';
+import { IBrand, IModel, IVehicle, IVehicleStatus, IVehicleType } from '../../interfaces';
 import { VehicleMutations, VehicleQueries } from '../../services';
-import { MatCommonModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-create-update-vehicle',
   standalone: true,
   imports: [
-    PrimaryButtonComponent,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule
+    PrimaryButtonComponent, CommonModule,
+    FormsModule, ReactiveFormsModule,
+    FormsModule, MatInputModule, MatFormFieldModule,
+    MatOptionModule, MatSelectModule
   ],
   providers: [VehicleMutations],
   templateUrl: './create-update-vehicle.component.html',
@@ -22,10 +25,14 @@ import { MatCommonModule } from '@angular/material/core';
 })
 export class CreateUpdateVehicleComponent implements OnInit{
   public isCreate = false;
+  public vehicleType = '';
+  public currentYear = new Date().getFullYear();
   public vehicleForm!: FormGroup;
   public brands: IBrand[] = [];
   public models: IModel[] = [];
+  public filteredModels: IModel[] = [];
   public vehicleTypes: IVehicleType[] = [];
+  public statuses: IVehicleStatus[] = [];
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -42,45 +49,84 @@ export class CreateUpdateVehicleComponent implements OnInit{
       kms: ['', [Validators.required]],
       chasis: ['', [Validators.required]],
       motor: ['', [Validators.required]],
-      kpg: [0, [Validators.required]],
+      kpg: ['', [Validators.required]],
       img: ['', [Validators.required]],
-      year: [0, [Validators.required]],
-      maintenanceKms: [0, [Validators.required]],
+      year: ['', [Validators.required]],
+      maintenanceKms: ['', [Validators.required]],
       color: ['', [Validators.required]],
       model: ['', [Validators.required]],
       brand: ['', [Validators.required]],
-      vehicleStatus:['', [Validators.required]]
+      status:['', [Validators.required]],
+      vehicleType:['', [Validators.required]]
     });
 
+    this.fetchData();
     this.fillForm();
+  }
+
+  public fetchData(): void {
+    this.vehicleQuery.getBrands().subscribe(({data}) => {
+      this.brands = data;
+    });
+    this.vehicleQuery.getModels().subscribe(({data}) => {
+      this.models = data;
+      if(this.isCreate) {
+        this.filteredModels = this.models;
+      } else {
+        this.filterModels(this.data.vehicle.TB_Modelo.TB_Marca_Vehiculo.ID_Marca_Vehiculo);
+      }
+    });
+    this.vehicleQuery.getStatuses().subscribe(({data}) => {
+      this.statuses = data;
+    });
   }
 
   public onCancel(): void {
     this.dialogRef.close(true);
   }
 
-  public async deleteVehicle(): Promise<void> {
+  public async onSubmit(): Promise<void> {
     const data = {
       ID_Vehiculo: this.data.vehicle.ID_Vehiculo,
-      Placa: this.vehicleForm.controls['plate'].value,
-      Kilometraje: this.vehicleForm.controls['kms'].value,
-      Chasis: this.vehicleForm.controls['chasis'].value,
-      Motor: this.vehicleForm.controls['motor'].value,
-      KPG: this.vehicleForm.controls['kpg'].value,
-      Imagen_URL: this.vehicleForm.controls['img'].value,
-      Anio: this.vehicleForm.controls['year'].value,
-      Kilometraje_Mantenimiento: this.vehicleForm.controls['maintenanceKms'].value,
-      Color: this.vehicleForm.controls['color'].value,
-      ID_Modelo: this.vehicleForm.controls['model'].value,
-      ID_Marca: this.vehicleForm.controls['brand'].value,
-      ID_Estado_Vehiculo: this.vehicleForm.controls['brand'].value
+      Placa: this.vehicleForm.controls.plate.value,
+      Kilometraje: this.vehicleForm.controls.kms.value,
+      Chasis: this.vehicleForm.controls.chasis.value,
+      Motor: this.vehicleForm.controls.motor.value,
+      KPG: this.vehicleForm.controls.kpg.value,
+      Imagen_URL: this.vehicleForm.controls.img.value,
+      Anio: this.vehicleForm.controls.year.value,
+      Kilometraje_Mantenimiento: this.vehicleForm.controls.maintenanceKms.value,
+      Color: this.vehicleForm.controls.color.value,
+      ID_Modelo: this.vehicleForm.controls.model.value,
+      ID_Estado_Vehiculo: this.vehicleForm.controls.status.value
     };
 
-    const mutationResponse = this.isCreate ? await this.vehicleMutation.createVehicle(data) : true;
+    console.log(data);
+
+    let mutationResponse;
+    if (this.isCreate) {
+      mutationResponse = await this.vehicleMutation.createVehicle(data);
+    } else {
+      mutationResponse = await this.vehicleMutation.editVehicle(data);
+    }
 
     if (mutationResponse) {
       this.onCancel();
     }
+  }
+
+  public filterModels(brandId: number): void {
+    this.filteredModels = this.models.filter(model => model.TB_Marca_Vehiculo.ID_Marca_Vehiculo === brandId);
+    this.vehicleForm.patchValue({
+      model: this.filteredModels[0].ID_Modelo
+    });
+    this.setType(this.filteredModels[0]);
+  }
+
+  public setType(model: IModel): void {
+    this.vehicleForm.patchValue({
+      vehicleType: model.TB_Tipo_Vehiculo.Tipo_Vehiculo
+    });
   }
 
   private fillForm(): void {
@@ -98,9 +144,10 @@ export class CreateUpdateVehicleComponent implements OnInit{
       year: this.data.vehicle.Anio,
       maintenanceKms: this.data.vehicle.Kilometraje_Mantenimiento,
       color: this.data.vehicle.Color,
-      model: this.data.vehicle.TB_Modelo.Modelo,
-      brand: this.data.vehicle.TB_Modelo.TB_Marca_Vehiculo.Marca,
-      vehicleStatus: this.data.vehicle.TB_Estado_Vehiculo.Estado_Vehiculo
+      model: this.data.vehicle.TB_Modelo.ID_Modelo,
+      brand: this.data.vehicle.TB_Modelo.TB_Marca_Vehiculo.ID_Marca_Vehiculo,
+      status: this.data.vehicle.TB_Estado_Vehiculo.ID_Estado_Vehiculo,
+      vehicleType: this.data.vehicle.TB_Modelo.TB_Tipo_Vehiculo.Tipo_Vehiculo
     });
   }
 }
