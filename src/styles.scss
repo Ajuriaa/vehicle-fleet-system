@@ -40,6 +40,24 @@ a {
   font-family: 'Inter', sans-serif;
 }
 
-.toast-success {
+.toast-success, .toast-error, .toast-warning, .toast-info {
   background-color: $blue !important;
+  height: 10rem;
+  font-size: 1.7rem;
+}
+
+.toast-error {
+  background-color: $red !important;
+}
+
+.toast-warning {
+  background-color: $warning !important;
+}
+
+.toast-info {
+  background-color: $dark-blue !important;
+}
+
+.toast-title {
+  font-size: 2rem;
 }
