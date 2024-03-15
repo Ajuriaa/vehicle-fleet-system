@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environments';
-import { IVehicleResponse } from '../interfaces';
+import { IVehicleResponse, IVehiclesResponse } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,11 @@ import { IVehicleResponse } from '../interfaces';
 export class VehicleQueries {
   constructor(private http: HttpClient) {}
 
-  public getAllVehicles(): Observable<IVehicleResponse> {
-    return this.http.get<IVehicleResponse>(`${environment.apiUrl}/vehicles`);
+  public getVehicle(id: number): Observable<IVehicleResponse> {
+    return this.http.get<IVehicleResponse>(`${environment.apiUrl}/vehicle/${id}`);
+  }
+
+  public getAllVehicles(): Observable<IVehiclesResponse> {
+    return this.http.get<IVehiclesResponse>(`${environment.apiUrl}/vehicles`);
   }
 }

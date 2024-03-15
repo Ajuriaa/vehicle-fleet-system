@@ -6,16 +6,18 @@ import { FormsModule } from '@angular/forms';
 import { SearchService } from 'src/app/core/services';
 import { PrimaryButtonComponent } from 'src/app/shared';
 import { EMPTY_VEHICLE } from 'src/app/core/helpers';
+import { Router } from '@angular/router';
 import { CreateUpdateVehicleComponent, DeleteVehicleComponent } from '../../components';
 import { VehicleQueries } from '../../services';
 import { IVehicle } from '../../interfaces';
+import { vehicleInfoHelper } from '../../helpers';
 
 const TABLE_COLUMNS = [ 'plate', 'model', 'type','status', 'edit'];
 @Component({
   selector: 'app-vehicles',
   standalone: true,
   imports: [CommonModule, MatTableModule, FormsModule, PrimaryButtonComponent],
-  providers: [VehicleQueries],
+  providers: [VehicleQueries, vehicleInfoHelper],
   templateUrl: './vehicles.component.html',
   styleUrl: './vehicles.component.scss'
 })
@@ -32,7 +34,9 @@ export class VehiclesComponent implements OnInit {
   constructor(
     private vehicleQuery: VehicleQueries,
     private dialog: MatDialog,
-    private searchEngine: SearchService
+    private searchEngine: SearchService,
+    private router: Router,
+    public vehicleInfoHelper: vehicleInfoHelper
   ) {}
 
   ngOnInit(): void {
@@ -43,24 +47,13 @@ export class VehiclesComponent implements OnInit {
     this.filteredVehicles = this.searchEngine.filterData(this.vehicles, term, 'vehicles');
   }
 
-  public getModel(vehicle: IVehicle): string {
-    const brand = vehicle.TB_Modelo.TB_Marca_Vehiculo.Marca;
-    const model = vehicle.TB_Modelo.Modelo;
-    const year = vehicle.Anio;
-    return `${brand} ${model} ${year}`;
-  }
-
-  public getType(vehicle: IVehicle): string {
-    return vehicle.TB_Modelo.TB_Tipo_Vehiculo.Tipo_Vehiculo;
-  }
-
   public openDeleteVehicleModal(vehicle: IVehicle): void {
     this.dialog.open(DeleteVehicleComponent, {
       panelClass: 'dialog-style',
       data: {
         id: vehicle.ID_Vehiculo,
         plate: vehicle.Placa,
-        model: this.getModel(vehicle)
+        model: this.vehicleInfoHelper.getModel(vehicle)
       }
     }).afterClosed().subscribe((result) => {
       if(result) {
@@ -80,8 +73,8 @@ export class VehiclesComponent implements OnInit {
     });
   }
 
-  public getVehicleStatus(vehicle: IVehicle): string {
-    return vehicle.TB_Estado_Vehiculo.Estado_Vehiculo;
+  public vehicleInfo(vehicleId: number): void {
+    this.router.navigate([`/admin/vehicle/`, vehicleId]);
   }
 
   private getMaintenanceInfo(maintenance: { id: number, kms: number }): void {
@@ -93,7 +86,7 @@ export class VehiclesComponent implements OnInit {
     this.vehicleQuery.getAllVehicles().subscribe(({data, maintenance}) => {
       if(data){
         this.vehicles = data;
-        this.availableVehicles = this.vehicles.filter(vehicle => this.getVehicleStatus(vehicle) === 'Disponible').length;
+        this.availableVehicles = this.vehicles.filter(vehicle => this.vehicleInfoHelper.getVehicleStatus(vehicle) === 'Disponible').length;
         this.getMaintenanceInfo(maintenance);
         this.filteredVehicles = this.vehicles;
       }

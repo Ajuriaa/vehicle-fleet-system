@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
 import {
   AdminRouterComponent, DashboardComponent, DriversComponent,
-  LogComponent, MaintenanceComponent, RequestsComponent, VehiclesComponent
+  LogComponent, MaintenanceComponent, RequestsComponent,
+  VehiclesComponent, VehicleComponent
 } from './containers';
 
 export const adminRoutes: Routes = [{
@@ -37,6 +38,11 @@ export const adminRoutes: Routes = [{
       path: 'requests',
       title: 'Solicitudes',
       component: RequestsComponent
+    },
+    {
+      path: 'vehicle/:id',
+      title: 'Vehículo',
+      component: VehicleComponent
     }
   ]
 }];

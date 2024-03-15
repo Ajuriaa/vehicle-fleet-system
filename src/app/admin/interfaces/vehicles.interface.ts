@@ -1,3 +1,5 @@
+import { ILog } from ".";
+
 export interface IVehicle {
   ID_Vehiculo: number;
   Placa: string;
@@ -11,6 +13,7 @@ export interface IVehicle {
   Color: string;
   TB_Estado_Vehiculo: IVehicleState;
   TB_Modelo: IModel;
+  TB_Bitacoras: ILog[];
   Siguiente_Mantenimiento?: number;
 }
 
@@ -37,6 +40,10 @@ export interface IVehicleType {
 }
 
 export interface IVehicleResponse {
+  data: IVehicle;
+}
+
+export interface IVehiclesResponse {
   data: IVehicle[];
   maintenance: { id: number, kms: number };
 }
