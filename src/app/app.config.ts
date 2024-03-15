@@ -10,6 +10,6 @@ import { routes } from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes), provideAnimationsAsync('noop'),
-    provideAnimations(), provideToastr(), provideHttpClient(withFetch())
+    provideAnimations(), provideToastr(), provideHttpClient(withFetch()), provideAnimationsAsync()
   ]
 };
