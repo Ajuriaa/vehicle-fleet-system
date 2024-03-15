@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import {
   AdminRouterComponent, DashboardComponent, DriversComponent,
-  GasComponent, LogComponent, MaintenanceComponent, VehiclesComponent
+  LogComponent, MaintenanceComponent, RequestsComponent, VehiclesComponent
 } from './containers';
 
 export const adminRoutes: Routes = [{
@@ -19,11 +19,6 @@ export const adminRoutes: Routes = [{
       component: DriversComponent
     },
     {
-      path: 'gas',
-      title: 'Combustible',
-      component: GasComponent
-    },
-    {
       path: 'vehicles',
       title: 'Vehículos',
       component: VehiclesComponent
@@ -38,5 +33,10 @@ export const adminRoutes: Routes = [{
       title: 'Mantenimiento',
       component: MaintenanceComponent
     },
+    {
+      path: 'requests',
+      title: 'Solicitudes',
+      component: RequestsComponent
+    }
   ]
 }];

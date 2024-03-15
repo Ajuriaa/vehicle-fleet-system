@@ -17,22 +17,6 @@
     >
     </app-side-nav-button>
     <app-side-nav-button
-      [icon]="'streering'"
-      [label]="'Conductores'"
-      [selected]="selectedOption === 'drivers'"
-      [toggle]="toggleBar"
-      (click)="selectOption('drivers')"
-    >
-    </app-side-nav-button>
-    <app-side-nav-button
-      [icon]="'pump'"
-      [label]="'Combustible'"
-      [selected]="selectedOption === 'gas'"
-      [toggle]="toggleBar"
-      (click)="selectOption('gas')"
-    >
-    </app-side-nav-button>
-    <app-side-nav-button
       [icon]="'car-sideview'"
       [label]="'Vehículos'"
       [selected]="selectedOption === 'vehicles'"
@@ -41,11 +25,11 @@
     >
     </app-side-nav-button>
     <app-side-nav-button
-      [icon]="'diary'"
-      [label]="'Bitácora'"
-      [selected]="selectedOption === 'log'"
+      [icon]="'streering'"
+      [label]="'Conductores'"
+      [selected]="selectedOption === 'drivers'"
       [toggle]="toggleBar"
-      (click)="selectOption('log')"
+      (click)="selectOption('drivers')"
     >
     </app-side-nav-button>
     <app-side-nav-button
@@ -54,6 +38,22 @@
       [selected]="selectedOption === 'maintenance'"
       [toggle]="toggleBar"
       (click)="selectOption('maintenance')"
+    >
+    </app-side-nav-button>
+    <app-side-nav-button
+      [icon]="'clipboard'"
+      [label]="'Solicitudes'"
+      [selected]="selectedOption === 'requests'"
+      [toggle]="toggleBar"
+      (click)="selectOption('requests')"
+    >
+    </app-side-nav-button>
+    <app-side-nav-button
+      [icon]="'diary'"
+      [label]="'Bitácora'"
+      [selected]="selectedOption === 'log'"
+      [toggle]="toggleBar"
+      (click)="selectOption('log')"
     >
     </app-side-nav-button>
   </div>

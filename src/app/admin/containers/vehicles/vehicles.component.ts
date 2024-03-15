@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
-import { CreateUpdateVehicleComponent, DeleteVehicleComponent } from '../../components';
-import { VehicleQueries } from '../../services';
-import { IVehicle } from '../../interfaces';
 import { SearchService } from 'src/app/core/services';
 import { PrimaryButtonComponent } from 'src/app/shared';
 import { EMPTY_VEHICLE } from 'src/app/core/helpers';
+import { CreateUpdateVehicleComponent, DeleteVehicleComponent } from '../../components';
+import { VehicleQueries } from '../../services';
+import { IVehicle } from '../../interfaces';
 
 const TABLE_COLUMNS = [ 'plate', 'model', 'type','status', 'edit'];
 @Component({
