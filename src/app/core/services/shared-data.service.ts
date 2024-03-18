@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class SharedDataService {
   private role: number = 0;
-  private name: string = '';
-  private position: string = '';
+  private name: string = 'Jose Alejandro Ajuria Aguilar';
+  private position: string = 'Analista de sistemas';
 
   constructor() { }
 

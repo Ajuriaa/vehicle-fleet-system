@@ -60,8 +60,8 @@
   <div class="bar-footer">
     <img *ngIf="!toggleBar" class="profile" alt="profile" src="assets/profile.png"/>
     <span *ngIf="!toggleBar">
-      <p class="name"> José Ajuria </p>
-      <p class="position"> Analista de sistemas </p>
+      <p class="name"> {{ transformFullName() }} </p>
+      <p class="position"> {{ position }} </p>
     </span>
     <i class="uil uil-signout logout" (click)="logout()"></i>
   </div>
