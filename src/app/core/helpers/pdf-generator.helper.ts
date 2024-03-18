@@ -12,20 +12,19 @@ export class PDFHelper {
   private isFirstPageDrawn = false;
   constructor(private vehicleInfoHelper: vehicleInfoHelper) {}
 
-  public generateVehiclesPDF(vehicles: IVehicle[]): void {
+  public generatePDF(formattedData: any[], columns: string[], title: string): void {
     const doc = new jsPDF('landscape');
-    const formattedVehicles = this.formatVehiclesForPDF(vehicles);
 
     autoTable(doc, {
-      head: [['Placa', 'Modelo', 'Tipo', 'Estado', 'Kilometraje']],
-      body: formattedVehicles,
+      head: [columns],
+      body: formattedData,
       didDrawPage: (data) => {
         doc.setFontSize(20);
         doc.setTextColor(40);
 
         // Header
         if (!this.isFirstPageDrawn) {
-          const text = "Listado de Vehículos - " + moment().format('DD/MM/YYYY');
+          const text = title + ' - ' + moment().format('DD/MM/YYYY');
           doc.setFontSize(20);
           doc.setTextColor(40);
 
@@ -37,43 +36,23 @@ export class PDFHelper {
         }
       },
       margin: { top: 30 },
-      styles: { halign : 'center'},
-      headStyles :{fillColor : [82, 204, 222]}
+      styles: { halign: 'center' },
+      headStyles: { fillColor: [82, 204, 222] }
     });
 
     doc.output('dataurlnewwindow');
   }
 
+  public generateVehiclesPDF(vehicles: IVehicle[]): void {
+    const columns = ['Placa', 'Modelo', 'Tipo', 'Estado', 'Kilometraje'];
+    const formattedVehicles = this.formatVehiclesForPDF(vehicles);
+    this.generatePDF(formattedVehicles, columns, 'Listado de Vehículos',);
+  }
+
   public generateDriversPdf(drivers: IDriver[]): void {
-    const doc = new jsPDF('landscape');
+    const columns = ['ID', 'Nombre', 'Solicitudes Finalizadas', 'Disponible'];
     const formattedDrivers = this.formatDriversForPDF(drivers);
-
-    autoTable(doc, {
-      head: [['ID', 'Nombre', 'Solicitudes Finalizadas', 'Disponible']],
-      body: formattedDrivers,
-      didDrawPage: (data) => {
-        doc.setFontSize(20);
-        doc.setTextColor(40);
-
-        // Header
-        if (!this.isFirstPageDrawn) {
-          const text = "Listado de Conductores - " + moment().format('DD/MM/YYYY');
-          doc.setFontSize(20);
-          doc.setTextColor(40);
-
-          // Header
-          //doc.addImage('assets/pdf.jpg', 'JPEG', data.settings.margin.left, 15, 60, 10);
-          doc.text(text, data.settings.margin.left, 22);
-
-          this.isFirstPageDrawn = true;
-        }
-      },
-      margin: { top: 30 },
-      styles: { halign : 'center'},
-      headStyles :{fillColor : [82, 204, 222]}
-    });
-
-    doc.output('dataurlnewwindow');
+    this.generatePDF(formattedDrivers, columns, 'Listado de Conductores');
   }
 
   private formatDriversForPDF(drivers: IDriver[]): any[] {
