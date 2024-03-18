@@ -3,12 +3,12 @@ import { PrimaryButtonComponent } from 'src/app/shared';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IBrand, IModel, IVehicle, IVehicleStatus, IVehicleType } from '../../interfaces';
-import { VehicleMutations, VehicleQueries } from '../../services';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { VehicleMutations, VehicleQueries } from '../../services';
+import { IBrand, IModel, IVehicle, IVehicleStatus, IVehicleType } from '../../interfaces';
 
 @Component({
   selector: 'app-create-update-vehicle',

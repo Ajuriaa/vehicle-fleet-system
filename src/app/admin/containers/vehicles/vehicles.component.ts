@@ -7,6 +7,7 @@ import { SearchService } from 'src/app/core/services';
 import { PrimaryButtonComponent } from 'src/app/shared';
 import { EMPTY_VEHICLE } from 'src/app/core/helpers';
 import { Router } from '@angular/router';
+import { PDFHelper } from 'src/app/core/helpers/pdf-generator.helper';
 import { CreateUpdateVehicleComponent, DeleteVehicleComponent } from '../../components';
 import { VehicleQueries } from '../../services';
 import { IVehicle } from '../../interfaces';
@@ -17,7 +18,7 @@ const TABLE_COLUMNS = [ 'plate', 'model', 'type','status', 'edit'];
   selector: 'app-vehicles',
   standalone: true,
   imports: [CommonModule, MatTableModule, FormsModule, PrimaryButtonComponent],
-  providers: [VehicleQueries, vehicleInfoHelper],
+  providers: [VehicleQueries, vehicleInfoHelper, PDFHelper],
   templateUrl: './vehicles.component.html',
   styleUrl: './vehicles.component.scss'
 })
@@ -32,11 +33,12 @@ export class VehiclesComponent implements OnInit {
   public displayedColumns: string[] = TABLE_COLUMNS;
 
   constructor(
+    public vehicleInfoHelper: vehicleInfoHelper,
     private vehicleQuery: VehicleQueries,
     private dialog: MatDialog,
     private searchEngine: SearchService,
     private router: Router,
-    public vehicleInfoHelper: vehicleInfoHelper
+    private pdfHelper: PDFHelper
   ) {}
 
   ngOnInit(): void {
@@ -71,6 +73,10 @@ export class VehiclesComponent implements OnInit {
         this.getAllVehicles();
       }
     });
+  }
+
+  public generatePdf(): void {
+    this.pdfHelper.generateVehiclesPDF(this.vehicles);
   }
 
   public vehicleInfo(vehicleId: number): void {

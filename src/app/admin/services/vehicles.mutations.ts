@@ -65,7 +65,6 @@ export class VehicleMutations {
           }
         },
         (error) => {
-          debugger;
           this.toaster.error(error, 'Error!');
           reject(error);
         }
