@@ -46,6 +46,10 @@ export class DriversComponent implements OnInit {
     this.filteredDrivers = this.searchEngine.filterData(this.drivers, term, 'drivers');
   }
 
+  public driverInfo(driverId: number): void {
+    this.router.navigate([`/admin/driver/`, driverId]);
+  }
+
   public generatePdf(): void {
     this.pdfHelper.generateDriversPdf(this.drivers);
   }

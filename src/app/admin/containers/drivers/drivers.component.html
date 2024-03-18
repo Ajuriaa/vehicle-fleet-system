@@ -25,28 +25,28 @@
     <table mat-table [dataSource]="filteredDrivers" class="table">
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">ID</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="driverInfo(element.ID_Conductor)">
           {{ element.ID_Conductor }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Nombre</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="driverInfo(element.ID_Conductor)">
           {{ element.Nombre }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="endedRequestCount">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Solicitudes finalizadas</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="driverInfo(element.ID_Conductor)">
           {{ element.Solicitudes_Finalizadas }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="available">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Disponible</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="driverInfo(element.ID_Conductor)">
           {{ element.Disponible ? 'Si' : 'No' }}
         </td>
       </ng-container>

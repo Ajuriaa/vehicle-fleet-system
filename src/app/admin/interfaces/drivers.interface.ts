@@ -8,3 +8,7 @@ export interface IDriver {
 export interface IDriversResponse {
   data: IDriver[];
 }
+
+export interface IDriverResponse {
+  data: IDriver;
+}

@@ -4,6 +4,7 @@ import {
   LogComponent, MaintenanceComponent, RequestsComponent,
   VehiclesComponent, VehicleComponent
 } from './containers';
+import { DriverComponent } from './containers/driver/driver.component';
 
 export const adminRoutes: Routes = [{
   path: '',
@@ -43,6 +44,11 @@ export const adminRoutes: Routes = [{
       path: 'vehicle/:id',
       title: 'Vehículo',
       component: VehicleComponent
+    },
+    {
+      path: 'driver/:id',
+      title: 'Conductor',
+      component: DriverComponent
     }
   ]
 }];
