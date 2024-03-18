@@ -5,6 +5,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { PrimaryButtonComponent } from 'src/app/shared';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services';
+import { cookieHelper } from 'src/app/core/helpers';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +19,7 @@ import { Router } from '@angular/router';
     MatInputModule,
     PrimaryButtonComponent
   ],
+  providers: [AuthService, cookieHelper],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -25,9 +28,14 @@ export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
   public passwordType = 'password';
   public showPassword = false;
+  public error = false;
 
 
-  constructor(private _formBuilder: FormBuilder, private _router: Router) {
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _router: Router,
+    private _auth: AuthService
+    ) {
   }
 
   ngOnInit(): void {
@@ -42,7 +50,15 @@ export class LoginComponent implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-  public test(): void {
-    this._router.navigate([`/admin/dashboard`]);
+  public login(): void {
+    if (this.loginForm.invalid) {
+      this.error = true;
+      return;
+    }
+    this._auth.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(success => {
+      if (success) {
+        this._router.navigate(['/dashboard']);
+      }
+    });
   }
 }

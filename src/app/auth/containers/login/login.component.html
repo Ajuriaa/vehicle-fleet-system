@@ -31,8 +31,9 @@
           <i (click)="togglePasswordVisibility()" *ngIf="showPassword" class="uil uil-eye-slash icon password"></i>
           <i (click)="togglePasswordVisibility()" *ngIf="!showPassword" class="uil uil-eye icon password"></i>
         </div>
+        <mat-error class="error" *ngIf="error">Por favor, llena todos los campos.</mat-error>
       </form>
-      <app-primary-button (btnClick)="test()" class="button">LOG IN</app-primary-button>
+      <app-primary-button (btnClick)="login()" class="button">LOG IN</app-primary-button>
     </section>
     <section class="login-panel">
       <img alt="login banner" class="image" src="assets/login-banner.png"/>
