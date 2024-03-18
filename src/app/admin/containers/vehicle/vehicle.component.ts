@@ -24,7 +24,7 @@ export class VehicleComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    const vehicleId = this.route.snapshot.params['id'];
+    const vehicleId = this.route.snapshot.params.id;
 
     this.vehicleQuery.getVehicle(vehicleId).subscribe(({data}) => {
       this.vehicle = data;

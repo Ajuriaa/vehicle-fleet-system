@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -11,13 +11,16 @@ import { SideNavButtonComponent } from '../buttons';
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.scss'
 })
-export class SideBarComponent {
+export class SideBarComponent implements OnInit {
   public selectedOption = 'dashboard';
   public toggleBar = false;
   public image = "assets/logo.png";
 
   constructor(private _router: Router){}
 
+  ngOnInit(): void {
+    this.selectedOption = this._router.url.split('/')[2];
+  }
   public selectOption(option: string): void {
     this.selectedOption = option;
     this._router.navigate([`admin/`, option]);
