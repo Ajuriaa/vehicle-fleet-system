@@ -46,6 +46,14 @@
         >
       </mat-form-field>
       <mat-form-field class="field">
+        <mat-label class="label">Estado</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let status of statuses" [value]="status.ID_Estado_Vehiculo">
+            {{ status.Estado_Vehiculo }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="field">
         <mat-label class="label">Marca</mat-label>
         <mat-select formControlName="brand">
           <mat-option
@@ -56,10 +64,6 @@
             {{ brand.Marca }}
           </mat-option>
         </mat-select>
-      </mat-form-field>
-      <mat-form-field class="field">
-        <mat-label class="label">Tipo</mat-label>
-        <input matInput formControlName="vehicleType" readonly [value]="vehicleType">
       </mat-form-field>
     </div>
     <div class="form-half">
@@ -123,14 +127,6 @@
         <mat-select formControlName="model">
           <mat-option (click)="setType(model)" *ngFor="let model of filteredModels" [value]="model.ID_Modelo">
             {{ model.Modelo }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field class="field">
-        <mat-label class="label">Estado</mat-label>
-        <mat-select formControlName="status">
-          <mat-option *ngFor="let status of statuses" [value]="status.ID_Estado_Vehiculo">
-            {{ status.Estado_Vehiculo }}
           </mat-option>
         </mat-select>
       </mat-form-field>

@@ -40,9 +40,10 @@ export class VehicleMutations {
           if (response) {
             this.toaster.success('Vehículo creado correctamente', 'Listo!');
             resolve(response);
+          } else {
+            this.toaster.success('Ocurrió un error durante la creación', 'Error!');
+            resolve(response);
           }
-          this.toaster.success('Ocurrió un error durante la creación', 'Error!');
-          resolve(response);
         },
         (error) => {
           this.toaster.error(error, 'Error!');
