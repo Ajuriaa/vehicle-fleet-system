@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IVehicle } from 'src/app/admin/interfaces';
+import { IDriver, IVehicle } from 'src/app/admin/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -8,12 +8,17 @@ export class SearchService {
   constructor() {}
 
   public filterData(data: any[], term: string, dataModel: string): any[] {
-    if( dataModel === 'vehicles') {
+    if(dataModel === 'vehicles') {
       return data.filter((vehicle: IVehicle)  =>
         vehicle.Placa.toLowerCase().includes(term.toLowerCase()) ||
         this.getVehicleModel(vehicle).toLowerCase().includes(term.toLowerCase()) ||
         this.getVehicleType(vehicle).toLowerCase().includes(term.toLowerCase()) ||
         vehicle.TB_Estado_Vehiculo.Estado_Vehiculo.toLowerCase().includes(term.toLowerCase())
+      );
+    }
+    if(dataModel === 'drivers') {
+      return data.filter((driver: IDriver)  =>
+        driver.Nombre.toLowerCase().includes(term.toLowerCase())
       );
     }
     return data;
