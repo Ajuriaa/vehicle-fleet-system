@@ -85,7 +85,17 @@ export class CreateUpdateVehicleComponent implements OnInit{
     this.dialogRef.close(true);
   }
 
+  public isFormInvalid(): boolean {
+    return Object.keys(this.vehicleForm.controls).some(controlName => {
+      const control = this.vehicleForm.controls[controlName];
+      return control.errors && control.errors.required && control.value === '';
+    });
+  }
+
   public async onSubmit(): Promise<void> {
+    if (this.vehicleForm.invalid) {
+      return;
+    }
     const data = {
       ID_Vehiculo: this.data.vehicle.ID_Vehiculo,
       Placa: this.vehicleForm.controls.plate.value,
@@ -100,8 +110,6 @@ export class CreateUpdateVehicleComponent implements OnInit{
       ID_Modelo: this.vehicleForm.controls.model.value,
       ID_Estado_Vehiculo: this.vehicleForm.controls.status.value
     };
-
-    console.log(data);
 
     let mutationResponse;
     if (this.isCreate) {

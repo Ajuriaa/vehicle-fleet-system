@@ -8,6 +8,11 @@
   border-radius: 2rem;
   color: $dark-blue;
 
+  .error {
+    font-size: 1.5rem;
+    color: $red;
+  }
+
   .title {
     font-size: 3rem;
     font-weight: bold;
