@@ -13,8 +13,8 @@ import { VehicleMutations } from '../../services';
 })
 export class DeleteVehicleComponent {
   constructor(
-    public vehicleMutation: VehicleMutations,
-    public dialogRef: MatDialogRef<DeleteVehicleComponent>,
+    private vehicleMutation: VehicleMutations,
+    private dialogRef: MatDialogRef<DeleteVehicleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { id: string, plate: string, model: string }
   ){}
 

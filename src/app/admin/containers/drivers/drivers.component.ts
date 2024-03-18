@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { DriverQueries } from '../../services';
 import { PDFHelper } from 'src/app/core/helpers/pdf-generator.helper';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { PrimaryButtonComponent } from 'src/app/shared';
-import { IDriver } from '../../interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SearchService } from 'src/app/core/services';
+import { IDriver } from '../../interfaces';
+import { DriverQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
+import { CreateUpdateDriverComponent, DeleteDriverComponent } from '../../components';
+import { EMPTY_DRIVER } from 'src/app/core/helpers';
 
 const TABLE_COLUMNS = ['id', 'name', 'endedRequestCount', 'available', 'edit'];
 
@@ -46,6 +48,31 @@ export class DriversComponent implements OnInit {
 
   public generatePdf(): void {
     this.pdfHelper.generateDriversPdf(this.drivers);
+  }
+
+  public openDeleteDriverModal(driver: IDriver): void {
+    this.dialog.open(DeleteDriverComponent, {
+      panelClass: 'dialog-style',
+      data: {
+        id: driver.ID_Conductor,
+        name: driver.Nombre
+      }
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.getallDrivers();
+      }
+    });
+  }
+
+  public openCreateUpdateDriverModal(modalType: string = 'create', driver: IDriver = EMPTY_DRIVER): void {
+    this.dialog.open(CreateUpdateDriverComponent, {
+      panelClass: 'dialog-style',
+      data: { driver, modalType }
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.getallDrivers();
+      }
+    });
   }
 
   private getallDrivers(): void {
