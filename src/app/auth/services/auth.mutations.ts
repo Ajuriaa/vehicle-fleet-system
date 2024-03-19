@@ -4,6 +4,7 @@ import { catchError, map } from 'rxjs/operators'; // Import map and catchError f
 import { cookieHelper } from 'src/app/core/helpers';
 import { SharedDataService } from 'src/app/core/services';
 import { ToastrService } from 'ngx-toastr';
+import { Role } from 'src/app/core/enums';
 
 const API_URL = 'https://satt.transporte.gob.hn/api_login.php';
 const APP_ID = '89b473b3ea9d5b6719c8ee8ce0c247d5';
@@ -45,7 +46,13 @@ export class AuthService {
           const token = data[1].session_key;
           const user = data[1].usuario;
           this._cookie._setCookie(token, user);
-          this._sharedData.setRole(this.getRole(data[1].roles));
+
+          if(this.isAdmin(data[1].roles)) {
+            this._toaster.error('Error', 'No tienes los permisos para ingresar a esta aplicación');
+            return false;
+          }
+
+          this._sharedData.setRole(+this.getRole(data[1].roles));
           this._sharedData.setPosition(data[1].ID_Area.Cargo)
           this._sharedData.setName(data[1].perfil.Nombre);
           this._toaster.success('Bienvenido', 'Inicio de sesión exitoso');
@@ -61,7 +68,12 @@ export class AuthService {
     );
   }
 
-  public getRole(roles: { modulo: number, rol: number }[]): number {
-    return roles.find(role => role.modulo === this.module)?.rol || 0;
+  private getRole(roles: { modulo: string, rol: string }[]): string {
+    return roles.find(role => +role.modulo === this.module)?.rol || '0';
+  }
+
+  private isAdmin(roles: { modulo: string, rol: string }[]): boolean {
+    const role = +this.getRole(roles)
+    return role === Role.ADMINISTRATOR;
   }
 }

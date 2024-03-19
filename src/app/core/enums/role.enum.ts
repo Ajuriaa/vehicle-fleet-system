@@ -1,5 +1,12 @@
 export enum Role {
-  Requester = 1,
-  User = 2,
-  Admin = 3
+  ADMINISTRATOR = 1,
+  CONSULTANT = 2,
+  INGRESO = 3,
+  SUPER_USER = 4,
+  DOCUMENT_MANAGER_ADMIN = 5,
+  LAWYER = 6,
+  SUPERVISOR = 7,
+  WINDOW_CLERK = 8,
+  SUPER_ADMINISTRATOR = 9,
+  REVENUE_SUPERVISOR = 10
 }
