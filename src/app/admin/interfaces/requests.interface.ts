@@ -10,10 +10,10 @@ export interface IRequest {
   Hora_Salida: Date;
   Hora_Regreso: Date;
   TB_Ciudad: ICity;
-  TB_Vehiculo?: IVehicle;
+  TB_Vehiculos?: IVehicle;
   TB_Estado_Solicitud: IRequestStatus;
   TB_Tipo_Solicitud: IRequestType;
-  TB_Conductor?: IDriver;
+  TB_Conductores?: IDriver;
 }
 
 export interface IRequestStatus {

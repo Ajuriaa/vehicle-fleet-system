@@ -50,7 +50,7 @@ export class RequestsComponent {
   }
 
   public generatePdf(): void {
-    //this.pdfHelper.generateRequestsPdf(this.requests);
+    this.pdfHelper.generateRequestsPdf(this.requests);
   }
 
   public getDate(date: string): string {
@@ -71,16 +71,6 @@ export class RequestsComponent {
   public getDriver(driver: IDriver): string {
     if (!driver) return 'N/A';
     return driver.Nombre;
-  }
-
-  public openDeleteRequestModal(request: any): void {
-    // this.dialog.open(DeleteRequestComponent, {
-    //   panelClass: 'dialog-style',
-    //   data: {
-    //     request,
-    //     driverQuery: this.driverQuery
-    //   }
-    // });
   }
 
   private getAllRequests(): void {

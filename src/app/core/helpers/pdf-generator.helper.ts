@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { jsPDF } from 'jspdf';
 import moment from 'moment';
 import autoTable from 'jspdf-autotable';
-import { IDriver, IVehicle } from 'src/app/admin/interfaces';
+import { IDriver, IRequest, IVehicle } from 'src/app/admin/interfaces';
 import { vehicleInfoHelper } from 'src/app/admin/helpers';
 
 @Injectable({
@@ -55,6 +55,27 @@ export class PDFHelper {
     this.generatePDF(formattedDrivers, columns, 'Listado de Conductores');
   }
 
+  public generateRequestsPdf(requests: IRequest[]): void {
+    const columns = ['Estado', 'Empleado', 'Fecha', 'Hora Salida', 'Hora Entrada', 'Ciudad', 'Vehículo', 'Conductor'];
+    const formattedDrivers = this.formatRequestsForPDF(requests);
+    this.generatePDF(formattedDrivers, columns, 'Listado de Solicitudes');
+  }
+
+  public formatRequestsForPDF(requests: IRequest[]) {
+    return requests.map(request => {
+      return [
+        request.TB_Estado_Solicitud.Estado,
+        request.Nombre_Empleado,
+        this.getDate(request.Fecha.toString()),
+        this.getTime(request.Hora_Salida.toString()),
+        this.getTime(request.Hora_Regreso.toString()),
+        request.TB_Ciudad.Nombre,
+        this.getVehicle(request.TB_Vehiculos),
+        this.getDriver(request.TB_Conductores)
+      ];
+    });
+  }
+
   private formatDriversForPDF(drivers: IDriver[]): any[] {
     return drivers.map(driver => {
       return [
@@ -77,4 +98,25 @@ export class PDFHelper {
       ];
     });
   }
+
+  private getDate(date: string): string {
+    return moment(date).format('DD/MM/YYYY');
+  }
+
+  private getTime(time: string): string {
+    return moment(time).tz("America/Tegucigalpa").format('hh:mm');
+  }
+
+  private getVehicle(vehicle: IVehicle | undefined): string {
+    if (!vehicle) return 'N/A';
+    const model = this.vehicleInfoHelper.getModel(vehicle);
+    const plate = vehicle.Placa;
+    return `${model} - ${plate}`;
+  }
+
+  private getDriver(driver: IDriver | undefined): string {
+    if (!driver) return 'N/A';
+    return driver.Nombre;
+  }
 }
+
