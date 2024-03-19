@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IDriver, IVehicle } from 'src/app/admin/interfaces';
+import moment from 'moment';
+import { IDriver, IRequest, IVehicle } from 'src/app/admin/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +22,22 @@ export class SearchService {
         driver.Nombre.toLowerCase().includes(term.toLowerCase())
       );
     }
+    if(dataModel === 'requests') {
+      return data.filter((request: IRequest)  =>
+        request.TB_Ciudad.Nombre.toLowerCase().includes(term.toLowerCase()) ||
+        request.Nombre_Empleado.toLowerCase().includes(term.toLowerCase()) ||
+        request.TB_Conductores?.Nombre.toLowerCase().includes(term.toLowerCase()) ||
+        request.TB_Vehiculos?.Placa.toLowerCase().includes(term.toLowerCase()) ||
+        this.getVehicleModel(request.TB_Vehiculos).toLowerCase().includes(term.toLowerCase()) ||
+        moment(request.Fecha).format('DD/MM/YYYY').toLowerCase().includes(term.toLowerCase()) ||
+        request.TB_Estado_Solicitud.Estado.toLowerCase().includes(term.toLowerCase())
+      );
+    }
     return data;
   }
 
-  public getVehicleModel(vehicle: IVehicle): string {
+  public getVehicleModel(vehicle: IVehicle | undefined): string {
+    if(!vehicle) return '';
     const brand = vehicle.TB_Modelo.TB_Marca_Vehiculo.Marca;
     const model = vehicle.TB_Modelo.Modelo;
     const year = vehicle.Anio;
