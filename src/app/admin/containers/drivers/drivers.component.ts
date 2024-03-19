@@ -7,11 +7,11 @@ import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SearchService } from 'src/app/core/services';
+import { EMPTY_DRIVER } from 'src/app/core/helpers';
 import { IDriver } from '../../interfaces';
 import { DriverQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
 import { CreateUpdateDriverComponent, DeleteDriverComponent } from '../../components';
-import { EMPTY_DRIVER } from 'src/app/core/helpers';
 
 const TABLE_COLUMNS = ['id', 'name', 'endedRequestCount', 'available', 'edit'];
 

@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DriverMutations } from '../../services';
-import { IDriver, IVehicle } from '../../interfaces';
 import { PrimaryButtonComponent } from 'src/app/shared';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
+import { IDriver } from '../../interfaces';
+import { DriverMutations } from '../../services';
 
 @Component({
   selector: 'app-create-update-driver',

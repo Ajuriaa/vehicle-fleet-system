@@ -34,7 +34,7 @@ export class AuthService {
       modulo: this.module,
       nombre: username,
       password: password
-    }
+    };
 
     return this.http.post<any>(this.loginApiUrl, data).pipe(
       map(data => {
@@ -53,7 +53,7 @@ export class AuthService {
           }
 
           this._sharedData.setRole(+this.getRole(data[1].roles));
-          this._sharedData.setPosition(data[1].ID_Area.Cargo)
+          this._sharedData.setPosition(data[1].ID_Area.Cargo);
           this._sharedData.setName(data[1].perfil.Nombre);
           this._toaster.success('Bienvenido', 'Inicio de sesión exitoso');
           return true;
@@ -73,7 +73,7 @@ export class AuthService {
   }
 
   private isAdmin(roles: { modulo: string, rol: string }[]): boolean {
-    const role = +this.getRole(roles)
-    return role === Role.ADMINISTRATOR;
+    const role = +this.getRole(roles);
+    return role === Role.admin;
   }
 }

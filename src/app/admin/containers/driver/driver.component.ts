@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { IDriver } from '../../interfaces';
 import { EMPTY_DRIVER } from 'src/app/core/helpers';
 import { ActivatedRoute } from '@angular/router';
+import { IDriver } from '../../interfaces';
 import { DriverQueries } from '../../services';
 
 @Component({

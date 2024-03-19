@@ -5,8 +5,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { PrimaryButtonComponent } from 'src/app/shared';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services';
 import { cookieHelper } from 'src/app/core/helpers';
+import { AuthService } from '../../services';
 
 @Component({
   selector: 'app-login',

@@ -1,15 +1,49 @@
 import {
   IVehicle, IModel, IBrand,
   IVehicleStatus, IVehicleType, IGasRefill,
-  IGasUnit, ILog, IDriver
+  IGasUnit, ILog, IDriver,
+  IRequest,
+  ICity,
+  IRequestStatus,
+  IRequestType
 } from "src/app/admin/interfaces";
+
+export const EMPTY_CITY: ICity = {
+  ID_Ciudad: 0,
+  Nombre: "",
+  Kms: 0
+};
+
+export const EMPTY_REQUEST_STATUS: IRequestStatus = {
+  ID_Estado_Solicitud: 0,
+  Estado: ""
+};
+
+export const EMPTY_REQUEST_TYPE: IRequestType = {
+  ID_Tipo_Solicitud: 0,
+  Tipo_Solicitud: ""
+};
+
+export const EMPTY_REQUEST: IRequest = {
+  ID_Solicitud: 0,
+  ID_Empleado: 0,
+  Nombre_Empleado: "",
+  Destino: "",
+  Motivo: "",
+  Fecha: new Date(),
+  Hora_Salida: new Date(),
+  Hora_Regreso: new Date(),
+  TB_Ciudad: EMPTY_CITY,
+  TB_Estado_Solicitud: EMPTY_REQUEST_STATUS,
+  TB_Tipo_Solicitud: EMPTY_REQUEST_TYPE
+};
 
 export const EMPTY_DRIVER: IDriver = {
   ID_Conductor: 0,
   Nombre: "",
   Solicitudes_Finalizadas: 0,
   Disponible: false
-}
+};
 
 export const EMPTY_BRAND: IBrand = {
   ID_Marca_Vehiculo: 0,

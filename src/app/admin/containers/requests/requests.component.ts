@@ -1,16 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { PDFHelper } from 'src/app/core/helpers/pdf-generator.helper';
 import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
-import { vehicleInfoHelper } from '../../helpers';
-import { RequestQueries } from '../../services';
 import { SearchService } from 'src/app/core/services';
 import { MatDialog } from '@angular/material/dialog';
-import { IDriver, IRequest, IVehicle } from '../../interfaces';
 import moment from 'moment';
 import 'moment-timezone';
+import { Router } from '@angular/router';
+import { IDriver, IRequest, IVehicle } from '../../interfaces';
+import { RequestQueries } from '../../services';
+import { vehicleInfoHelper } from '../../helpers';
 
 const TABLE_COLUMNS = [
   'status', 'name', 'date', 'timeOut', 'timeIn', 'city', 'vehicle', 'driver', 'actions'
@@ -24,7 +25,7 @@ const TABLE_COLUMNS = [
   templateUrl: './requests.component.html',
   styleUrl: './requests.component.scss'
 })
-export class RequestsComponent {
+export class RequestsComponent implements OnInit {
   public loading = true;
   public searchInput = '';
   public displayedColumns: string[] = TABLE_COLUMNS;
@@ -37,6 +38,7 @@ export class RequestsComponent {
     private requestQuery: RequestQueries,
     private searchEngine: SearchService,
     private vehicleInfoHelper: vehicleInfoHelper,
+    private router: Router,
     private dialog: MatDialog,
     private pdfHelper: PDFHelper,
   ) {}
@@ -71,6 +73,20 @@ export class RequestsComponent {
   public getDriver(driver: IDriver): string {
     if (!driver) return 'N/A';
     return driver.Nombre;
+  }
+
+  public openRequest(requestId: number): void {
+    this.router.navigate([`/admin/request/${requestId}`]);
+  }
+
+  public openDriver(driver: IDriver): void {
+    if (!driver) return;
+    this.router.navigate([`/admin/driver/${driver.ID_Conductor}`]);
+  }
+
+  public openVehicle(vehicle: IVehicle): void {
+    if (!vehicle) return;
+    this.router.navigate([`/admin/vehicle/${vehicle.ID_Vehiculo}`]);
   }
 
   private getAllRequests(): void {

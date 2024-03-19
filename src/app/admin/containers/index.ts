@@ -7,3 +7,4 @@ export * from './log/log.component';
 export * from './maintenance/maintenance.component';
 export * from './requests/requests.component';
 export * from  './vehicle/vehicle.component';
+export * from './request/request.component';

@@ -27,49 +27,49 @@
     <table mat-table [dataSource]="filteredRequests" class="table">
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Estado</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="openRequest(element.ID_Solicitud)">
           {{ element.TB_Estado_Solicitud.Estado }}
         </td>
       </ng-container>
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Empleado</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="openRequest(element.ID_Solicitud)">
           {{ element.Nombre_Empleado }}
         </td>
       </ng-container>
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Fecha</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="openRequest(element.ID_Solicitud)">
           {{ getDate(element.Fecha) }}
         </td>
       </ng-container>
       <ng-container matColumnDef="timeOut">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Hora Salida</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="openRequest(element.ID_Solicitud)">
           {{ getTime(element.Hora_Salida) }}
         </td>
       </ng-container>
       <ng-container matColumnDef="timeIn">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Hora Regreso</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="openRequest(element.ID_Solicitud)">
           {{ getTime(element.Hora_Regreso) }}
         </td>
       </ng-container>
       <ng-container matColumnDef="city">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Ciudad</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="openRequest(element.ID_Solicitud)">
           {{ element.TB_Ciudad.Nombre }}
         </td>
       </ng-container>
       <ng-container matColumnDef="vehicle">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Vehículo</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="openVehicle(element.TB_Vehiculos)">
           {{ getVehicle(element.TB_Vehiculos) }}
         </td>
       </ng-container>
       <ng-container matColumnDef="driver">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Conductor</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="openDriver(element.TB_Conductores)">
           {{ getDriver(element.TB_Conductores) }}
         </td>
       </ng-container>

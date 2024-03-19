@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { SideNavButtonComponent } from '../buttons';
 import { SharedDataService } from 'src/app/core/services';
+import { SideNavButtonComponent } from '../buttons';
 
 @Component({
   selector: 'app-side-bar',
