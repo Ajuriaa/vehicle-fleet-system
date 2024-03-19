@@ -33,3 +33,8 @@ export interface IRequestsResponse {
 export interface IRequestResponse {
   data: IRequest;
 }
+export interface IAvaliableForRequestResponse {
+  vehicles: IVehicle[];
+  drivers: IDriver[];
+  states: IRequestStatus[];
+}

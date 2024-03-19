@@ -63,7 +63,7 @@ export class CreateUpdateDriverComponent implements OnInit {
     }
   }
 
-  public fillForm() {
+  public fillForm(): void {
     if(this.isCreate) {
       return;
     }

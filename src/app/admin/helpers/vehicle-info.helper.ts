@@ -1,7 +1,8 @@
 import { IVehicle } from '../interfaces';
 
 export class vehicleInfoHelper {
-  public getModel(vehicle: IVehicle): string {
+  public getModel(vehicle: IVehicle | undefined): string {
+    if(!vehicle) return '';
     const brand = vehicle.TB_Modelo.TB_Marca_Vehiculo.Marca;
     const model = vehicle.TB_Modelo.Modelo;
     const year = vehicle.Anio;
