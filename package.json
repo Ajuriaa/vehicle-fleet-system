@@ -26,6 +26,7 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",
     "moment": "^2.30.1",
+    "moment-timezone": "^0.5.45",
     "ngx-toastr": "^18.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

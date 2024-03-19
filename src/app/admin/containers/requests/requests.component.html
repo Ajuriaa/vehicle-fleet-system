@@ -1,1 +1,88 @@
-<p>requests works!</p>
+<app-loading class="loading" *ngIf="loading"></app-loading>
+<div class="container" *ngIf="!loading">
+  <section class="panel">
+    <div class="search-bar-wrapper">
+      <i class="uil uil-search-alt"></i>
+      <input
+        [(ngModel)]="searchInput"
+        class="search-bar"
+        (input)="onSearch(searchInput)"
+        type="text"
+        placeholder="Buscar"
+      />
+    </div>
+    <div class="available">
+      <p class="panel-title">Solicitudes Pendientes</p>
+      <p class="panel-label">{{ pendingRequests }}</p>
+    </div>
+    <div class="available">
+      <p class="panel-title">Solicitudes Activas</p>
+      <p class="panel-label">{{ activeRequests }}</p>
+    </div>
+    <div class="buttons">
+      <app-primary-button (btnClick)="generatePdf()" class="button">IMPRIMIR LISTADO</app-primary-button>
+    </div>
+  </section>
+  <section class="table-container">
+    <table mat-table [dataSource]="filteredRequests" class="table">
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef class="table-cell title">Estado</th>
+        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+          {{ element.TB_Estado_Solicitud.Estado }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="table-cell title">Empleado</th>
+        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+          {{ element.Nombre_Empleado }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef class="table-cell title">Fecha</th>
+        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+          {{ getDate(element.Fecha) }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="timeOut">
+        <th mat-header-cell *matHeaderCellDef class="table-cell title">Hora Salida</th>
+        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+          {{ getTime(element.Hora_Salida) }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="timeIn">
+        <th mat-header-cell *matHeaderCellDef class="table-cell title">Hora Regreso</th>
+        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+          {{ getTime(element.Hora_Regreso) }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef class="table-cell title">Ciudad</th>
+        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+          {{ element.TB_Ciudad.Nombre }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="vehicle">
+        <th mat-header-cell *matHeaderCellDef class="table-cell title">Vehículo</th>
+        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+          {{ getVehicle(element.TB_Vehiculos) }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="driver">
+        <th mat-header-cell *matHeaderCellDef class="table-cell title">Conductor</th>
+        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+          {{ getDriver(element.TB_Conductores) }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="table-cell title">Editar</th>
+        <td mat-cell *matCellDef="let element" class="table-cell icons">
+          <i class="uil uil-edit"></i>
+          <i class="uil uil-trash-alt"></i>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </section>
+</div>

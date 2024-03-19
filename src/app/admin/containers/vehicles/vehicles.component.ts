@@ -4,7 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { SearchService } from 'src/app/core/services';
-import { PrimaryButtonComponent } from 'src/app/shared';
+import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { EMPTY_VEHICLE } from 'src/app/core/helpers';
 import { Router } from '@angular/router';
 import { PDFHelper } from 'src/app/core/helpers/pdf-generator.helper';
@@ -17,7 +17,7 @@ const TABLE_COLUMNS = [ 'plate', 'model', 'type','status', 'edit'];
 @Component({
   selector: 'app-vehicles',
   standalone: true,
-  imports: [CommonModule, MatTableModule, FormsModule, PrimaryButtonComponent],
+  imports: [CommonModule, MatTableModule, FormsModule, PrimaryButtonComponent, LoadingComponent],
   providers: [VehicleQueries, vehicleInfoHelper, PDFHelper],
   templateUrl: './vehicles.component.html',
   styleUrl: './vehicles.component.scss'
@@ -31,6 +31,7 @@ export class VehiclesComponent implements OnInit {
   public filteredVehicles: IVehicle[] = [];
   public maintenanceVehicle: IVehicle = EMPTY_VEHICLE;
   public displayedColumns: string[] = TABLE_COLUMNS;
+  public loading = true;
 
   constructor(
     public vehicleInfoHelper: vehicleInfoHelper,
@@ -95,6 +96,7 @@ export class VehiclesComponent implements OnInit {
         this.availableVehicles = this.vehicles.filter(vehicle => this.vehicleInfoHelper.getVehicleStatus(vehicle) === 'Disponible').length;
         this.getMaintenanceInfo(maintenance);
         this.filteredVehicles = this.vehicles;
+        this.loading = false;
       }
     });
   }
