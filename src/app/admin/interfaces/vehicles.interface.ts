@@ -10,9 +10,9 @@ export interface IVehicle {
   Imagen_URL: string;
   Anio: number;
   Color: string;
-  TB_Estado_Vehiculo: IVehicleStatus;
-  TB_Modelo: IModel;
-  TB_Bitacoras: ILog[];
+  Estado_Vehiculo: IVehicleStatus;
+  Modelo: IModel;
+  Bitacoras: ILog[];
   Siguiente_Mantenimiento?: number;
 }
 
@@ -27,8 +27,8 @@ export interface IMaintenance {
 export interface IModel {
   ID_Modelo: number;
   Modelo: string;
-  TB_Marca_Vehiculo: IBrand;
-  TB_Tipo_Vehiculo: IVehicleType;
+  Marca_Vehiculo: IBrand;
+  Tipo_Vehiculo: IVehicleType;
 }
 
 export interface IBrand {

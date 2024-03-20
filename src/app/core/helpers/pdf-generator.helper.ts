@@ -64,14 +64,14 @@ export class PDFHelper {
   public formatRequestsForPDF(requests: IRequest[]) {
     return requests.map(request => {
       return [
-        request.TB_Estado_Solicitud.Estado,
+        request.Estado_Solicitud.Estado,
         request.Nombre_Empleado,
         this.getDate(request.Fecha.toString()),
         this.getTime(request.Hora_Salida.toString()),
         this.getTime(request.Hora_Regreso.toString()),
-        request.TB_Ciudad.Nombre,
-        this.getVehicle(request.TB_Vehiculos),
-        this.getDriver(request.TB_Conductores)
+        request.Ciudad.Nombre,
+        this.getVehicle(request.Vehiculo),
+        this.getDriver(request.Conductor)
       ];
     });
   }

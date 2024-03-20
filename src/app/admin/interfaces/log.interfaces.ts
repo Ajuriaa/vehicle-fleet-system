@@ -6,7 +6,7 @@ export interface ILog {
   Hora_Entrada: Date;
   Fecha: Date;
   Observaciones: string;
-  TB_Llenado_Combustible: IGasRefill;
+  Llenado_Combustible: IGasRefill;
 }
 
 export interface IGasRefill {
@@ -16,7 +16,7 @@ export interface IGasRefill {
   Kilometraje_Recarga: number;
   Fecha: Date;
   Precio: number;
-  TB_Unidad_Combustible: IGasUnit;
+  Unidad_Combustible: IGasUnit;
 }
 
 export interface IGasUnit {

@@ -93,10 +93,10 @@ export class RequestsComponent implements OnInit {
     this.requestQuery.getAllRequests().subscribe(({data}) => {
       this.requests = data;
       this.pendingRequests = this.requests.filter(
-        (request) => request.TB_Estado_Solicitud.Estado === 'Pendiente por admin'
+        (request) => request.Estado_Solicitud.Estado === 'Pendiente por admin'
       ).length;
       this.activeRequests = this.requests.filter(
-        (request) => request.TB_Estado_Solicitud.Estado === 'Activo'
+        (request) => request.Estado_Solicitud.Estado === 'Activo'
       ).length;
       this.filteredRequests = this.requests;
       this.loading = false;

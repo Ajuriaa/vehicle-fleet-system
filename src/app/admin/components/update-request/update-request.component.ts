@@ -70,9 +70,9 @@ export class UpdateRequestComponent implements OnInit {
 
   private fillForm(): void {
     this.requestForm.patchValue({
-      status: this.request.TB_Estado_Solicitud.Estado,
-      vehicle: this.vehicleInfoHelper.getModel(this.request.TB_Vehiculos),
-      driver: this.request.TB_Conductores?.Nombre || ''
+      status: this.request.Estado_Solicitud.Estado,
+      vehicle: this.vehicleInfoHelper.getModel(this.request.Vehiculo),
+      driver: this.request.Conductor?.Nombre || ''
     });
   }
 

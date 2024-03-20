@@ -2,9 +2,7 @@ import {
   IVehicle, IModel, IBrand,
   IVehicleStatus, IVehicleType, IGasRefill,
   IGasUnit, ILog, IDriver,
-  IRequest,
-  ICity,
-  IRequestStatus,
+  IRequest, ICity, IRequestStatus,
   IRequestType
 } from "src/app/admin/interfaces";
 
@@ -33,9 +31,9 @@ export const EMPTY_REQUEST: IRequest = {
   Fecha: new Date(),
   Hora_Salida: new Date(),
   Hora_Regreso: new Date(),
-  TB_Ciudad: EMPTY_CITY,
-  TB_Estado_Solicitud: EMPTY_REQUEST_STATUS,
-  TB_Tipo_Solicitud: EMPTY_REQUEST_TYPE
+  Ciudad: EMPTY_CITY,
+  Estado_Solicitud: EMPTY_REQUEST_STATUS,
+  Tipo_Solicitud: EMPTY_REQUEST_TYPE
 };
 
 export const EMPTY_DRIVER: IDriver = {
@@ -63,8 +61,8 @@ export const EMPTY_VEHICLE_TYPE: IVehicleType = {
 export const EMPTY_MODEL: IModel = {
   ID_Modelo: 0,
   Modelo: '',
-  TB_Marca_Vehiculo: EMPTY_BRAND,
-  TB_Tipo_Vehiculo: EMPTY_VEHICLE_TYPE
+  Marca_Vehiculo: EMPTY_BRAND,
+  Tipo_Vehiculo: EMPTY_VEHICLE_TYPE
 };
 
 export const EMPTY_GAS_UNIT: IGasUnit = {
@@ -79,7 +77,7 @@ export const EMPTY_GAS_REFILL: IGasRefill = {
   Kilometraje_Recarga: 0,
   Fecha: new Date(),
   Precio: 0,
-  TB_Unidad_Combustible: EMPTY_GAS_UNIT,
+  Unidad_Combustible: EMPTY_GAS_UNIT,
 };
 
 export const EMPTY_LOG: ILog = {
@@ -90,7 +88,7 @@ export const EMPTY_LOG: ILog = {
   Hora_Entrada: new Date(),
   Fecha: new Date(),
   Observaciones: '',
-  TB_Llenado_Combustible: EMPTY_GAS_REFILL,
+  Llenado_Combustible: EMPTY_GAS_REFILL,
 };
 
 export const EMPTY_VEHICLE: IVehicle = {
@@ -103,8 +101,8 @@ export const EMPTY_VEHICLE: IVehicle = {
   Imagen_URL: '',
   Anio: 0,
   Color: '',
-  TB_Estado_Vehiculo: EMPTY_VEHICLE_STATE,
-  TB_Modelo: EMPTY_MODEL,
+  Estado_Vehiculo: EMPTY_VEHICLE_STATE,
+  Modelo: EMPTY_MODEL,
   Siguiente_Mantenimiento: 0,
-  TB_Bitacoras: []
+  Bitacoras: []
 };

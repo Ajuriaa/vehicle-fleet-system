@@ -72,7 +72,7 @@ export class CreateUpdateVehicleComponent implements OnInit{
       if(this.isCreate) {
         this.filteredModels = this.models;
       } else {
-        this.filterModels(this.data.vehicle.TB_Modelo.TB_Marca_Vehiculo.ID_Marca_Vehiculo);
+        this.filterModels(this.data.vehicle.Modelo.Marca_Vehiculo.ID_Marca_Vehiculo);
       }
     });
     this.vehicleQuery.getStatuses().subscribe(({data}) => {
@@ -122,7 +122,7 @@ export class CreateUpdateVehicleComponent implements OnInit{
   }
 
   public filterModels(brandId: number): void {
-    this.filteredModels = this.models.filter(model => model.TB_Marca_Vehiculo.ID_Marca_Vehiculo === brandId);
+    this.filteredModels = this.models.filter(model => model.Marca_Vehiculo.ID_Marca_Vehiculo === brandId);
     this.vehicleForm.patchValue({
       model: this.filteredModels[0].ID_Modelo
     });
@@ -131,7 +131,7 @@ export class CreateUpdateVehicleComponent implements OnInit{
 
   public setType(model: IModel): void {
     this.vehicleForm.patchValue({
-      vehicleType: model.TB_Tipo_Vehiculo.Tipo_Vehiculo
+      vehicleType: model.Tipo_Vehiculo.Tipo_Vehiculo
     });
   }
 
@@ -149,10 +149,10 @@ export class CreateUpdateVehicleComponent implements OnInit{
       img: this.data.vehicle.Imagen_URL,
       year: this.data.vehicle.Anio,
       color: this.data.vehicle.Color,
-      model: this.data.vehicle.TB_Modelo.ID_Modelo,
-      brand: this.data.vehicle.TB_Modelo.TB_Marca_Vehiculo.ID_Marca_Vehiculo,
-      status: this.data.vehicle.TB_Estado_Vehiculo.ID_Estado_Vehiculo,
-      vehicleType: this.data.vehicle.TB_Modelo.TB_Tipo_Vehiculo.Tipo_Vehiculo
+      model: this.data.vehicle.Modelo.ID_Modelo,
+      brand: this.data.vehicle.Modelo.Marca_Vehiculo.ID_Marca_Vehiculo,
+      status: this.data.vehicle.Estado_Vehiculo.ID_Estado_Vehiculo,
+      vehicleType: this.data.vehicle.Modelo.Tipo_Vehiculo.Tipo_Vehiculo
     });
   }
 }

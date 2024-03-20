@@ -14,7 +14,7 @@ export class SearchService {
         vehicle.Placa.toLowerCase().includes(term.toLowerCase()) ||
         this.getVehicleModel(vehicle).toLowerCase().includes(term.toLowerCase()) ||
         this.getVehicleType(vehicle).toLowerCase().includes(term.toLowerCase()) ||
-        vehicle.TB_Estado_Vehiculo.Estado_Vehiculo.toLowerCase().includes(term.toLowerCase())
+        vehicle.Estado_Vehiculo.Estado_Vehiculo.toLowerCase().includes(term.toLowerCase())
       );
     }
     if(dataModel === 'drivers') {
@@ -24,13 +24,13 @@ export class SearchService {
     }
     if(dataModel === 'requests') {
       return data.filter((request: IRequest)  =>
-        request.TB_Ciudad.Nombre.toLowerCase().includes(term.toLowerCase()) ||
+        request.Ciudad.Nombre.toLowerCase().includes(term.toLowerCase()) ||
         request.Nombre_Empleado.toLowerCase().includes(term.toLowerCase()) ||
-        request.TB_Conductores?.Nombre.toLowerCase().includes(term.toLowerCase()) ||
-        request.TB_Vehiculos?.Placa.toLowerCase().includes(term.toLowerCase()) ||
-        this.getVehicleModel(request.TB_Vehiculos).toLowerCase().includes(term.toLowerCase()) ||
+        request.Conductor?.Nombre.toLowerCase().includes(term.toLowerCase()) ||
+        request.Vehiculo?.Placa.toLowerCase().includes(term.toLowerCase()) ||
+        this.getVehicleModel(request.Vehiculo).toLowerCase().includes(term.toLowerCase()) ||
         moment(request.Fecha).format('DD/MM/YYYY').toLowerCase().includes(term.toLowerCase()) ||
-        request.TB_Estado_Solicitud.Estado.toLowerCase().includes(term.toLowerCase())
+        request.Estado_Solicitud.Estado.toLowerCase().includes(term.toLowerCase())
       );
     }
     return data;
@@ -38,13 +38,13 @@ export class SearchService {
 
   public getVehicleModel(vehicle: IVehicle | undefined): string {
     if(!vehicle) return '';
-    const brand = vehicle.TB_Modelo.TB_Marca_Vehiculo.Marca;
-    const model = vehicle.TB_Modelo.Modelo;
+    const brand = vehicle.Modelo.Marca_Vehiculo.Marca;
+    const model = vehicle.Modelo.Modelo;
     const year = vehicle.Anio;
     return `${brand} ${model} ${year}`;
   }
 
   public getVehicleType(vehicle: IVehicle): string {
-    return vehicle.TB_Modelo.TB_Tipo_Vehiculo.Tipo_Vehiculo;
+    return vehicle.Modelo.Tipo_Vehiculo.Tipo_Vehiculo;
   }
 }
