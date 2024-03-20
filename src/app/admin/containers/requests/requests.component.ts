@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
-import { PDFHelper } from 'src/app/core/helpers/pdf-generator.helper';
 import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { SearchService } from 'src/app/core/services';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,6 +11,7 @@ import { Router } from '@angular/router';
 import { IDriver, IRequest, IVehicle } from '../../interfaces';
 import { RequestQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
+import { PDFHelper } from 'src/app/core/helpers';
 
 const TABLE_COLUMNS = [
   'status', 'name', 'date', 'timeOut', 'timeIn', 'city', 'vehicle', 'driver', 'actions'

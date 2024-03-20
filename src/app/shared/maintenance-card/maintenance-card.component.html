@@ -1,1 +1,13 @@
-<p>maintenance-card works!</p>
+<div class="card-wrapper" *ngIf="vehicle">
+  <div class="header">
+   <img class="img" [src]="vehicle.Imagen_URL">
+    <div>
+      <p class="model">{{ model }}</p>
+      <p class="type">{{ vehicle.Modelo.Tipo_Vehiculo.Tipo_Vehiculo }} - {{ vehicle.Kilometraje }} Kms</p>
+    </div>
+  </div>
+  <div class="maintenance-info">
+    <mat-calendar [dateClass]="dateClass" class="calendar" [startAt]="lastMaintenanceDate"></mat-calendar>
+    <p class="kms-label">Próximo mantenimiento en <strong>{{ remainingKms }} KMS</strong></p>
+  </div>
+</div>

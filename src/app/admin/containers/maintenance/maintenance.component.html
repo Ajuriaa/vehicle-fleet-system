@@ -1,1 +1,37 @@
-<p>maintenance works!</p>
+<app-loading class="loading" *ngIf="loading"></app-loading>
+
+<div class="container" *ngIf="!loading">
+  <section class="panel">
+    <div class="search-bar-wrapper">
+      <i class="uil uil-search-alt"></i>
+      <input
+        [(ngModel)]="searchInput"
+        class="search-bar"
+        (input)="onSearch(searchInput)"
+        type="text"
+        placeholder="Buscar"
+      />
+    </div>
+    <div class="available">
+      <p class="panel-title">Vehículos con mantenimiento este mes</p>
+      <p class="panel-label">{{ lastMonthMaintenanceVehicles }}</p>
+    </div>
+    <div class="buttons">
+      <app-primary-button class="button">
+        AGREGAR MANTENIMIENTO
+      </app-primary-button>
+    </div>
+  </section>
+  <section class="cards-container">
+    @for(vehicle of filteredVehicles; track vehicle.ID_Vehiculo) {
+      <app-maintenance-card
+        [vehicle]="vehicle"
+        (click)="goToVehicle(vehicle.ID_Vehiculo)"
+        class="pointer"
+      >
+      </app-maintenance-card>
+    } @empty {
+      <app-no-result></app-no-result>
+    }
+  </section>
+</div>

@@ -13,6 +13,7 @@ export interface IVehicle {
   Estado_Vehiculo: IVehicleStatus;
   Modelo: IModel;
   Bitacoras: ILog[];
+  Mantenimientos?: IMaintenance[];
   Siguiente_Mantenimiento?: number;
 }
 

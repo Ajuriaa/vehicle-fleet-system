@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PDFHelper } from 'src/app/core/helpers/pdf-generator.helper';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
@@ -7,7 +6,7 @@ import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SearchService } from 'src/app/core/services';
-import { EMPTY_DRIVER } from 'src/app/core/helpers';
+import { EMPTY_DRIVER, PDFHelper } from 'src/app/core/helpers';
 import { IDriver } from '../../interfaces';
 import { DriverQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';

@@ -1,0 +1,60 @@
+@import 'global';
+
+.card-wrapper {
+  @include flex-center-column;
+  height: 44rem;
+  width: 42rem;
+  background-color: $light-gray;
+  border-radius: 2rem;
+  border: solid 0.2rem $dark-blue;
+
+  .header {
+    margin: 2rem 2rem 0 2rem;
+    height: 10rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .img {
+    width: 10rem;
+  }
+
+  .maintenance-info {
+    @include flex-center;
+    justify-content: space-between;
+    height: 30rem;
+  }
+}
+
+.calendar {
+  width: 60%;
+  margin-left: 2rem;
+}
+
+.model {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.type {
+  font-size: 1.5rem;
+}
+
+.kms-label {
+  font-size: 1.5rem;
+  width: 30%;
+  margin-right: 2rem;
+  text-align: center;
+}
+
+button.preventive-date {
+  background: $warning;
+  border-radius: 100%;
+}
+
+button.corrective-date {
+  background: $red;
+  border-radius: 100%;
+}
