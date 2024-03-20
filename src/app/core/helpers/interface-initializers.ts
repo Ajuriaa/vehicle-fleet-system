@@ -102,7 +102,6 @@ export const EMPTY_VEHICLE: IVehicle = {
   KPG: 0,
   Imagen_URL: '',
   Anio: 0,
-  Kilometraje_Mantenimiento: 0,
   Color: '',
   TB_Estado_Vehiculo: EMPTY_VEHICLE_STATE,
   TB_Modelo: EMPTY_MODEL,

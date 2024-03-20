@@ -9,12 +9,19 @@ export interface IVehicle {
   KPG: number;
   Imagen_URL: string;
   Anio: number;
-  Kilometraje_Mantenimiento: number;
   Color: string;
   TB_Estado_Vehiculo: IVehicleStatus;
   TB_Modelo: IModel;
   TB_Bitacoras: ILog[];
   Siguiente_Mantenimiento?: number;
+}
+
+export interface IMaintenance {
+  ID_Mantenimiento: number;
+  Kilometraje: number;
+  Tipo_Mantenimiento: 'Correctivo' | 'Preventivo';
+  Vehiculo: IVehicle;
+  Fecha: Date;
 }
 
 export interface IModel {

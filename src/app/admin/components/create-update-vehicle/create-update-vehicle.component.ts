@@ -52,7 +52,6 @@ export class CreateUpdateVehicleComponent implements OnInit{
       kpg: ['', [Validators.required]],
       img: ['', [Validators.required]],
       year: ['', [Validators.required]],
-      maintenanceKms: ['', [Validators.required]],
       color: ['', [Validators.required]],
       model: ['', [Validators.required]],
       brand: ['', [Validators.required]],
@@ -105,7 +104,6 @@ export class CreateUpdateVehicleComponent implements OnInit{
       KPG: this.vehicleForm.controls.kpg.value,
       Imagen_URL: this.vehicleForm.controls.img.value,
       Anio: this.vehicleForm.controls.year.value,
-      Kilometraje_Mantenimiento: this.vehicleForm.controls.maintenanceKms.value,
       Color: this.vehicleForm.controls.color.value,
       ID_Modelo: this.vehicleForm.controls.model.value,
       ID_Estado_Vehiculo: this.vehicleForm.controls.status.value
@@ -150,7 +148,6 @@ export class CreateUpdateVehicleComponent implements OnInit{
       kpg: this.data.vehicle.KPG,
       img: this.data.vehicle.Imagen_URL,
       year: this.data.vehicle.Anio,
-      maintenanceKms: this.data.vehicle.Kilometraje_Mantenimiento,
       color: this.data.vehicle.Color,
       model: this.data.vehicle.TB_Modelo.ID_Modelo,
       brand: this.data.vehicle.TB_Modelo.TB_Marca_Vehiculo.ID_Marca_Vehiculo,
