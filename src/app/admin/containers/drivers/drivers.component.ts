@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
-import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
+import { LoadingComponent, NoResultComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SearchService } from 'src/app/core/services';
@@ -17,7 +17,10 @@ const TABLE_COLUMNS = ['id', 'name', 'endedRequestCount', 'available', 'edit'];
 @Component({
   selector: 'app-drivers',
   standalone: true,
-  imports: [CommonModule, MatTableModule, FormsModule, PrimaryButtonComponent, LoadingComponent],
+  imports: [
+    CommonModule, MatTableModule, FormsModule,
+    PrimaryButtonComponent, LoadingComponent, NoResultComponent
+  ],
   providers: [DriverQueries, PDFHelper, vehicleInfoHelper],
   templateUrl: './drivers.component.html',
   styleUrl: './drivers.component.scss'

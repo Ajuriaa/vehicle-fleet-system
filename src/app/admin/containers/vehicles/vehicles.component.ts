@@ -4,7 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { SearchService } from 'src/app/core/services';
-import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
+import { LoadingComponent, NoResultComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { EMPTY_VEHICLE, PDFHelper } from 'src/app/core/helpers';
 import { Router } from '@angular/router';
 import { CreateUpdateVehicleComponent, DeleteVehicleComponent } from '../../components';
@@ -16,7 +16,10 @@ const TABLE_COLUMNS = [ 'plate', 'model', 'type','status', 'edit'];
 @Component({
   selector: 'app-vehicles',
   standalone: true,
-  imports: [CommonModule, MatTableModule, FormsModule, PrimaryButtonComponent, LoadingComponent],
+  imports: [
+    CommonModule, MatTableModule, FormsModule,
+    PrimaryButtonComponent, LoadingComponent, NoResultComponent
+  ],
   providers: [VehicleQueries, vehicleInfoHelper, PDFHelper],
   templateUrl: './vehicles.component.html',
   styleUrl: './vehicles.component.scss'
