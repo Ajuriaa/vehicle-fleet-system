@@ -70,9 +70,14 @@ export class VehicleCardComponent implements OnChanges {
   logDateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
     if (view === 'month') {
       const date = cellDate.toDateString();
+      const startOfWeek = moment.utc().clone().startOf('week').subtract(1, 'days');
+      const endOfWeek = moment.utc().clone().endOf('week').subtract(1, 'days');
       let dateClass = '';
+      if(moment.utc(cellDate).isBetween(startOfWeek, endOfWeek)) {
+        dateClass = 'log-week';
+      }
       if (this.logDates.includes(date)) {
-        dateClass = 'log-date';
+        dateClass = ' log-date';
       }
       return dateClass;
     }

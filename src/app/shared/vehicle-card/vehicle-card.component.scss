@@ -69,6 +69,12 @@ button.corrective-date {
 }
 
 button.log-date {
+  background: $warning;
+  border-radius: 100%;
+}
+
+button.log-week {
   background: $blue;
   border-radius: 100%;
 }
+

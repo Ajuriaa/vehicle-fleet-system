@@ -12,12 +12,16 @@
       />
     </div>
     <div class="available">
-      <p class="panel-title">PLACE HOLDER DE ALGO INTERESANTE</p>
-      <p class="panel-label"> NOSE </p>
+      <p class="panel-title">La última semana se han usado</p>
+      <p class="panel-label"> {{ vehiclesCount }} Vehículo{{ vehiclesCount !== 1 ? 's' : '' }} </p>
+    </div>
+    <div class="available">
+      <p class="panel-title">Y se han recorrido</p>
+      <p class="panel-label"> {{ kms }} Km </p>
     </div>
     <div class="buttons">
       <app-primary-button class="button">
-        BOTON PARA ALGO
+        INGRESAR BITACORA
       </app-primary-button>
     </div>
   </section>
