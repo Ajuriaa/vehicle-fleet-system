@@ -2,10 +2,8 @@ import { Routes } from '@angular/router';
 import {
   AdminRouterComponent, DashboardComponent, DriversComponent,
   LogComponent, MaintenanceComponent, RequestsComponent,
-  VehiclesComponent, VehicleComponent,
-  RequestComponent,
-  LogsComponent,
-  CarLogsComponent
+  VehiclesComponent, VehicleComponent, RequestComponent,
+  LogsComponent
 } from './containers';
 import { DriverComponent } from './containers/driver/driver.component';
 
@@ -29,13 +27,8 @@ export const adminRoutes: Routes = [{
       component: VehiclesComponent
     },
     {
-      path: 'car-logs',
+      path: 'logs',
       title: 'Listado Bitácoras',
-      component: CarLogsComponent
-    },
-    {
-      path: 'logs/:vehicleId',
-      title: 'Bitácoras',
       component: LogsComponent
     },
     {

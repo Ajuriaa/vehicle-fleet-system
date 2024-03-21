@@ -1,1 +1,27 @@
-<p>logs works!</p>
+<app-loading class="loading" *ngIf="loading"></app-loading>
+<div class="container" *ngIf="!loading">
+  <section class="panel">
+    <div class="search-bar-wrapper">
+      <i class="uil uil-search-alt"></i>
+      <input
+        [(ngModel)]="searchInput"
+        class="search-bar"
+        (input)="onSearch(searchInput)"
+        type="text"
+        placeholder="Buscar"
+      />
+    </div>
+    <div class="available">
+      <p class="panel-title">PLACE HOLDER DE ALGO INTERESANTE</p>
+      <p class="panel-label"> NOSE </p>
+    </div>
+    <div class="buttons">
+      <app-primary-button class="button">
+        BOTON PARA ALGO
+      </app-primary-button>
+    </div>
+  </section>
+  <section class="cards-container">
+    <app-log-card></app-log-card>
+  </section>
+</div>
