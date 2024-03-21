@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LoadingComponent, MaintenanceCardComponent, PrimaryButtonComponent } from 'src/app/shared';
-import { IVehicle } from '../../interfaces';
+import { LoadingComponent, MaintenanceCardComponent, PrimaryButtonComponent, NoResultComponent } from 'src/app/shared';
+import { IMaintenance, IVehicle } from '../../interfaces';
 import { SearchService } from 'src/app/core/services';
 import { VehicleQueries } from '../../services';
-import { NoResultComponent } from 'src/app/shared/no-result/no-result.component';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateMaintenanceComponent } from '../../components';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-maintenance',
@@ -29,7 +31,8 @@ export class MaintenanceComponent implements OnInit {
   constructor(
     private searchEngine: SearchService,
     private vehicleQuery: VehicleQueries,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ){}
 
   ngOnInit(): void {
@@ -51,6 +54,16 @@ export class MaintenanceComponent implements OnInit {
         this.filteredVehicles = this.vehicles;
         this.loading = false;
         this.getVehiclesMaintenancesLastMonth();
+      }
+    });
+  }
+
+  public openCreateMaintenanceModal(): void {
+    this.dialog.open(CreateMaintenanceComponent, {
+      panelClass: 'dialog-style'
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.getAllVehicles();
       }
     });
   }

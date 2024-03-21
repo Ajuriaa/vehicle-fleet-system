@@ -6,6 +6,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { vehicleInfoHelper } from 'src/app/admin/helpers';
 import { CommonModule } from '@angular/common';
+import moment from 'moment';
 
 @Component({
   selector: 'app-maintenance-card',
@@ -53,7 +54,7 @@ export class MaintenanceCardComponent implements OnChanges {
     if(!this.vehicle.Mantenimientos) return [];
     const dates = this.vehicle.Mantenimientos
                   .filter(m => m.Tipo_Mantenimiento === type)
-                  .map(m => new Date(m.Fecha).toDateString());
+                  .map(m => moment.utc(m.Fecha).format('ddd MMM DD YYYY'));
     return dates;
   }
 
