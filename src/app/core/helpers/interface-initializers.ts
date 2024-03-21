@@ -104,5 +104,6 @@ export const EMPTY_VEHICLE: IVehicle = {
   Estado_Vehiculo: EMPTY_VEHICLE_STATE,
   Modelo: EMPTY_MODEL,
   Siguiente_Mantenimiento: 0,
-  Bitacoras: []
+  Bitacoras: [],
+  Mantenimientos: []
 };

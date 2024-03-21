@@ -22,6 +22,14 @@
     </div>
   </section>
   <section class="cards-container">
-    <app-log-card></app-log-card>
+    @for(vehicle of filteredVehicles; track vehicle.ID_Vehiculo) {
+      <app-vehicle-card
+        [vehicle]="vehicle"
+        class="pointer"
+      >
+      </app-vehicle-card>
+    } @empty {
+      <app-no-result></app-no-result>
+    }
   </section>
 </div>

@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { vehicleInfoHelper } from 'src/app/admin/helpers';
 import { CommonModule } from '@angular/common';
 import moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vehicle-card',
@@ -17,17 +18,20 @@ import moment from 'moment';
   templateUrl: './vehicle-card.component.html',
   styleUrl: './vehicle-card.component.scss'
 })
-export class VehicleCardComponent {
+export class VehicleCardComponent implements OnChanges {
   public model = '';
   public remainingKms = 0;
   public preventiveDates: string[] = [];
   public correctiveDates: string[] = [];
+  public logDates: string[] = [];
   public lastMaintenanceDate = new Date();
+  public lastLogDate = new Date();
   @Input() public vehicle!: IVehicle;
   @Input() public type: string = 'log';
 
   constructor(
-    private vehicleInfoHelper: vehicleInfoHelper
+    private vehicleInfoHelper: vehicleInfoHelper,
+    private router: Router
   ){}
 
   ngOnChanges(): void {
@@ -37,6 +41,16 @@ export class VehicleCardComponent {
       this.preventiveDates = this.getDates('Preventivo');
       this.correctiveDates = this.getDates('Correctivo');
     }
+    if(this.type === 'log') {
+      this.logDates = this.getLogDates();
+    }
+  }
+
+
+  public goToVehicle(vehicleId: number): void {
+    let path = '';
+    this.type === 'log' ? path = 'log' : path = 'vehicle';
+    this.router.navigate([`/admin/${path}/${vehicleId}`]);
   }
 
   maintenanceDateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
@@ -53,11 +67,31 @@ export class VehicleCardComponent {
     return '';
   };
 
+  logDateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
+    if (view === 'month') {
+      const date = cellDate.toDateString();
+      let dateClass = '';
+      if (this.logDates.includes(date)) {
+        dateClass = 'log-date';
+      }
+      return dateClass;
+    }
+    return '';
+  };
+
   private getDates(type: 'Preventivo' | 'Correctivo'): string[] {
-    if(!this.vehicle.Mantenimientos) return [];
+    if(this.vehicle.Mantenimientos.length === 0) return [];
     const dates = this.vehicle.Mantenimientos
                   .filter(m => m.Tipo_Mantenimiento === type)
                   .map(m => moment.utc(m.Fecha).format('ddd MMM DD YYYY'));
+    return dates;
+  }
+
+  private getLogDates(): string[] {
+    if(this.vehicle.Bitacoras.length === 0) return [];
+    const dates = this.vehicle.Bitacoras
+                  .map(b => moment.utc(b.Fecha).format('ddd MMM DD YYYY'));
+    this.lastLogDate = this.vehicle.Bitacoras[0].Fecha;
     return dates;
   }
 

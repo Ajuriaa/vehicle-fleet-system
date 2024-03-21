@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LoadingComponent, PrimaryButtonComponent, NoResultComponent, VehicleCardComponent } from 'src/app/shared';
 import { SearchService } from 'src/app/core/services';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateMaintenanceComponent } from '../../components';
 import { VehicleQueries } from '../../services';
@@ -30,7 +29,6 @@ export class MaintenanceComponent implements OnInit {
   constructor(
     private searchEngine: SearchService,
     private vehicleQuery: VehicleQueries,
-    private router: Router,
     private dialog: MatDialog
   ){}
 
@@ -40,10 +38,6 @@ export class MaintenanceComponent implements OnInit {
 
   public onSearch(term: string): void {
     this.filteredVehicles = this.searchEngine.filterData(this.vehicles, term, 'vehicles');
-  }
-
-  public goToVehicle(vehicleId: number): void {
-    this.router.navigate([`/admin/vehicle/${vehicleId}`]);
   }
 
   private getAllVehicles(): void {
