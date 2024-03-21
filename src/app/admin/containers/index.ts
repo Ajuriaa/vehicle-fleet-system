@@ -8,3 +8,5 @@ export * from './maintenance/maintenance.component';
 export * from './requests/requests.component';
 export * from  './vehicle/vehicle.component';
 export * from './request/request.component';
+export * from './logs/logs.component';
+export * from './car-logs/car-logs.component';
