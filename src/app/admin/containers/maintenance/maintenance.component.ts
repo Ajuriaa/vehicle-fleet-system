@@ -2,13 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LoadingComponent, MaintenanceCardComponent, PrimaryButtonComponent, NoResultComponent } from 'src/app/shared';
-import { IMaintenance, IVehicle } from '../../interfaces';
 import { SearchService } from 'src/app/core/services';
-import { VehicleQueries } from '../../services';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateMaintenanceComponent } from '../../components';
-import { Subject } from 'rxjs';
+import { VehicleQueries } from '../../services';
+import { IVehicle } from '../../interfaces';
 
 @Component({
   selector: 'app-maintenance',

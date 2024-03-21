@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { SearchService } from 'src/app/core/services';
-import { IVehicle } from '../../interfaces';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PrimaryButtonComponent, LoadingComponent, NoResultComponent, LogCardComponent } from 'src/app/shared';
+import { IVehicle } from '../../interfaces';
 
 @Component({
   selector: 'app-logs',

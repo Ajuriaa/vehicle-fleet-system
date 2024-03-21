@@ -1,20 +1,20 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { IMaintenance, IVehicle } from '../../interfaces';
+import { MatDialogRef } from '@angular/material/dialog';
 import { PrimaryButtonComponent } from 'src/app/shared';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { MaintenanceMutations, VehicleQueries } from '../../services';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SearchService } from 'src/app/core/services';
-import { vehicleInfoHelper } from '../../helpers';
-import { EMPTY, map, Observable, of, startWith } from 'rxjs';
+import { map, Observable, startWith } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { EMPTY_VEHICLE } from 'src/app/core/helpers';
+import { vehicleInfoHelper } from '../../helpers';
+import { MaintenanceMutations, VehicleQueries } from '../../services';
+import { IVehicle } from '../../interfaces';
 
 @Component({
   selector: 'app-create-maintenance',

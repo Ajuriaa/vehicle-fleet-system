@@ -8,10 +8,10 @@ import { MatDialog } from '@angular/material/dialog';
 import moment from 'moment';
 import 'moment-timezone';
 import { Router } from '@angular/router';
+import { PDFHelper } from 'src/app/core/helpers';
 import { IDriver, IRequest, IVehicle } from '../../interfaces';
 import { RequestQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
-import { PDFHelper } from 'src/app/core/helpers';
 
 const TABLE_COLUMNS = [
   'status', 'name', 'date', 'timeOut', 'timeIn', 'city', 'vehicle', 'driver', 'actions'

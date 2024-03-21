@@ -3,10 +3,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { PrimaryButtonComponent } from 'src/app/shared';
-import { IDriver, IRequest, IRequestStatus, IVehicle } from '../../interfaces';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { vehicleInfoHelper } from '../../helpers';
 import { EMPTY_REQUEST } from 'src/app/core/helpers';
+import { IDriver, IRequest, IRequestStatus, IVehicle } from '../../interfaces';
+import { vehicleInfoHelper } from '../../helpers';
 import { RequestMutations, RequestQueries } from '../../services';
 
 @Component({

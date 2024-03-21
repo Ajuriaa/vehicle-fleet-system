@@ -4,8 +4,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { routes } from './app.routes';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
