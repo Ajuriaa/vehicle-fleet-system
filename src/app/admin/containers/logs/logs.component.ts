@@ -6,6 +6,8 @@ import { PrimaryButtonComponent, LoadingComponent, NoResultComponent, VehicleCar
 import { IVehicle } from '../../interfaces';
 import { VehicleQueries } from '../../services';
 import moment from 'moment';
+import { CreateLogComponent } from '../../components';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-logs',
@@ -27,11 +29,22 @@ export class LogsComponent implements OnInit {
 
   constructor(
     private searchEngine: SearchService,
-    private vehicleQuery: VehicleQueries
+    private vehicleQuery: VehicleQueries,
+    private dialog: MatDialog
   ){}
 
   ngOnInit(): void {
     this.getAllVehicles();
+  }
+
+  public openCreateLogModal(): void {
+    this.dialog.open(CreateLogComponent, {
+      panelClass: 'dialog-style'
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.getAllVehicles();
+      }
+    });
   }
 
   public countData(): void {
@@ -47,7 +60,7 @@ export class LogsComponent implements OnInit {
       vehicle.Bitacoras.forEach(bitacora => {
           const bitacoraDate = moment.utc(bitacora.Fecha);
           if (bitacoraDate.isBetween(startOfWeek, endOfWeek)) {
-              totalKms += (bitacora.Kilometraje_Salida - bitacora.Kilometraje_Entrada);
+              totalKms += (bitacora.Kilometraje_Entrada - bitacora.Kilometraje_Salida);
           }
       });
     });

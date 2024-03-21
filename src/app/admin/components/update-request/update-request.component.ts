@@ -46,8 +46,8 @@ export class UpdateRequestComponent implements OnInit {
     this.fillForm();
   }
 
-  public onCancel(): void {
-    this.dialogRef.close(true);
+  public onCancel(changesMade = false): void {
+    this.dialogRef.close(changesMade);
   }
 
   public async onSubmit(): Promise<void> {
@@ -64,7 +64,7 @@ export class UpdateRequestComponent implements OnInit {
     const mutationResponse = await this.requestMutations.updateRequest(data);
 
     if (mutationResponse) {
-      this.onCancel();
+      this.onCancel(mutationResponse);
     }
   }
 
