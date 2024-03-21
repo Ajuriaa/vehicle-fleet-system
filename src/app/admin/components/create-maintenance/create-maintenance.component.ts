@@ -86,7 +86,7 @@ export class CreateMaintenanceComponent implements OnInit {
     const mutationResponse = await this.maintenanceMutation.createMaintenance(data);
 
     if (mutationResponse) {
-      this.onCancel();
+      this.onCancel(mutationResponse);
     }
   }
 
