@@ -6,8 +6,8 @@
       <p class="type">{{ vehicle.Modelo.Tipo_Vehiculo.Tipo_Vehiculo }} - {{ vehicle.Kilometraje }} Kms</p>
     </div>
   </div>
-  <div class="maintenance-info">
-    <mat-calendar [dateClass]="dateClass" class="calendar" [startAt]="lastMaintenanceDate"></mat-calendar>
+  <div class="maintenance-info" *ngIf="type === 'maintenance'">
+    <mat-calendar [dateClass]="maintenanceDateClass" class="calendar" [startAt]="lastMaintenanceDate"></mat-calendar>
     <p class="kms-label">Próximo mantenimiento en <strong>{{ remainingKms }} KMS</strong></p>
   </div>
 </div>

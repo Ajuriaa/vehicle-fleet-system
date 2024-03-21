@@ -9,21 +9,22 @@ import { CommonModule } from '@angular/common';
 import moment from 'moment';
 
 @Component({
-  selector: 'app-maintenance-card',
+  selector: 'app-vehicle-card',
   standalone: true,
   imports: [MatFormFieldModule, MatDatepickerModule, MatInputModule, CommonModule],
   providers: [provideNativeDateAdapter(), vehicleInfoHelper],
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './maintenance-card.component.html',
-  styleUrl: './maintenance-card.component.scss'
+  templateUrl: './vehicle-card.component.html',
+  styleUrl: './vehicle-card.component.scss'
 })
-export class MaintenanceCardComponent implements OnChanges {
+export class VehicleCardComponent {
   public model = '';
   public remainingKms = 0;
   public preventiveDates: string[] = [];
   public correctiveDates: string[] = [];
   public lastMaintenanceDate = new Date();
   @Input() public vehicle!: IVehicle;
+  @Input() public type: string = 'log';
 
   constructor(
     private vehicleInfoHelper: vehicleInfoHelper
@@ -31,12 +32,14 @@ export class MaintenanceCardComponent implements OnChanges {
 
   ngOnChanges(): void {
     this.model = this.vehicleInfoHelper.getModel(this.vehicle);
-    this.remainingKms = this.getNextMaintenanceKms();
-    this.preventiveDates = this.getDates('Preventivo');
-    this.correctiveDates = this.getDates('Correctivo');
+    if(this.type === 'maintenance') {
+      this.remainingKms = this.getNextMaintenanceKms();
+      this.preventiveDates = this.getDates('Preventivo');
+      this.correctiveDates = this.getDates('Correctivo');
+    }
   }
 
-  dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
+  maintenanceDateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
     if (view === 'month') {
       const date = cellDate.toDateString();
       let dateClass = '';

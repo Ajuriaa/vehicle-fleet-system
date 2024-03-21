@@ -24,12 +24,13 @@
   </section>
   <section class="cards-container">
     @for(vehicle of filteredVehicles; track vehicle.ID_Vehiculo) {
-      <app-maintenance-card
+      <app-vehicle-card
+        type="maintenance"
         [vehicle]="vehicle"
         (click)="goToVehicle(vehicle.ID_Vehiculo)"
         class="pointer"
       >
-      </app-maintenance-card>
+      </app-vehicle-card>
     } @empty {
       <app-no-result></app-no-result>
     }

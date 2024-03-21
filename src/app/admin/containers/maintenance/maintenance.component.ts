@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LoadingComponent, MaintenanceCardComponent, PrimaryButtonComponent, NoResultComponent } from 'src/app/shared';
+import { LoadingComponent, PrimaryButtonComponent, NoResultComponent, VehicleCardComponent } from 'src/app/shared';
 import { SearchService } from 'src/app/core/services';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,7 +13,7 @@ import { IVehicle } from '../../interfaces';
   selector: 'app-maintenance',
   standalone: true,
   imports: [
-    MaintenanceCardComponent, LoadingComponent,
+    VehicleCardComponent, LoadingComponent,
     CommonModule, FormsModule, PrimaryButtonComponent,
     NoResultComponent
   ],
