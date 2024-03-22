@@ -54,6 +54,7 @@ export class LogComponent implements OnInit {
 
   public openCreateLogModal(): void {
     this.dialog.open(CreateLogComponent, {
+      maxWidth: '100%',
       panelClass: 'dialog-style',
       data: this.vehicle
     }).afterClosed().subscribe((result) => {

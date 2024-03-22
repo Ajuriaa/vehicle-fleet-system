@@ -4,7 +4,7 @@
   @include flex-center-column;
   gap: 2rem;
   padding: 4rem;
-  width: 70rem;
+  min-width: 70rem;
   border-radius: 2rem;
   color: $dark-blue;
 
@@ -24,6 +24,10 @@
     gap: 2rem;
   }
 
+  .form-btn {
+    font-size: 4rem;
+  }
+
   .btn {
     width: 100%;
   }
@@ -36,4 +40,42 @@
   .label, .input {
     font-size: 2rem;
   }
+}
+
+.create-field {
+  height: 7rem;
+
+  .label, .input {
+    font-size: 2rem;
+  }
+}
+
+
+.table {
+  width: 80%;
+  margin-bottom: 5rem;
+
+  .table-cell {
+    text-align: center;
+    font-size: 2rem;
+    color: $dark-blue;
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: 2rem;
+  }
+
+  .gas {
+    color: $warning;
+  }
+
+  .uil {
+    cursor: pointer;
+    font-size: 3rem;
+  }
+}
+
+tr:nth-child(even) {
+  background-color: $light-gray;
 }

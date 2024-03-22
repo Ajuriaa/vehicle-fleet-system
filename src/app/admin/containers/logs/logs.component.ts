@@ -40,6 +40,7 @@ export class LogsComponent implements OnInit {
 
   public openCreateLogModal(): void {
     this.dialog.open(CreateLogComponent, {
+      maxWidth: '100%',
       panelClass: 'dialog-style'
     }).afterClosed().subscribe((result) => {
       if(result) {
