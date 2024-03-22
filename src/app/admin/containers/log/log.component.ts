@@ -10,12 +10,12 @@ import { LoadingComponent, NoResultComponent, PrimaryButtonComponent } from 'src
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
-import { CreateLogComponent, LogPassengersComponent } from '../../components';
+import { CreateLogComponent, GasInfoComponent, LogPassengersComponent } from '../../components';
 import moment from 'moment';
 import { Model } from 'src/app/core/enums';
 
 const TABLE_COLUMNS = [
-  'date', 'driver', 'destination', 'kmsOut', 'kmsIn', 'timeOut', 'timeIn', 'observation', 'passengers'
+  'date', 'driver', 'destination', 'kmsOut', 'kmsIn', 'timeOut', 'timeIn', 'observation', 'passengers', 'gas'
 ];
 @Component({
   selector: 'app-log',
@@ -70,12 +70,23 @@ export class LogComponent implements OnInit {
     })
   }
 
+  public openGasInfo(log: ILog): void {
+    this.dialog.open(GasInfoComponent, {
+      panelClass: 'dialog-style',
+      data: log
+    })
+  }
+
   public formatDate(date: string): string {
     return moment.utc(date).format('DD/MM/YYYY')
   }
 
   public formatTime(time: string): string {
     return moment.utc(time).format('hh:mm A')
+  }
+
+  public hasGasRefill(log: ILog): boolean {
+    return log.Llenados_Combustible.length > 0;
   }
 
   private getVehicle(): void {

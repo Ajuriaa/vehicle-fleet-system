@@ -10,7 +10,7 @@ export interface ILog {
   Hora_Entrada: Date;
   Fecha: Date;
   Observaciones: string;
-  Llenado_Combustible: IGasRefill;
+  Llenados_Combustible: IGasRefill[];
   Conductor: IDriver
 }
 

@@ -39,6 +39,7 @@ export class CreateLogComponent implements OnInit {
   public drivers: IDriver[] = [];
   public filteredDrivers!: Observable<IDriver[]>;
   public selectedDriver: IDriver = EMPTY_DRIVER;
+  public readonly = false;
 
   constructor(
     public vehicleInfoHelper: vehicleInfoHelper,
@@ -122,5 +123,6 @@ export class CreateLogComponent implements OnInit {
     this.logForm.patchValue({
       vehicle: this.vehicleInfoHelper.getModel(this.vehicle)
     });
+    this.readonly = true;
   }
 }

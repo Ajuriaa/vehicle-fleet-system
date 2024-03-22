@@ -90,7 +90,7 @@ export const EMPTY_LOG: ILog = {
   Hora_Entrada: new Date(),
   Fecha: new Date(),
   Observaciones: '',
-  Llenado_Combustible: EMPTY_GAS_REFILL,
+  Llenados_Combustible: [],
   Conductor: EMPTY_DRIVER
 };
 
