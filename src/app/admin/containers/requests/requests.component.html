@@ -34,7 +34,7 @@
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Empleado</th>
         <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="openRequest(element.ID_Solicitud)">
-          {{ element.Nombre_Empleado }}
+          {{ nameHelper.getShortName(element.Nombre_Empleado)  }}
         </td>
       </ng-container>
       <ng-container matColumnDef="date">
@@ -63,14 +63,14 @@
       </ng-container>
       <ng-container matColumnDef="vehicle">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Vehículo</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="openVehicle(element.Vehiculos)">
-          {{ getVehicle(element.Vehiculos) }}
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="openVehicle(element.Vehiculo)">
+          {{ getVehicle(element.Vehiculo) }}
         </td>
       </ng-container>
       <ng-container matColumnDef="driver">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Conductor</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="openDriver(element.Conductores)">
-          {{ getDriver(element.Conductores) }}
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="openDriver(element.Conductor)">
+          {{ getDriver(element.Conductor) }}
         </td>
       </ng-container>
       <ng-container matColumnDef="actions">

@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { PDFHelper } from 'src/app/core/helpers';
 import { IDriver, IRequest, IVehicle } from '../../interfaces';
 import { RequestQueries } from '../../services';
-import { vehicleInfoHelper } from '../../helpers';
+import { NameHelper, vehicleInfoHelper } from '../../helpers';
 import { Model } from 'src/app/core/enums';
 
 const TABLE_COLUMNS = [
@@ -22,7 +22,7 @@ const TABLE_COLUMNS = [
   selector: 'app-requests',
   standalone: true,
   imports: [CommonModule, MatTableModule, FormsModule, PrimaryButtonComponent, LoadingComponent],
-  providers: [RequestQueries, PDFHelper, vehicleInfoHelper],
+  providers: [RequestQueries, PDFHelper, vehicleInfoHelper, NameHelper],
   templateUrl: './requests.component.html',
   styleUrl: './requests.component.scss'
 })
@@ -36,12 +36,13 @@ export class RequestsComponent implements OnInit {
   public filteredRequests: IRequest[] = [];
 
   constructor(
+    public nameHelper: NameHelper,
     private requestQuery: RequestQueries,
     private searchEngine: SearchService,
     private vehicleInfoHelper: vehicleInfoHelper,
     private router: Router,
     private dialog: MatDialog,
-    private pdfHelper: PDFHelper,
+    private pdfHelper: PDFHelper
   ) {}
 
   ngOnInit(): void {

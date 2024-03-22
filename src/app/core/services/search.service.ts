@@ -36,6 +36,7 @@ export class SearchService {
       return data.filter((request: IRequest)  =>
         request.Ciudad.Nombre.toLowerCase().includes(term.toLowerCase()) ||
         request.Nombre_Empleado.toLowerCase().includes(term.toLowerCase()) ||
+        request.ID_Empleado.toString().includes(term.toLowerCase()) ||
         request.Conductor?.Nombre.toLowerCase().includes(term.toLowerCase()) ||
         request.Vehiculo?.Placa.toLowerCase().includes(term.toLowerCase()) ||
         this.getVehicleModel(request.Vehiculo).toLowerCase().includes(term.toLowerCase()) ||
