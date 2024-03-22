@@ -8,6 +8,7 @@ import { VehicleQueries } from '../../services';
 import moment from 'moment';
 import { CreateLogComponent } from '../../components';
 import { MatDialog } from '@angular/material/dialog';
+import { Model } from 'src/app/core/enums';
 
 @Component({
   selector: 'app-logs',
@@ -68,7 +69,7 @@ export class LogsComponent implements OnInit {
   }
 
   public onSearch(term: string): void {
-    this.filteredVehicles = this.searchEngine.filterData(this.vehicles, term, 'vehicles');
+    this.filteredVehicles = this.searchEngine.filterData(this.vehicles, term, Model.vehicle);
   }
 
   private getAllVehicles(): void {

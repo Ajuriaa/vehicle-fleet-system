@@ -1,5 +1,9 @@
+import { IDriver } from ".";
+
 export interface ILog {
   ID_Bitacora: number;
+  Destino: string;
+  Pasajeros: string;
   Kilometraje_Entrada: number;
   Kilometraje_Salida: number;
   Hora_Salida: Date;
@@ -7,6 +11,7 @@ export interface ILog {
   Fecha: Date;
   Observaciones: string;
   Llenado_Combustible: IGasRefill;
+  Conductor: IDriver
 }
 
 export interface IGasRefill {
@@ -22,4 +27,8 @@ export interface IGasRefill {
 export interface IGasUnit {
   ID_Unidad_Combustible: number;
   Unidad: string;
+}
+
+export interface ILogResponse {
+  data: ILog;
 }

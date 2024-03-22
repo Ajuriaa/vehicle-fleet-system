@@ -11,6 +11,7 @@ import { CreateUpdateVehicleComponent, DeleteVehicleComponent } from '../../comp
 import { VehicleQueries } from '../../services';
 import { IVehicle } from '../../interfaces';
 import { vehicleInfoHelper } from '../../helpers';
+import { Model } from 'src/app/core/enums';
 
 const TABLE_COLUMNS = [ 'plate', 'model', 'type','status', 'edit'];
 @Component({
@@ -49,7 +50,7 @@ export class VehiclesComponent implements OnInit {
   }
 
   public onSearch(term: string): void {
-    this.filteredVehicles = this.searchEngine.filterData(this.vehicles, term, 'vehicles');
+    this.filteredVehicles = this.searchEngine.filterData(this.vehicles, term, Model.vehicle);
   }
 
   public openDeleteVehicleModal(vehicle: IVehicle): void {

@@ -12,6 +12,7 @@ import { PDFHelper } from 'src/app/core/helpers';
 import { IDriver, IRequest, IVehicle } from '../../interfaces';
 import { RequestQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
+import { Model } from 'src/app/core/enums';
 
 const TABLE_COLUMNS = [
   'status', 'name', 'date', 'timeOut', 'timeIn', 'city', 'vehicle', 'driver', 'actions'
@@ -48,7 +49,7 @@ export class RequestsComponent implements OnInit {
   }
 
   public onSearch(term: string): void {
-    this.filteredRequests = this.searchEngine.filterData(this.requests, term, 'requests');
+    this.filteredRequests = this.searchEngine.filterData(this.requests, term, Model.request);
   }
 
   public generatePdf(): void {

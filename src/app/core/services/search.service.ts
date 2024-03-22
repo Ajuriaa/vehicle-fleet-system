@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import moment from 'moment';
-import { IDriver, IRequest, IVehicle } from 'src/app/admin/interfaces';
+import { IDriver, ILog, IRequest, IVehicle } from 'src/app/admin/interfaces';
+import { Model } from '../enums';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class SearchService {
   constructor() {}
 
   public filterData(data: any[], term: string, dataModel: string): any[] {
-    if(dataModel === 'vehicles') {
+    if(dataModel === Model.vehicle) {
       return data.filter((vehicle: IVehicle)  =>
         vehicle.Placa.toLowerCase().includes(term.toLowerCase()) ||
         this.getVehicleModel(vehicle).toLowerCase().includes(term.toLowerCase()) ||
@@ -17,12 +18,21 @@ export class SearchService {
         vehicle.Estado_Vehiculo.Estado_Vehiculo.toLowerCase().includes(term.toLowerCase())
       );
     }
-    if(dataModel === 'drivers') {
+    if(dataModel === Model.driver) {
       return data.filter((driver: IDriver)  =>
         driver.Nombre.toLowerCase().includes(term.toLowerCase())
       );
     }
-    if(dataModel === 'requests') {
+    if(dataModel === Model.log) {
+      return data.filter((log: ILog)  =>
+        log.Destino.toLowerCase().includes(term.toLowerCase()) ||
+        moment.utc(log.Fecha).format('DD/MM/YYYY').includes(term.toLowerCase()) ||
+        moment.utc(log.Hora_Entrada).format('hh:mm A').includes(term.toLowerCase()) ||
+        moment.utc(log.Hora_Salida).format('hh:mm A').includes(term.toLowerCase()) ||
+        log.Conductor.Nombre.toLowerCase().includes(term.toLowerCase())
+      );
+    }
+    if(dataModel === Model.request) {
       return data.filter((request: IRequest)  =>
         request.Ciudad.Nombre.toLowerCase().includes(term.toLowerCase()) ||
         request.Nombre_Empleado.toLowerCase().includes(term.toLowerCase()) ||

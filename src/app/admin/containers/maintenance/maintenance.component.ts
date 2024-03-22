@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateMaintenanceComponent } from '../../components';
 import { VehicleQueries } from '../../services';
 import { IVehicle } from '../../interfaces';
+import { Model } from 'src/app/core/enums';
 
 @Component({
   selector: 'app-maintenance',
@@ -37,7 +38,7 @@ export class MaintenanceComponent implements OnInit {
   }
 
   public onSearch(term: string): void {
-    this.filteredVehicles = this.searchEngine.filterData(this.vehicles, term, 'vehicles');
+    this.filteredVehicles = this.searchEngine.filterData(this.vehicles, term, Model.vehicle);
   }
 
   private getAllVehicles(): void {

@@ -15,6 +15,7 @@ import { vehicleInfoHelper } from '../../helpers';
 import { DriverQueries, VehicleQueries } from '../../services';
 import { map, Observable, startWith } from 'rxjs';
 import { SearchService } from 'src/app/core/services';
+import { Model } from 'src/app/core/enums';
 
 @Component({
   selector: 'app-create-log',
@@ -104,11 +105,11 @@ export class CreateLogComponent implements OnInit {
   private startAutocomplete(): void {
     this.filteredVehicles = this.logForm.controls.vehicle.valueChanges.pipe(
       startWith(''),
-      map(value => this.searchEngine.filterData(this.vehicles, value, 'vehicles')),
+      map(value => this.searchEngine.filterData(this.vehicles, value, Model.vehicle)),
     );
     this.filteredDrivers = this.logForm.controls.driver.valueChanges.pipe(
       startWith(''),
-      map(value => this.searchEngine.filterData(this.drivers, value, 'drivers')),
+      map(value => this.searchEngine.filterData(this.drivers, value, Model.driver)),
     );
   }
 

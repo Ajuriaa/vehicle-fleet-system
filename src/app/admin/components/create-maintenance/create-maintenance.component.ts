@@ -15,6 +15,7 @@ import { EMPTY_VEHICLE } from 'src/app/core/helpers';
 import { vehicleInfoHelper } from '../../helpers';
 import { MaintenanceMutations, VehicleQueries } from '../../services';
 import { IVehicle } from '../../interfaces';
+import { Model } from 'src/app/core/enums';
 
 @Component({
   selector: 'app-create-maintenance',
@@ -63,7 +64,7 @@ export class CreateMaintenanceComponent implements OnInit {
     });
     this.filteredVehicles = this.maintenanceForm.controls.vehicle.valueChanges.pipe(
       startWith(''),
-      map(value => this.searchEngine.filterData(this.vehicles, value, 'vehicles')),
+      map(value => this.searchEngine.filterData(this.vehicles, value, Model.vehicle)),
     );
   }
 

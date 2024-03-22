@@ -11,6 +11,7 @@ import { IDriver } from '../../interfaces';
 import { DriverQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
 import { CreateUpdateDriverComponent, DeleteDriverComponent } from '../../components';
+import { Model } from 'src/app/core/enums';
 
 const TABLE_COLUMNS = ['id', 'name', 'endedRequestCount', 'available', 'edit'];
 
@@ -46,7 +47,7 @@ export class DriversComponent implements OnInit {
   }
 
   public onSearch(term: string): void {
-    this.filteredDrivers = this.searchEngine.filterData(this.drivers, term, 'drivers');
+    this.filteredDrivers = this.searchEngine.filterData(this.drivers, term, Model.driver);
   }
 
   public driverInfo(driverId: number): void {

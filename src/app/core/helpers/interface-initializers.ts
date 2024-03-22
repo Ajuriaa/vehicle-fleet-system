@@ -82,6 +82,8 @@ export const EMPTY_GAS_REFILL: IGasRefill = {
 
 export const EMPTY_LOG: ILog = {
   ID_Bitacora: 0,
+  Destino: '',
+  Pasajeros: '',
   Kilometraje_Entrada: 0,
   Kilometraje_Salida: 0,
   Hora_Salida: new Date(),
@@ -89,6 +91,7 @@ export const EMPTY_LOG: ILog = {
   Fecha: new Date(),
   Observaciones: '',
   Llenado_Combustible: EMPTY_GAS_REFILL,
+  Conductor: EMPTY_DRIVER
 };
 
 export const EMPTY_VEHICLE: IVehicle = {
