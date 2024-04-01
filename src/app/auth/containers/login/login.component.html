@@ -1,44 +1,37 @@
 <div class="container">
-  <div class="form-wrapper">
-    <section class="login-info">
-      <div>
-        <h1 class="form-header">Log in.</h1>
-        <p class="header-label">Ingresa tus credenciales</p>
-      </div>
-      <form [formGroup]="loginForm" class="login-form">
-        <p class="form-label">Ingresa tu nombre de usuario:</p>
-        <div class="form-field">
-          <i class="uil uil-user icon"></i>
-          <input
-            class="input"
-            formControlName="username"
-            maxlength="50"
-            minlength="1"
-            required
-          >
-        </div>
-        <p class="form-label">Ingresa tu contraseña:</p>
-        <div class="form-field">
-          <i class="uil uil-lock icon"></i>
-          <input
-            class="input"
-            formControlName="password"
-            maxlength="50"
-            minlength="1"
-            [type]="passwordType"
-            required
-          >
-          <i (click)="togglePasswordVisibility()" *ngIf="showPassword" class="uil uil-eye-slash icon password"></i>
-          <i (click)="togglePasswordVisibility()" *ngIf="!showPassword" class="uil uil-eye icon password"></i>
-        </div>
-        <mat-error class="error" *ngIf="error">Por favor, llena todos los campos.</mat-error>
-      </form>
-      <app-primary-button (btnClick)="login()" class="button">LOG IN</app-primary-button>
-    </section>
-    <section class="login-panel">
-      <img alt="login banner" class="image" src="assets/login-banner.png"/>
-      <p class="label-name">INSTITUTO HONDUREÑO DE TRANSPORTE TERRESTRE</p>
-      <p class="system-label">Sistema de gestión de vehículos</p>
-    </section>
+<img src="assets/login.png" />
+
+<div class="panel">
+  <div class="labels">
+    <p class="main">Sistema de Gestión de Vehículos</p>
+    <p>INICIO DE SESIÓN</p>
   </div>
+  <form [formGroup]="loginForm" class="form">
+    <p class="label first">Usuario</p>
+    <mat-form-field class="field" appearance="outline">
+      <i class="uil uil-user icon"></i>
+      <input
+        matInput
+        required
+        class="input"
+        formControlName="username"
+        placeholder="Ingrese el nombre de usuario"
+      >
+    </mat-form-field>
+    <p class="label">Contraseña</p>
+    <mat-form-field class="field" appearance="outline">
+      <i class="uil uil-lock icon"></i>
+      <input
+        matInput
+        required
+        class="input"
+        formControlName="password"
+        placeholder="Ingrese la contraseña"
+      >
+    </mat-form-field>
+    <mat-error *ngIf="error" class="error">Credenciales incorrectas</mat-error>
+    <app-primary-button styleClass="btn-white" (btnClick)="login()" class="button">INGRESAR</app-primary-button>
+  </form>
+  <img class="image" src="assets/logo.png" />
+</div>
 </div>
