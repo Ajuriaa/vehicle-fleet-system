@@ -1,8 +1,4 @@
-<div *ngIf="!toggle" class="btn" [ngClass]="{'selected' : selected}">
-  <i [className]="'uil uil-'+ icon"></i>
-  <p class="label"> {{ label }} </p>
-</div>
-
-<div *ngIf="toggle" class="mini-btn" [ngClass]="{'selected' : selected}">
-  <i [className]="'uil uil-'+ icon"></i>
+<div class="btn" [ngClass]="{'selected' : selected}">
+  <img class="image" [src]="'assets/'+ icon + '.svg'"/>
+  <p class="label" *ngIf="!selected"> {{ label }} </p>
 </div>

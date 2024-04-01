@@ -4,3 +4,4 @@ export * from './loading/loading.component';
 export * from './fuel-card/fuel-card.component';
 export * from './no-result/no-result.component';
 export * from './vehicle-card/vehicle-card.component';
+export * from './header/header.component';

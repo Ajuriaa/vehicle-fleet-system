@@ -1,0 +1,31 @@
+@import 'global';
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10rem;
+  width: 100%;
+  background-color: $blue;
+
+  .image {
+    height: 7rem;
+    margin-left: 4rem;
+  }
+
+  .profile {
+    height: 7rem;
+    margin-right: 4rem;
+  }
+}
+
+.profile-info {
+  @include flex-center;
+  gap: 2rem;
+
+  .labels {
+    color: $white;
+    text-align: right;
+    font-size: 2rem;
+  }
+}

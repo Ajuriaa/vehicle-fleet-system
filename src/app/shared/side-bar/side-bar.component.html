@@ -1,68 +1,46 @@
-<div class="container" [ngClass]="{'mini-bar': toggleBar}">
-  <i *ngIf="!toggleBar" class="uil uil-arrow-left toggle" (click)="toggleSideNav()"></i>
-  <i *ngIf="toggleBar" class="uil uil-arrow-right toggle" (click)="toggleSideNav()"></i>
-  <div class="bar-header" [ngClass]="{'mini-logo': toggleBar}">
-    <img
-      class="image" alt="logo"
-      [src]="toggleBar ? 'assets/mini-logo.png' : 'assets/logo.png'"
-    />
-  </div>
+<div class="container">
   <div class="bar-menu">
     <app-side-nav-button
-      [icon]="'create-dashboard'"
-      [label]="'Dashboard'"
+      icon='dashboard'
+      label='Dashboard'
       [selected]="selectedOption === 'dashboard'"
-      [toggle]="toggleBar"
       (click)="selectOption('dashboard')"
     >
     </app-side-nav-button>
     <app-side-nav-button
-      [icon]="'car-sideview'"
-      [label]="'Vehículos'"
+      icon='vehicles'
+      label='Vehículos'
       [selected]="selectedOption === 'vehicles'"
-      [toggle]="toggleBar"
       (click)="selectOption('vehicles')"
     >
     </app-side-nav-button>
     <app-side-nav-button
-      [icon]="'streering'"
-      [label]="'Conductores'"
+      icon='drivers'
+      label='Conductores'
       [selected]="selectedOption === 'drivers'"
-      [toggle]="toggleBar"
       (click)="selectOption('drivers')"
     >
     </app-side-nav-button>
     <app-side-nav-button
-      [icon]="'wrench'"
-      [label]="'Mantenimiento'"
+      icon='maintenance'
+      label='Mantenimiento'
       [selected]="selectedOption === 'maintenance'"
-      [toggle]="toggleBar"
       (click)="selectOption('maintenance')"
     >
     </app-side-nav-button>
     <app-side-nav-button
-      [icon]="'clipboard'"
-      [label]="'Solicitudes'"
+      icon='requests'
+      label='Solicitudes'
       [selected]="selectedOption === 'requests'"
-      [toggle]="toggleBar"
       (click)="selectOption('requests')"
     >
     </app-side-nav-button>
     <app-side-nav-button
-      [icon]="'diary'"
-      [label]="'Bitácora'"
+      icon='logs'
+      label='Bitácora'
       [selected]="selectedOption === 'logs'"
-      [toggle]="toggleBar"
       (click)="selectOption('logs')"
     >
     </app-side-nav-button>
-  </div>
-  <div class="bar-footer">
-    <img *ngIf="!toggleBar" class="profile" alt="profile" src="assets/profile.png"/>
-    <span *ngIf="!toggleBar">
-      <p class="name"> {{ transformFullName() }} </p>
-      <p class="position"> {{ position }} </p>
-    </span>
-    <i class="uil uil-signout logout" (click)="logout()"></i>
   </div>
 </div>

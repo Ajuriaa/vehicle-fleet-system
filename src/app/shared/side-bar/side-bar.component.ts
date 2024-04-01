@@ -14,9 +14,6 @@ import { SideNavButtonComponent } from '../buttons';
 })
 export class SideBarComponent implements OnInit {
   public selectedOption = 'dashboard';
-  public toggleBar = false;
-  public image = "assets/logo.png";
-  public position = this.sharedData.getPosition();
 
   constructor(private _router: Router, private sharedData: SharedDataService){}
 
@@ -28,22 +25,7 @@ export class SideBarComponent implements OnInit {
     this._router.navigate([`admin/`, option]);
   }
 
-  public toggleSideNav(): void {
-    this.toggleBar = !this.toggleBar;
-  }
-
   public logout(): void {
     this._router.navigate([``]);
-  }
-
-  public transformFullName(): string {
-    const fullName = this.sharedData.getName();
-    const parts = fullName.trim().split(/\s+/);
-
-    if (parts.length < 2) {
-        return fullName;
-    }
-
-    return `${parts[0]} ${parts[parts.length - 2]}`;
   }
 }
