@@ -25,5 +25,6 @@
 }
 
 .selected {
+  transition: background-color 0.7s linear;
   background-color: $opaque-blue;
 }

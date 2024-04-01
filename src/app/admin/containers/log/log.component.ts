@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ILog, IVehicle } from '../../interfaces';
 import { EMPTY_VEHICLE } from 'src/app/core/helpers';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchService } from 'src/app/core/services';
-import { VehicleQueries } from '../../services';
 import { ActivatedRoute } from '@angular/router';
-import { vehicleInfoHelper } from '../../helpers';
 import { LoadingComponent, NoResultComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
-import { CreateLogComponent, GasInfoComponent, LogPassengersComponent } from '../../components';
 import moment from 'moment';
 import { Model } from 'src/app/core/enums';
+import { CreateLogComponent, GasInfoComponent, LogPassengersComponent } from '../../components';
+import { vehicleInfoHelper } from '../../helpers';
+import { VehicleQueries } from '../../services';
+import { ILog, IVehicle } from '../../interfaces';
 
 const TABLE_COLUMNS = [
   'date', 'driver', 'destination', 'kmsOut', 'kmsIn', 'timeOut', 'timeIn', 'observation', 'passengers', 'gas'
@@ -68,22 +68,22 @@ export class LogComponent implements OnInit {
     this.dialog.open(LogPassengersComponent, {
       panelClass: 'dialog-style',
       data: log
-    })
+    });
   }
 
   public openGasInfo(log: ILog): void {
     this.dialog.open(GasInfoComponent, {
       panelClass: 'dialog-style',
       data: log
-    })
+    });
   }
 
   public formatDate(date: string): string {
-    return moment.utc(date).format('DD/MM/YYYY')
+    return moment.utc(date).format('DD/MM/YYYY');
   }
 
   public formatTime(time: string): string {
-    return moment.utc(time).format('hh:mm A')
+    return moment.utc(time).format('hh:mm A');
   }
 
   public hasGasRefill(log: ILog): boolean {

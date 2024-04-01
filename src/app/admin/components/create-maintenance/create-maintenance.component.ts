@@ -12,10 +12,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { EMPTY_VEHICLE } from 'src/app/core/helpers';
+import { Model } from 'src/app/core/enums';
 import { vehicleInfoHelper } from '../../helpers';
 import { MaintenanceMutations, VehicleQueries } from '../../services';
 import { IVehicle } from '../../interfaces';
-import { Model } from 'src/app/core/enums';
 
 @Component({
   selector: 'app-create-maintenance',

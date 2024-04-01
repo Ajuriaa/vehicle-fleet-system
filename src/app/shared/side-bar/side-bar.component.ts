@@ -14,6 +14,7 @@ import { SideNavButtonComponent } from '../buttons';
 })
 export class SideBarComponent implements OnInit {
   public selectedOption = 'dashboard';
+  public iconTopPosition = 4.5;
 
   constructor(private _router: Router, private sharedData: SharedDataService){}
 
@@ -23,9 +24,33 @@ export class SideBarComponent implements OnInit {
   public selectOption(option: string): void {
     this.selectedOption = option;
     this._router.navigate([`admin/`, option]);
+    this.animateIcon();
   }
 
   public logout(): void {
     this._router.navigate([``]);
+  }
+
+  animateIcon(): void {
+    switch (this.selectedOption) {
+      case 'dashboard':
+        this.iconTopPosition = 4.5;
+        break;
+      case 'vehicles':
+        this.iconTopPosition = 21;
+        break;
+      case 'drivers':
+        this.iconTopPosition = 37.5;
+        break;
+      case 'maintenance':
+        this.iconTopPosition = 54;
+        break;
+      case 'requests':
+        this.iconTopPosition = 70.5;
+        break;
+      case 'logs':
+        this.iconTopPosition = 87;
+        break;
+    }
   }
 }

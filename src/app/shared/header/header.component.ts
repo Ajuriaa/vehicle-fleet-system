@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { SharedDataService } from 'src/app/core/services';
 
 @Component({
@@ -9,7 +9,7 @@ import { SharedDataService } from 'src/app/core/services';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  public position = this.sharedDataService.getPosition();;
+  public position = this.sharedDataService.getPosition();
 
   constructor(
     private sharedDataService: SharedDataService

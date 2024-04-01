@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PrimaryButtonComponent } from 'src/app/shared';
-import { ILog } from '../../interfaces';
 import { EMPTY_LOG } from 'src/app/core/helpers';
+import { ILog } from '../../interfaces';
 
 @Component({
   selector: 'app-log-passengers',

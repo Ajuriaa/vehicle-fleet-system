@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IDriver, ILog, IVehicle } from '../../interfaces';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EMPTY_DRIVER, EMPTY_VEHICLE } from 'src/app/core/helpers';
 import { PrimaryButtonComponent } from 'src/app/shared';
@@ -11,13 +10,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { vehicleInfoHelper } from '../../helpers';
-import { DriverQueries, VehicleQueries } from '../../services';
 import { map, Observable, startWith } from 'rxjs';
 import { SearchService } from 'src/app/core/services';
 import { Model } from 'src/app/core/enums';
 import { MatTableModule } from '@angular/material/table';
 import moment from 'moment';
+import { DriverQueries, VehicleQueries } from '../../services';
+import { vehicleInfoHelper } from '../../helpers';
+import { IDriver, ILog, IVehicle } from '../../interfaces';
 
 const TABLE_COLUMNS = [
   'date'  ,'destination', 'timeIn', 'timeOut', 'kmsIn', 'kmsOut', 'gas', 'passengers', 'observation','delete'
@@ -51,7 +51,7 @@ export class CreateLogComponent implements OnInit {
   public showTable = true;
 
   // TEST ONLY
-  public vehicle: IVehicle = EMPTY_VEHICLE
+  public vehicle: IVehicle = EMPTY_VEHICLE;
   constructor(
     public vehicleInfoHelper: vehicleInfoHelper,
     private _formBuilder: FormBuilder,
@@ -89,11 +89,11 @@ export class CreateLogComponent implements OnInit {
   }
 
   public formatDate(date: string): string {
-    return moment.utc(date).format('DD/MM/YYYY')
+    return moment.utc(date).format('DD/MM/YYYY');
   }
 
   public formatTime(time: string): string {
-    return moment.utc(time).format('hh:mm A')
+    return moment.utc(time).format('hh:mm A');
   }
 
   public hasGasRefill(): boolean {

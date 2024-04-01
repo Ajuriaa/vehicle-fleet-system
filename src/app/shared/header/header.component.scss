@@ -2,25 +2,30 @@
 
 .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  position: relative;
   height: 10rem;
   width: 100%;
   background-color: $blue;
+  color: $white;
+  font-size: 4rem;
 
   .image {
+    position: absolute;
+    left: 4rem;
     height: 7rem;
-    margin-left: 4rem;
   }
 
   .profile {
     height: 7rem;
-    margin-right: 4rem;
   }
 }
 
 .profile-info {
   @include flex-center;
+  position: absolute;
+  right: 4rem;
   gap: 2rem;
 
   .labels {

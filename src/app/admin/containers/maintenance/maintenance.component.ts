@@ -4,10 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { LoadingComponent, PrimaryButtonComponent, NoResultComponent, VehicleCardComponent } from 'src/app/shared';
 import { SearchService } from 'src/app/core/services';
 import { MatDialog } from '@angular/material/dialog';
+import { Model } from 'src/app/core/enums';
 import { CreateMaintenanceComponent } from '../../components';
 import { VehicleQueries } from '../../services';
 import { IVehicle } from '../../interfaces';
-import { Model } from 'src/app/core/enums';
 
 @Component({
   selector: 'app-maintenance',

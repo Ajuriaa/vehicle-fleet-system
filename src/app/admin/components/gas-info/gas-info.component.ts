@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { PrimaryButtonComponent } from 'src/app/shared/buttons';
-import { IGasRefill, ILog } from '../../interfaces';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EMPTY_GAS_REFILL, EMPTY_LOG } from 'src/app/core/helpers';
+import { IGasRefill, ILog } from '../../interfaces';
 
 @Component({
   selector: 'app-gas-info',

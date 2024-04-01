@@ -7,11 +7,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SearchService } from 'src/app/core/services';
 import { EMPTY_DRIVER, PDFHelper } from 'src/app/core/helpers';
+import { Model } from 'src/app/core/enums';
 import { IDriver } from '../../interfaces';
 import { DriverQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
 import { CreateUpdateDriverComponent, DeleteDriverComponent } from '../../components';
-import { Model } from 'src/app/core/enums';
 
 const TABLE_COLUMNS = ['id', 'name', 'endedRequestCount', 'available', 'edit'];
 

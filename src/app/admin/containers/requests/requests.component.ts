@@ -9,10 +9,10 @@ import moment from 'moment';
 import 'moment-timezone';
 import { Router } from '@angular/router';
 import { PDFHelper } from 'src/app/core/helpers';
+import { Model } from 'src/app/core/enums';
 import { IDriver, IRequest, IVehicle } from '../../interfaces';
 import { RequestQueries } from '../../services';
 import { NameHelper, vehicleInfoHelper } from '../../helpers';
-import { Model } from 'src/app/core/enums';
 
 const TABLE_COLUMNS = [
   'status', 'name', 'date', 'timeOut', 'timeIn', 'city', 'vehicle', 'driver', 'actions'

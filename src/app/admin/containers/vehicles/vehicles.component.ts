@@ -7,11 +7,11 @@ import { SearchService } from 'src/app/core/services';
 import { LoadingComponent, NoResultComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { EMPTY_VEHICLE, PDFHelper } from 'src/app/core/helpers';
 import { Router } from '@angular/router';
+import { Model } from 'src/app/core/enums';
 import { CreateUpdateVehicleComponent, DeleteVehicleComponent } from '../../components';
 import { VehicleQueries } from '../../services';
 import { IVehicle } from '../../interfaces';
 import { vehicleInfoHelper } from '../../helpers';
-import { Model } from 'src/app/core/enums';
 
 const TABLE_COLUMNS = [ 'plate', 'model', 'type','status', 'edit'];
 @Component({

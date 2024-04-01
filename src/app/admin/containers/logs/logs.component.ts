@@ -3,12 +3,12 @@ import { SearchService } from 'src/app/core/services';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PrimaryButtonComponent, LoadingComponent, NoResultComponent, VehicleCardComponent } from 'src/app/shared';
-import { IVehicle } from '../../interfaces';
-import { VehicleQueries } from '../../services';
 import moment from 'moment';
-import { CreateLogComponent } from '../../components';
 import { MatDialog } from '@angular/material/dialog';
 import { Model } from 'src/app/core/enums';
+import { IVehicle } from '../../interfaces';
+import { VehicleQueries } from '../../services';
+import { CreateLogComponent } from '../../components';
 
 @Component({
   selector: 'app-logs',
