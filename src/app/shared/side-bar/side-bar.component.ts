@@ -20,7 +20,9 @@ export class SideBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectedOption = this._router.url.split('/')[2];
+    this.animateIcon();
   }
+
   public selectOption(option: string): void {
     this.selectedOption = option;
     this._router.navigate([`admin/`, option]);
