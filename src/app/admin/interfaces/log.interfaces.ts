@@ -15,6 +15,12 @@ export interface ILog {
   Conductor: IDriver
 }
 
+export interface IUser {
+  ID_Usuario: number;
+  Nombres: string;
+  Apellidos: string;
+}
+
 export interface IGasRefill {
   ID_Llenado_Combustible: number;
   Cantidad: number;
