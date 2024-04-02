@@ -3,7 +3,7 @@ import {
   AdminRouterComponent, DashboardComponent, DriversComponent,
   LogComponent, MaintenanceComponent, RequestsComponent,
   VehiclesComponent, VehicleComponent, RequestComponent,
-  LogsComponent
+  LogsComponent, CreateLogComponent
 } from './containers';
 import { DriverComponent } from './containers/driver/driver.component';
 
@@ -60,6 +60,11 @@ export const adminRoutes: Routes = [{
       path: 'request/:id',
       title: 'Solicitud',
       component: RequestComponent
+    },
+    {
+      path: 'create-log/:id',
+      title: 'Crear Bitácora',
+      component: CreateLogComponent
     }
   ]
 }];

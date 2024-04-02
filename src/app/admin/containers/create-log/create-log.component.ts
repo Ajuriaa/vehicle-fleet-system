@@ -1,11 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EMPTY_DRIVER, EMPTY_VEHICLE } from 'src/app/core/helpers';
 import { PrimaryButtonComponent } from 'src/app/shared';
-import { CommonModule, AsyncPipe } from '@angular/common';
+import { CommonModule, AsyncPipe, Location } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -13,11 +11,14 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { map, Observable, startWith } from 'rxjs';
 import { SearchService } from 'src/app/core/services';
 import { Model } from 'src/app/core/enums';
-import { MatTableModule } from '@angular/material/table';
+import { MatTable, MatTableModule } from '@angular/material/table';
 import moment from 'moment';
 import { DriverQueries, VehicleQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
 import { IDriver, ILog, IVehicle } from '../../interfaces';
+import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AddLogComponent } from '../../components';
 
 const TABLE_COLUMNS = [
   'date'  ,'destination', 'timeIn', 'timeOut', 'kmsIn', 'kmsOut', 'gas', 'passengers', 'observation','delete'
@@ -29,7 +30,7 @@ const TABLE_COLUMNS = [
     PrimaryButtonComponent, MatFormFieldModule, FormsModule,
     ReactiveFormsModule, CommonModule, MatInputModule,
     MatAutocompleteModule, AsyncPipe, MatSelectModule,
-    MatDatepickerModule, MatTableModule
+    MatTableModule
   ],
   providers: [vehicleInfoHelper, provideNativeDateAdapter()],
   templateUrl: './create-log.component.html',
@@ -37,7 +38,6 @@ const TABLE_COLUMNS = [
 })
 export class CreateLogComponent implements OnInit {
   public logForm!: FormGroup;
-  public logDataForm!: FormGroup;
   public vehicles: IVehicle[] = [];
   public filteredVehicles!: Observable<IVehicle[]>;
   public selectedVehicle: IVehicle = EMPTY_VEHICLE;
@@ -47,20 +47,21 @@ export class CreateLogComponent implements OnInit {
   public selectedDriver: IDriver = EMPTY_DRIVER;
   public displayedColumns: string[] = TABLE_COLUMNS;
   public readonly = false;
-  public maxDate: Date = new Date();
   public showTable = true;
-
-  // TEST ONLY
+  public error = false;
+  public currentKm = 0;
   public vehicle: IVehicle = EMPTY_VEHICLE;
+  @ViewChild(MatTable) table!: MatTable<any>;
+
   constructor(
     public vehicleInfoHelper: vehicleInfoHelper,
     private _formBuilder: FormBuilder,
     private vehicleQuery: VehicleQueries,
     private driverQuery: DriverQueries,
-    // private dialogRef: MatDialogRef<CreateLogComponent>,
     private searchEngine: SearchService,
-    //@Inject(MAT_DIALOG_DATA) public vehicle: IVehicle = EMPTY_VEHICLE
-
+    private route: ActivatedRoute,
+    private location: Location,
+    private dialog: MatDialog
   ){}
 
   ngOnInit(): void {
@@ -70,14 +71,6 @@ export class CreateLogComponent implements OnInit {
     });
     this.fetchData();
     this.startAutocomplete();
-    this.fillForm();
-
-    //TEST ONLY
-    this.showLogTable();
-  }
-
-  public onCancel(changesMade = false): void {
-    // this.dialogRef.close(changesMade);
   }
 
   public selectVehicle(vehicle: IVehicle): void {
@@ -93,30 +86,58 @@ export class CreateLogComponent implements OnInit {
   }
 
   public formatTime(time: string): string {
-    return moment.utc(time).format('hh:mm A');
+    return moment.utc(time, 'h:mm A').format('hh:mm A');
   }
 
-  public hasGasRefill(): boolean {
-    return true;
+  public hasGasRefill(log: ILog): boolean {
+    return log.Llenados_Combustible.length > 0 ? true : false;
+  }
+
+  public return(): void {
+    this.location.back();
   }
 
   public showLogTable(): void {
+    if(this.logForm.invalid) {
+      this.error = true;
+      return;
+    }
+
     this.showTable = true;
-    this.logDataForm = this._formBuilder.group({
-      ID_Vehiculo: this.selectedVehicle.ID_Vehiculo,
-      ID_Conductor: this.selectedDriver.ID_Conductor,
-      Kilometraje_Entrada: [0, [Validators.required]],
-      Kilometraje_Salida: [0, [Validators.required]],
-      Hora_Salida: ['', [Validators.required]],
-      Hora_Entrada: ['', [Validators.required]],
-      Fecha: ['', [Validators.required]],
-      Destino: ['', [Validators.required]],
-      Observaciones: ['', [Validators.required]],
-      Pasajeros: ['', [Validators.required]],
+    this.error = false;
+  }
+
+  public openLogModal(): void {
+    this.dialog.open(AddLogComponent, {
+      panelClass: 'dialog-style',
+      maxWidth: '100%',
+      data: this.currentKm
+    }).afterClosed().subscribe((log) => {
+      let formattedLog = log as ILog;
+      formattedLog.Llenados_Combustible = [];
+      formattedLog.Conductor = this.selectedDriver;
+      formattedLog.Vehiculo = this.selectedVehicle;
+      this.logs.push(formattedLog);
+      this.table.renderRows();
     });
   }
 
+  public removeLog(removedLog: ILog): void {
+    this.logs = this.logs.filter(log => log !== removedLog);
+    this.table.renderRows();
+  }
+
   private fetchData(): void {
+    const vehicleId = +this.route.snapshot.params.id;
+    if(vehicleId !== 0) {
+      this.vehicleQuery.getVehicle(vehicleId).subscribe(({ data }) => {
+        if(data){
+          this.vehicle = data;
+          this.currentKm = this.vehicle.Kilometraje;
+          this.fillForm();
+        }
+      });
+    }
     this.driverQuery.getAllDrivers().subscribe(({ data }) => {
       if(data){
         this.drivers = data;
@@ -141,10 +162,6 @@ export class CreateLogComponent implements OnInit {
   }
 
   private fillForm(): void {
-    if(this.vehicle.ID_Vehiculo === 0) {
-      return;
-    }
-
     this.selectedVehicle = this.vehicle;
     this.logForm.patchValue({
       vehicle: this.vehicleInfoHelper.getModel(this.vehicle)

@@ -4,11 +4,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PrimaryButtonComponent, LoadingComponent, NoResultComponent, VehicleCardComponent } from 'src/app/shared';
 import moment from 'moment';
-import { MatDialog } from '@angular/material/dialog';
 import { Model } from 'src/app/core/enums';
 import { IVehicle } from '../../interfaces';
 import { VehicleQueries } from '../../services';
-import { CreateLogComponent } from '../../components';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logs',
@@ -31,22 +30,15 @@ export class LogsComponent implements OnInit {
   constructor(
     private searchEngine: SearchService,
     private vehicleQuery: VehicleQueries,
-    private dialog: MatDialog
+    private router: Router
   ){}
 
   ngOnInit(): void {
     this.getAllVehicles();
   }
 
-  public openCreateLogModal(): void {
-    this.dialog.open(CreateLogComponent, {
-      maxWidth: '100%',
-      panelClass: 'dialog-style'
-    }).afterClosed().subscribe((result) => {
-      if(result) {
-        this.getAllVehicles();
-      }
-    });
+  public createLog(): void {
+    this.router.navigate(['/admin/create-log/0']);
   }
 
   public countData(): void {

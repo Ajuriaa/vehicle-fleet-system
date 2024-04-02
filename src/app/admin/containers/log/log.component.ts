@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { EMPTY_VEHICLE } from 'src/app/core/helpers';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchService } from 'src/app/core/services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingComponent, NoResultComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import moment from 'moment';
 import { Model } from 'src/app/core/enums';
-import { CreateLogComponent, GasInfoComponent, LogPassengersComponent } from '../../components';
+import { GasInfoComponent, LogPassengersComponent } from '../../components';
 import { vehicleInfoHelper } from '../../helpers';
 import { VehicleQueries } from '../../services';
 import { ILog, IVehicle } from '../../interfaces';
@@ -41,6 +41,7 @@ export class LogComponent implements OnInit {
     private searchEngine: SearchService,
     private vehicleQuery: VehicleQueries,
     private dialog: MatDialog,
+    private router: Router,
     private route: ActivatedRoute
   ){}
 
@@ -52,16 +53,8 @@ export class LogComponent implements OnInit {
     this.filteredLogs = this.searchEngine.filterData(this.logs, term, Model.log);
   }
 
-  public openCreateLogModal(): void {
-    this.dialog.open(CreateLogComponent, {
-      maxWidth: '100%',
-      panelClass: 'dialog-style',
-      data: this.vehicle
-    }).afterClosed().subscribe((result) => {
-      if(result) {
-        this.getVehicle();
-      }
-    });
+  public createLog(): void {
+    this.router.navigate([`/admin/create-log/`, this.vehicle.ID_Vehiculo]);
   }
 
   public openPassengerList(log: ILog): void {

@@ -9,3 +9,4 @@ export * from './requests/requests.component';
 export * from  './vehicle/vehicle.component';
 export * from './request/request.component';
 export * from './logs/logs.component';
+export * from  './create-log/create-log.component';

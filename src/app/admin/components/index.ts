@@ -4,6 +4,6 @@ export * from './delete-driver/delete-driver.component';
 export * from './create-update-driver/create-update-driver.component';
 export * from './update-request/update-request.component';
 export * from './create-maintenance/create-maintenance.component';
-export * from './create-log/create-log.component';
 export * from './log-passengers/log-passengers.component';
 export * from './gas-info/gas-info.component';
+export * from './add-log/add-log.component';

@@ -58,6 +58,14 @@ a {
   background-color: $dark-blue !important;
 }
 
+.timepicker-overlay {
+  z-index: 10000000 !important;
+}
+
+.timepicker-backdrop-overlay {
+  z-index: 10000000 !important;
+}
+
 .toast-title {
   font-size: 2rem;
 }
