@@ -21,7 +21,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddLogComponent } from '../../components';
 
 const TABLE_COLUMNS = [
-  'date'  ,'destination', 'timeIn', 'timeOut', 'kmsIn', 'kmsOut', 'gas', 'passengers', 'observation','delete'
+  'date'  ,'destination', 'timeOut', 'timeIn', 'kmsOut', 'kmsIn', 'gas', 'passengers', 'observation','delete'
 ];
 @Component({
   selector: 'app-create-log',
@@ -47,9 +47,10 @@ export class CreateLogComponent implements OnInit {
   public selectedDriver: IDriver = EMPTY_DRIVER;
   public displayedColumns: string[] = TABLE_COLUMNS;
   public readonly = false;
-  public showTable = true;
+  public showTable = false;
   public error = false;
   public currentKm = 0;
+  public currentTime = new Date().toLocaleTimeString();
   public vehicle: IVehicle = EMPTY_VEHICLE;
   @ViewChild(MatTable) table!: MatTable<any>;
 
@@ -75,6 +76,7 @@ export class CreateLogComponent implements OnInit {
 
   public selectVehicle(vehicle: IVehicle): void {
     this.selectedVehicle = vehicle;
+    this.currentKm = vehicle.Kilometraje;
   }
 
   public selectDriver(driver: IDriver): void {
@@ -86,11 +88,15 @@ export class CreateLogComponent implements OnInit {
   }
 
   public formatTime(time: string): string {
-    return moment.utc(time, 'h:mm A').format('hh:mm A');
+    return moment.utc(time, 'HH:mm:ss').format('hh:mm A');
   }
 
   public hasGasRefill(log: ILog): boolean {
     return log.Llenados_Combustible.length > 0 ? true : false;
+  }
+
+  public hasPassengers(log: ILog): boolean {
+    return log.Pasajeros.length > 0 ? true : false;
   }
 
   public return(): void {
@@ -109,21 +115,33 @@ export class CreateLogComponent implements OnInit {
 
   public openLogModal(): void {
     this.dialog.open(AddLogComponent, {
-      panelClass: 'dialog-style',
       maxWidth: '100%',
-      data: this.currentKm
+      panelClass: 'dialog-style',
+      data: {
+        lastKms: this.currentKm,
+        lastTime: moment(this.currentTime, 'hh:mm:ss A').format('hh:mm A')
+      }
     }).afterClosed().subscribe((log) => {
+      if(!log) {
+        return;
+      }
       let formattedLog = log as ILog;
       formattedLog.Llenados_Combustible = [];
+      formattedLog.Pasajeros = '';
       formattedLog.Conductor = this.selectedDriver;
       formattedLog.Vehiculo = this.selectedVehicle;
       this.logs.push(formattedLog);
+      this.currentTime = formattedLog.Hora_Entrada.toString();
+      this.currentKm = formattedLog.Kilometraje_Entrada;
       this.table.renderRows();
     });
   }
 
   public removeLog(removedLog: ILog): void {
     this.logs = this.logs.filter(log => log !== removedLog);
+    const lastLog = this.logs[this.logs.length - 1];
+    this.currentTime = lastLog.Hora_Entrada.toString();
+    this.currentKm = lastLog.Kilometraje_Entrada;
     this.table.renderRows();
   }
 

@@ -49,7 +49,7 @@
       <input
         matInput
         required
-        [min]="minKm"
+        [min]="this.lastData.lastKms"
         type="number"
         class="input"
         formControlName="Kilometraje_Salida"
@@ -60,21 +60,11 @@
       <mat-label class="label">Kilometraje Entrada</mat-label>
       <input
         matInput
+        [min]="this.lastData.lastKms"
         required
         type="number"
         class="input"
         formControlName="Kilometraje_Entrada"
-      >
-    </mat-form-field>
-
-    <mat-form-field class="create-field">
-      <mat-label class="label">Pasajeros</mat-label>
-      <input
-        matInput
-        required
-        type="number"
-        class="input"
-        formControlName="Pasajeros"
       >
     </mat-form-field>
 

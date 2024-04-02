@@ -11,8 +11,6 @@ import { MatSelectModule } from '@angular/material/select';
 import moment from 'moment';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { PrimaryButtonComponent } from 'src/app/shared';
-import { ILog } from '../../interfaces';
-import { EMPTY_DRIVER, EMPTY_VEHICLE } from 'src/app/core/helpers';
 
 @Component({
   selector: 'app-add-log',
@@ -33,23 +31,22 @@ export class AddLogComponent implements OnInit {
   public error = false;
   public isLater = false;
   public badKms = false;
-  @Inject(MAT_DIALOG_DATA) public minKm = 0;
 
   constructor(
     private _formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<AddLogComponent>,
-    ) { }
+    @Inject(MAT_DIALOG_DATA) public lastData: { lastKms: number, lastTime: string }
+  ) { }
 
   ngOnInit(): void {
     this.logDataForm = this._formBuilder.group({
-      Kilometraje_Entrada: [0, [Validators.required]],
-      Kilometraje_Salida: [0, [Validators.required]],
-      Hora_Salida: ['', [Validators.required]],
+      Kilometraje_Entrada: [this.lastData.lastKms, [Validators.required]],
+      Kilometraje_Salida: [this.lastData.lastKms, [Validators.required]],
+      Hora_Salida: [this.lastData.lastTime, [Validators.required]],
       Hora_Entrada: ['', [Validators.required]],
       Fecha: ['', [Validators.required]],
       Destino: ['', [Validators.required]],
-      Observaciones: [''],
-      Pasajeros: ['', [Validators.required]],
+      Observaciones: ['']
     });
   }
 
@@ -68,10 +65,9 @@ export class AddLogComponent implements OnInit {
       Destino: this.logDataForm.controls.Destino.value,
       Kilometraje_Entrada: this.logDataForm.controls.Kilometraje_Entrada.value,
       Kilometraje_Salida: this.logDataForm.controls.Kilometraje_Salida.value,
-      Hora_Salida: this.logDataForm.controls.Hora_Salida.value,
-      Hora_Entrada: this.logDataForm.controls.Hora_Entrada.value,
-      Observaciones: this.logDataForm.controls.Observaciones.value,
-      Pasajeros: this.logDataForm.controls.Pasajeros.value
+      Hora_Salida: moment.utc(this.logDataForm.controls.Hora_Salida.value, 'h:mm A').format('HH:mm:ss'),
+      Hora_Entrada: moment.utc(this.logDataForm.controls.Hora_Entrada.value, 'h:mm A').format('HH:mm:ss'),
+      Observaciones: this.logDataForm.controls.Observaciones.value
     }
 
     this.dialogRef.close(data);
