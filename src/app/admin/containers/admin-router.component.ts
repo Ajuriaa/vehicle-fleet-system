@@ -24,6 +24,7 @@ import { HeaderComponent, SideBarComponent } from 'src/app/shared';
       height: 100%;
       width: 100%;
       position: relative;
+      overflow-y: hidden;
     }
     .component-container {
       overflow-y: auto;
