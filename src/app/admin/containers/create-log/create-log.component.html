@@ -101,8 +101,8 @@
       <ng-container matColumnDef="passengers">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Pasajeros</th>
         <td mat-cell *matCellDef="let element" class="table-cell">
-          <i class="uil uil-users-alt" *ngIf="hasPassengers(element)"></i>
-          <i class="uil uil-plus-circle" *ngIf="!hasPassengers(element)"></i>
+          <i class="uil uil-users-alt" *ngIf="hasPassengers(element)" (click)="openPassengerModal(element, 'show')"></i>
+          <i class="uil uil-plus-circle" *ngIf="!hasPassengers(element)" (click)="openPassengerModal(element)"></i>
         </td>
       </ng-container>
 

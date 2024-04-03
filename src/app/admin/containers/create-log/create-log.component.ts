@@ -18,7 +18,7 @@ import { vehicleInfoHelper } from '../../helpers';
 import { IDriver, ILog, IVehicle } from '../../interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { AddLogComponent } from '../../components';
+import { AddLogComponent, ShowAddPassengersComponent } from '../../components';
 
 const TABLE_COLUMNS = [
   'date'  ,'destination', 'timeOut', 'timeIn', 'kmsOut', 'kmsIn', 'gas', 'passengers', 'observation','delete'
@@ -77,6 +77,17 @@ export class CreateLogComponent implements OnInit {
   public selectVehicle(vehicle: IVehicle): void {
     this.selectedVehicle = vehicle;
     this.currentKm = vehicle.Kilometraje;
+  }
+
+  public openPassengerModal(log: ILog, modalType = 'create'): void {
+    this.dialog.open(ShowAddPassengersComponent, {
+      panelClass: 'dialog-style',
+      data: { passengers: log.Pasajeros, type: modalType }
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        log.Pasajeros = result;
+      }
+    });
   }
 
   public selectDriver(driver: IDriver): void {

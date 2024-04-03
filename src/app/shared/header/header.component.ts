@@ -1,28 +1,26 @@
-import { Component, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { NameHelper } from 'src/app/admin/helpers';
+import { cookieHelper } from 'src/app/core/helpers';
 import { SharedDataService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [],
+  providers: [NameHelper, cookieHelper],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
-  public position = this.sharedDataService.getPosition();
+export class HeaderComponent implements OnInit {
+  public position = this.cookieHelper.getPosition();
+  public name = '';
 
   constructor(
-    private sharedDataService: SharedDataService
+    private cookieHelper: cookieHelper,
+    public nameHelper: NameHelper
   ){}
 
-  public transformFullName(): string {
-    const fullName = this.sharedDataService.getName();
-    const parts = fullName.trim().split(/\s+/);
-
-    if (parts.length < 2) {
-        return fullName;
-    }
-
-    return `${parts[0]} ${parts[parts.length - 2]}`;
+  ngOnInit(): void {
+    this.name = this.nameHelper.getShortName(this.cookieHelper.getName())
   }
 }

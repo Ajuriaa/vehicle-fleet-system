@@ -2,5 +2,6 @@ export enum Model {
   vehicle = 'vehicles',
   driver = 'drivers',
   log = 'logs',
-  request = 'requests'
+  request = 'requests',
+  user = 'users'
 }

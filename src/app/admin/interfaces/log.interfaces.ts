@@ -16,7 +16,7 @@ export interface ILog {
 }
 
 export interface IUser {
-  ID_Usuario: number;
+  ID_Empleado: number;
   Nombres: string;
   Apellidos: string;
 }
@@ -38,4 +38,8 @@ export interface IGasUnit {
 
 export interface ILogResponse {
   data: ILog;
+}
+
+export interface IUsersResponse {
+  data: IUser[];
 }

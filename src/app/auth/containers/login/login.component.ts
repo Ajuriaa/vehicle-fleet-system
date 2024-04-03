@@ -55,11 +55,10 @@ export class LoginComponent implements OnInit {
       this.error = true;
       return;
     }
-    this._router.navigate(['/admin/dashboard']);
-    // this._auth.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(success => {
-    //   if (success) {
-    //     this._router.navigate(['/admin/dashboard']);
-    //   }
-    // });
+    this._auth.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(success => {
+      if (success) {
+        this._router.navigate(['/admin/dashboard']);
+      }
+    });
   }
 }

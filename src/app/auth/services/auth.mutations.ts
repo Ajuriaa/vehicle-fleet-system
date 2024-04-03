@@ -28,13 +28,13 @@ export class AuthService {
   ) { }
 
   public login(username: string, password: string) {
-    const data = {
-      appid: this.appId,
-      action: this.action,
-      modulo: this.module,
-      nombre: username,
-      password: password
-    };
+    const data = new FormData();
+
+    data.append('appid', this.appId);
+    data.append('action', this.action);
+    data.append('modulo', this.module.toString());
+    data.append('nombre', username);
+    data.append('password', password);
 
     return this.http.post<any>(this.loginApiUrl, data).pipe(
       map(data => {
@@ -45,7 +45,10 @@ export class AuthService {
           }
           const token = data[1].session_key;
           const user = data[1].usuario;
-          this._cookie._setCookie(token, user);
+          const name = data[1].perfil.Nombre
+          const position = data[1].ID_Area.Cargo;
+
+          this._cookie._setCookie(token, user, name, position);
 
           if(this.isAdmin(data[1].roles)) {
             this._toaster.error('Error', 'No tienes los permisos para ingresar a esta aplicación');
@@ -53,12 +56,10 @@ export class AuthService {
           }
 
           this._sharedData.setRole(+this.getRole(data[1].roles));
-          this._sharedData.setPosition(data[1].ID_Area.Cargo);
-          this._sharedData.setName(data[1].perfil.Nombre);
           this._toaster.success('Bienvenido', 'Inicio de sesión exitoso');
           return true;
         }
-        this._toaster.error('Error', 'Usuario o contraseña incorrectos');
+        this._toaster.error('Usuario o contraseña incorrectos', 'Error');
         return false;
       }),
       catchError(error => {
