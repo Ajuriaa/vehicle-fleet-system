@@ -5,9 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { PrimaryButtonComponent, LoadingComponent, NoResultComponent, VehicleCardComponent } from 'src/app/shared';
 import moment from 'moment';
 import { Model } from 'src/app/core/enums';
+import { Router } from '@angular/router';
 import { IVehicle } from '../../interfaces';
 import { VehicleQueries } from '../../services';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logs',

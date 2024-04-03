@@ -1,5 +1,3 @@
-import { Router } from '@angular/router';
-
 export class NameHelper {
   public transformFullName(names: string): string {
     const parts = names.trim().split(/\s+/);

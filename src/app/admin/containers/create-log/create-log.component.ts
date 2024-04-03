@@ -13,11 +13,11 @@ import { SearchService } from 'src/app/core/services';
 import { Model } from 'src/app/core/enums';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import moment from 'moment';
+import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { DriverQueries, VehicleQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
 import { IDriver, ILog, IVehicle } from '../../interfaces';
-import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 import { AddLogComponent, ShowAddPassengersComponent } from '../../components';
 
 const TABLE_COLUMNS = [
@@ -136,7 +136,7 @@ export class CreateLogComponent implements OnInit {
       if(!log) {
         return;
       }
-      let formattedLog = log as ILog;
+      const formattedLog = log as ILog;
       formattedLog.Llenados_Combustible = [];
       formattedLog.Pasajeros = '';
       formattedLog.Conductor = this.selectedDriver;

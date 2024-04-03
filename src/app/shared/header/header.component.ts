@@ -1,7 +1,6 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NameHelper } from 'src/app/admin/helpers';
 import { cookieHelper } from 'src/app/core/helpers';
-import { SharedDataService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-header',
@@ -21,6 +20,6 @@ export class HeaderComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    this.name = this.nameHelper.getShortName(this.cookieHelper.getName())
+    this.name = this.nameHelper.getShortName(this.cookieHelper.getName());
   }
 }

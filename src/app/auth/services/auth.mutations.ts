@@ -45,7 +45,7 @@ export class AuthService {
           }
           const token = data[1].session_key;
           const user = data[1].usuario;
-          const name = data[1].perfil.Nombre
+          const name = data[1].perfil.Nombre;
           const position = data[1].ID_Area.Cargo;
 
           this._cookie._setCookie(token, user, name, position);

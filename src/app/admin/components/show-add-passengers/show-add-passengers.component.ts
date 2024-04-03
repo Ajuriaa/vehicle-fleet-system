@@ -1,17 +1,17 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { PrimaryButtonComponent } from 'src/app/shared';
-import { ILog, IUser } from '../../interfaces';
 import { map, Observable, startWith } from 'rxjs';
 import { SearchService } from 'src/app/core/services';
 import { Model } from 'src/app/core/enums';
 import { CommonModule } from '@angular/common';
-import { LogsQueries } from '../../services';
 import { MatInputModule } from '@angular/material/input';
+import { LogsQueries } from '../../services';
+import { IUser } from '../../interfaces';
 import { NameHelper } from '../../helpers';
 
 @Component({
@@ -86,14 +86,14 @@ export class ShowAddPassengersComponent implements OnInit {
       this.error = true;
       return;
     }
-    const passengerIds = this.selectedPassengers.map(passenger => passenger.ID_Empleado)
+    const passengerIds = this.selectedPassengers.map(passenger => passenger.ID_Empleado);
     this.dialogRef.close(JSON.stringify(passengerIds));
   }
 
   public display(): string {
     const names = this.selectedPassengers.map((passenger) => {
-      return this.nameHelper.getShortName(passenger.Nombres + " " + passenger.Apellidos)
-    })
+      return this.nameHelper.getShortName(passenger.Nombres + " " + passenger.Apellidos);
+    });
     return names.join(', ');
   }
 

@@ -57,7 +57,7 @@ export class AddLogComponent implements OnInit {
   public onSubmit(): void {
     if(!this.validateErrors()) {
       return;
-    }moment('02:54 PM', 'h:mm A').format('HH:mm:ss')
+    }moment('02:54 PM', 'h:mm A').format('HH:mm:ss');
 
     const data = {
       ID_Bitacora: 0,
@@ -68,7 +68,7 @@ export class AddLogComponent implements OnInit {
       Hora_Salida: moment.utc(this.logDataForm.controls.Hora_Salida.value, 'h:mm A').format('HH:mm:ss'),
       Hora_Entrada: moment.utc(this.logDataForm.controls.Hora_Entrada.value, 'h:mm A').format('HH:mm:ss'),
       Observaciones: this.logDataForm.controls.Observaciones.value
-    }
+    };
 
     this.dialogRef.close(data);
   }
