@@ -40,7 +40,7 @@ export class AuthService {
       map(data => {
         if (data && data.length >= 2) {
           if (data[0].result !== 1) {
-            this._toaster.error('Error', 'Usuario o contraseña incorrectos');
+            this._toaster.error('Usuario o contraseña incorrectos', 'Error');
             return false;
           }
           const token = data[1].session_key;
@@ -51,12 +51,12 @@ export class AuthService {
           this._cookie._setCookie(token, user, name, position);
 
           if(this.isAdmin(data[1].roles)) {
-            this._toaster.error('Error', 'No tienes los permisos para ingresar a esta aplicación');
+            this._toaster.error('No tienes los permisos para ingresar a esta aplicación', 'Error');
             return false;
           }
 
           this._sharedData.setRole(+this.getRole(data[1].roles));
-          this._toaster.success('Bienvenido', 'Inicio de sesión exitoso');
+          this._toaster.success('Inicio de sesión exitoso', 'Bienvenido');
           return true;
         }
         this._toaster.error('Usuario o contraseña incorrectos', 'Error');
