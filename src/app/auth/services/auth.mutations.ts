@@ -63,7 +63,7 @@ export class AuthService {
         return false;
       }),
       catchError(error => {
-        this._toaster.error('Error', error);
+        this._toaster.error(error.message, 'Error');
         throw error;
       })
     );

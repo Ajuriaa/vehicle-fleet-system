@@ -6,10 +6,12 @@ import {
   LogsComponent, CreateLogComponent
 } from './containers';
 import { DriverComponent } from './containers/driver/driver.component';
+import { authGuard } from '../core/guards';
 
 export const adminRoutes: Routes = [{
   path: '',
   component: AdminRouterComponent,
+  canActivate: [authGuard],
   children: [
     {
       path: 'dashboard',
