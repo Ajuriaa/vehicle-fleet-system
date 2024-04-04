@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { NameHelper } from 'src/app/admin/helpers';
 import { cookieHelper } from 'src/app/core/helpers';
 
@@ -12,14 +13,49 @@ import { cookieHelper } from 'src/app/core/helpers';
 })
 export class HeaderComponent implements OnInit {
   public position = this.cookieHelper.getPosition();
+  public title = 'Sistema de Gestión de Vehículos';
   public name = '';
 
   constructor(
     private cookieHelper: cookieHelper,
-    public nameHelper: NameHelper
-  ){}
+    public nameHelper: NameHelper,
+    private router: Router
+  ){
+    this.router.events.subscribe((ev) => {
+      if (ev instanceof NavigationEnd) {
+        this.setTitle();
+      }
+    });
+  }
 
   ngOnInit(): void {
+    this.setTitle();
     this.name = this.nameHelper.getShortName(this.cookieHelper.getName());
+  }
+
+  private setTitle(): void {
+    const url = this.router.url;
+    switch(true) {
+      case url.includes('dashboard'):
+        this.title = 'Dashboard';
+        break;
+      case url.includes('vehicles'):
+        this.title = 'Vehículos';
+        break;
+      case url.includes('drivers'):
+        this.title = 'Conductores';
+        break;
+      case url.includes('maintenance'):
+        this.title = 'Mantenimiento';
+        break;
+      case url.includes('requests'):
+        this.title = 'Solicitudes';
+        break;
+      case url.includes('logs'):
+        this.title = 'Bitácoras';
+        break;
+      default:
+          this.title = 'Default Title'; // Add a default title or handle other cases as needed
+    }
   }
 }

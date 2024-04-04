@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from '../core/guards';
 import {
   AdminRouterComponent, DashboardComponent, DriversComponent,
   LogComponent, MaintenanceComponent, RequestsComponent,
@@ -6,7 +7,6 @@ import {
   LogsComponent, CreateLogComponent
 } from './containers';
 import { DriverComponent } from './containers/driver/driver.component';
-import { authGuard } from '../core/guards';
 
 export const adminRoutes: Routes = [{
   path: '',
