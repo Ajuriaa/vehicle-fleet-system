@@ -151,8 +151,11 @@ export class CreateLogComponent implements OnInit {
   public removeLog(removedLog: ILog): void {
     this.logs = this.logs.filter(log => log !== removedLog);
     const lastLog = this.logs[this.logs.length - 1];
-    this.currentTime = lastLog.Hora_Entrada.toString();
-    this.currentKm = lastLog.Kilometraje_Entrada;
+
+    if(this.logs.length > 0) {
+      this.currentTime = lastLog.Hora_Entrada.toString();
+      this.currentKm = lastLog.Kilometraje_Entrada;
+    }
     this.table.renderRows();
   }
 
