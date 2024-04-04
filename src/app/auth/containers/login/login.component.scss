@@ -50,6 +50,10 @@
     font-size: 2rem;
   }
 
+  .error-color {
+    color: $red;
+  }
+
   .first {
     margin-top: 1.5rem;
   }
@@ -67,6 +71,10 @@
   .error {
     width: 90%;
     font-size: 1.5rem;
+  }
+
+  .eye {
+    right: 0;
   }
 }
 

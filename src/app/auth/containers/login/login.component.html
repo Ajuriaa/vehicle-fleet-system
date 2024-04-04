@@ -9,7 +9,7 @@
   <form [formGroup]="loginForm" class="form">
     <p class="label first">Usuario</p>
     <mat-form-field class="field" appearance="outline">
-      <i class="uil uil-user icon"></i>
+      <i class="uil uil-user icon" [ngClass]="error ? 'error-color' : ''"></i>
       <input
         matInput
         required
@@ -17,11 +17,15 @@
         formControlName="username"
         placeholder="Ingrese el nombre de usuario"
       >
+
     </mat-form-field>
     <p class="label">Contraseña</p>
     <mat-form-field class="field" appearance="outline">
-      <i class="uil uil-lock icon"></i>
+      <i class="uil uil-lock icon" [ngClass]="error ? 'error-color' : ''"></i>
+      <i class="uil uil-eye icon eye" (click)="togglePasswordVisibility()" *ngIf="showPassword"></i>
+      <i class="uil uil-eye-slash icon eye" (click)="togglePasswordVisibility()" *ngIf="!showPassword"></i>
       <input
+        [type]="passwordType"
         matInput
         required
         class="input"
@@ -29,7 +33,7 @@
         placeholder="Ingrese la contraseña"
       >
     </mat-form-field>
-    <mat-error *ngIf="error" class="error">Credenciales incorrectas</mat-error>
+    <mat-error *ngIf="error" class="error">Llene el formulario con sus credenciales</mat-error>
     <app-primary-button styleClass="btn-white" (btnClick)="login()" class="button">INGRESAR</app-primary-button>
   </form>
   <img class="image" src="assets/logo.png" />
