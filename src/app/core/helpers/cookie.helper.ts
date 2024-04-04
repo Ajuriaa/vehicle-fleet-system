@@ -13,7 +13,7 @@ export class cookieHelper {
         return c.substring(7);
       }
     }
-    return 'EMPLEADO';
+    return 'EMPLEADO IHTT NOMBRE';
   }
 
   public getPosition(): string {
@@ -23,7 +23,7 @@ export class cookieHelper {
         return c.substring(6);
       }
     }
-    return 'CARGO';
+    return 'CARGO IHTT';
   }
 
   public findToken(): boolean {
