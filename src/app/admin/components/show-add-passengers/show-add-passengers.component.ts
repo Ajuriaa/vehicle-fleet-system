@@ -41,11 +41,11 @@ export class ShowAddPassengersComponent implements OnInit {
     private searchEngine: SearchService,
     private logQuery: LogsQueries,
     private nameHelper: NameHelper,
-    @Inject(MAT_DIALOG_DATA) public data: { passengers: string, type: string }
+    @Inject(MAT_DIALOG_DATA) public data: { passengers: string, modalType: string }
   ){}
 
   ngOnInit(): void {
-    this.isCreate = this.data.type === 'create';
+    this.isCreate = this.data.modalType === 'create';
     this.logQuery.getAllUsers().subscribe(({ data }) => {
       if (data) {
         this.passengers = data;

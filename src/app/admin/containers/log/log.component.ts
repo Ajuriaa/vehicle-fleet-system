@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import moment from 'moment';
 import { Model } from 'src/app/core/enums';
-import { GasInfoComponent, LogPassengersComponent } from '../../components';
+import { GasInfoComponent, ShowAddPassengersComponent } from '../../components';
 import { vehicleInfoHelper } from '../../helpers';
 import { VehicleQueries } from '../../services';
 import { ILog, IVehicle } from '../../interfaces';
@@ -58,16 +58,22 @@ export class LogComponent implements OnInit {
   }
 
   public openPassengerList(log: ILog): void {
-    this.dialog.open(LogPassengersComponent, {
+    this.dialog.open(ShowAddPassengersComponent, {
       panelClass: 'dialog-style',
-      data: log
+      data: {
+        passengers: log.Pasajeros,
+        modalType: 'show'
+      }
     });
   }
 
   public openGasInfo(log: ILog): void {
     this.dialog.open(GasInfoComponent, {
       panelClass: 'dialog-style',
-      data: log
+      data: {
+        log: log,
+        modalType: 'show'
+      }
     });
   }
 

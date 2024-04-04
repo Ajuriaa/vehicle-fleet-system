@@ -13,13 +13,17 @@ import { IGasRefill, ILog } from '../../interfaces';
 })
 export class GasInfoComponent implements OnInit {
   public gasRefill: IGasRefill = EMPTY_GAS_REFILL;
+  public isCreate = false;
+
   constructor(
     private dialogRef: MatDialogRef<GasInfoComponent>,
-    @Inject(MAT_DIALOG_DATA) public log: ILog = EMPTY_LOG
+    @Inject(MAT_DIALOG_DATA) public data: { log: ILog, modalType: string }
   ){}
 
   ngOnInit(): void {
-    this.gasRefill = this.log.Llenados_Combustible[0];
+    this.isCreate = this.data.modalType === 'create';
+
+    !this.isCreate ? this.gasRefill = this.data.log.Llenados_Combustible[0] : '';
   }
 
   public onCancel(): void {

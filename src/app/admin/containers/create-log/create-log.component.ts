@@ -18,7 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DriverQueries, VehicleQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
 import { IDriver, ILog, IVehicle } from '../../interfaces';
-import { AddLogComponent, ShowAddPassengersComponent } from '../../components';
+import { AddLogComponent, GasInfoComponent, ShowAddPassengersComponent } from '../../components';
 
 const TABLE_COLUMNS = [
   'date'  ,'destination', 'timeOut', 'timeIn', 'kmsOut', 'kmsIn', 'gas', 'passengers', 'observation','delete'
@@ -157,6 +157,13 @@ export class CreateLogComponent implements OnInit {
       this.currentKm = lastLog.Kilometraje_Entrada;
     }
     this.table.renderRows();
+  }
+
+  public openGasInfo(log: ILog): void {
+    this.dialog.open(GasInfoComponent, {
+      panelClass: 'dialog-style',
+      data: log
+    });
   }
 
   private fetchData(): void {
