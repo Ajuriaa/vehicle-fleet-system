@@ -67,13 +67,10 @@ export class LogComponent implements OnInit {
     });
   }
 
-  public openGasInfo(log: ILog): void {
+  public openGasInfo(log: ILog, modalType = 'show'): void {
     this.dialog.open(GasInfoComponent, {
       panelClass: 'dialog-style',
-      data: {
-        log: log,
-        modalType: 'show'
-      }
+      data: { log, modalType }
     });
   }
 

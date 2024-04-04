@@ -1,6 +1,9 @@
 <div class="container">
   <p class="title">Información de llenado de combustible</p>
-  <p>{{ gasRefill.Cantidad }} {{ gasRefill.Unidad_Combustible.Unidad }}</p>
-  <p>{{ data.log.Conductor.Nombre }}</p>
+  <p>Fecha: <strong>{{ date }}</strong></p>
+  <p>Estación de servicio:  <strong>{{ gasRefill.Estacion_Combustible }}</strong></p>
+  <p>Cantidad:  <strong>{{ quantity }}</strong></p>
+  <p>Kilometraje:  <strong>{{ gasRefill.Kilometraje_Recarga }}</strong></p>
+  <p>Costo:  <strong>L.{{ gasRefill.Precio }}</strong></p>
   <app-primary-button class="btn" (btnClick)="onCancel()">Listo</app-primary-button>
 </div>

@@ -159,10 +159,10 @@ export class CreateLogComponent implements OnInit {
     this.table.renderRows();
   }
 
-  public openGasInfo(log: ILog): void {
+  public openGasInfo(log: ILog, modalType = 'create'): void {
     this.dialog.open(GasInfoComponent, {
       panelClass: 'dialog-style',
-      data: log
+      data: { log, modalType }
     });
   }
 

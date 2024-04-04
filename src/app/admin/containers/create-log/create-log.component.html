@@ -93,8 +93,8 @@
           <i class="uil uil-pump"></i>
         </th>
         <td mat-cell *matCellDef="let element" class="table-cell">
-          <i class="uil uil-pump gas" *ngIf="hasGasRefill(element)" ></i>
-          <i class="uil uil-plus-circle gas" *ngIf="!hasGasRefill(element)" ></i>
+          <i class="uil uil-pump gas" *ngIf="hasGasRefill(element)" (click)="openGasInfo(element, 'show')"></i>
+          <i class="uil uil-plus-circle gas" *ngIf="!hasGasRefill(element)" (click)="openGasInfo(element)"></i>
         </td>
       </ng-container>
 
