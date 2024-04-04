@@ -82,7 +82,7 @@ export class CreateLogComponent implements OnInit {
   public openPassengerModal(log: ILog, modalType = 'create'): void {
     this.dialog.open(ShowAddPassengersComponent, {
       panelClass: 'dialog-style',
-      data: { passengers: log.Pasajeros, type: modalType }
+      data: { passengers: log.Pasajeros, modalType: modalType }
     }).afterClosed().subscribe((result) => {
       if(result) {
         log.Pasajeros = result;
