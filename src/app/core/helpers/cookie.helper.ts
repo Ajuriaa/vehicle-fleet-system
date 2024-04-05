@@ -25,14 +25,4 @@ export class cookieHelper {
     }
     return 'CARGO IHTT';
   }
-
-  public findToken(): boolean {
-    const cookies = document.cookie.split('; ');
-    for (const c of cookies) {
-      if (c.indexOf('CK-TOKEN=') === 0) {
-        return true;
-      }
-    }
-    return false;
-  }
 }
