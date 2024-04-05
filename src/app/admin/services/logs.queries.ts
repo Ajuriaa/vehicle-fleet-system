@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environments';
-import { ILogResponse, IUsersResponse } from '../interfaces';
+import { IGasUnitsResponse, ILogResponse, IUsersResponse } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +16,9 @@ export class LogsQueries {
 
   public getAllUsers(): Observable<IUsersResponse> {
     return this.http.get<IUsersResponse>(`${environment.apiUrl}/users`);
+  }
+
+  public getGasUnits(): Observable<IGasUnitsResponse> {
+    return this.http.get<IGasUnitsResponse>(`${environment.apiUrl}/gas-units`);
   }
 }

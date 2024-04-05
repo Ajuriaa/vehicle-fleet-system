@@ -43,3 +43,7 @@ export interface ILogResponse {
 export interface IUsersResponse {
   data: IUser[];
 }
+
+export interface IGasUnitsResponse {
+  data: IGasUnit[];
+}

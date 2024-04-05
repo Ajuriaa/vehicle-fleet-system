@@ -17,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DriverQueries, VehicleQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
-import { IDriver, ILog, IVehicle } from '../../interfaces';
+import { IDriver, IGasRefill, ILog, IVehicle } from '../../interfaces';
 import { AddLogComponent, GasInfoComponent, ShowAddPassengersComponent } from '../../components';
 
 const TABLE_COLUMNS = [
@@ -163,6 +163,13 @@ export class CreateLogComponent implements OnInit {
     this.dialog.open(GasInfoComponent, {
       panelClass: 'dialog-style',
       data: { log, modalType }
+    }).afterClosed().subscribe((gas) => {
+      if(!gas) {
+        return;
+      }
+      const formattedGas = gas as IGasRefill;
+      log.Llenados_Combustible.push(formattedGas);
+      this.table.renderRows();
     });
   }
 

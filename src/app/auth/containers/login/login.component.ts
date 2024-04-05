@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._router.navigate(['/admin/dashboard']);
     this.loginForm = this._formBuilder.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
