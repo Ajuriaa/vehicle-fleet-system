@@ -5,8 +5,7 @@ import { EMPTY_GAS_REFILL, EMPTY_LOG } from 'src/app/core/helpers';
 import { IGasRefill, ILog } from '../../interfaces';
 import { CommonModule } from '@angular/common';
 import moment from 'moment';
-import 'moment/locale/es';
-moment.locale('es');
+import 'moment/min/locales';
 
 @Component({
   selector: 'app-gas-info',
@@ -27,6 +26,7 @@ export class GasInfoComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    moment.locale('es');
     this.isCreate = this.data.modalType === 'create';
     this.setData();
   }

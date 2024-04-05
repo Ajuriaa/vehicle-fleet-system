@@ -101,7 +101,7 @@ export class VehicleCardComponent implements OnChanges {
   }
 
   private getNextMaintenanceKms(): number {
-    if(!this.vehicle?.Mantenimientos) return 0;
+    if(this.vehicle.Mantenimientos.length === 0) return 0;
     const lastMaintenance = this.vehicle.Mantenimientos.filter(m => m.Tipo_Mantenimiento === 'Preventivo')[0];
     const lastMaintenanceKms = lastMaintenance.Kilometraje;
     const nextMaintenance = lastMaintenanceKms + 5000;
