@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import moment from 'moment';
-import { IDriver, ILog, IRequest, IUser, IVehicle } from 'src/app/admin/interfaces';
+import { ICity, IDriver, ILog, IRequest, IUser, IVehicle, IVehicleType } from 'src/app/admin/interfaces';
 import { Model } from '../enums';
 
 @Injectable({
@@ -49,6 +49,11 @@ export class SearchService {
         user.Nombres.toLowerCase().includes(term.toLowerCase()) ||
         user.Apellidos.toLowerCase().includes(term.toLowerCase()) ||
         user.ID_Empleado.toString().includes(term.toLowerCase())
+      );
+    }
+    if(dataModel === Model.city) {
+      return data.filter((city: ICity)  =>
+        city.Nombre.toLowerCase().includes(term.toLowerCase())
       );
     }
     return data;

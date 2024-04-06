@@ -1,0 +1,131 @@
+<div class="container">
+  <p class="title">Generar Solicitud de Vehículo</p>
+  <mat-form-field *ngIf="!showForm" class="id-field">
+    <mat-label>Número de empleado</mat-label>
+    <input
+      matInput
+      type="number"
+      [(ngModel)]="input"
+      placeholder="Ingrese su número de empleado"
+    />
+  </mat-form-field>
+  <app-primary-button class="btn" *ngIf="!showForm" (btnClick)="getId()">SIGUIENTE</app-primary-button>
+  <form *ngIf="showForm" [formGroup]="requestForm" class="form">
+
+    <div class="form-row">
+      <mat-form-field class="field">
+        <mat-label>Escoge la fecha</mat-label>
+        <input formControlName="date" matInput [matDatepicker]="picker" required>
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="field">
+        <mat-label class="label">Tipo de Gira</mat-label>
+        <mat-select formControlName="type">
+          @for (type of requestTypes; track type) {
+            <mat-option [value]="type.Tipo_Solicitud">{{ type.Tipo_Solicitud }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="field">
+        <mat-label class="label">Ciudad</mat-label>
+        <input
+          matInput
+          required
+          [matAutocomplete]="autoCity"
+          formControlName="city"
+          placeholder="Ingrese la ciudad"
+        >
+        <mat-autocomplete #autoCity="matAutocomplete">
+          @for (city of filteredCities | async; track city.ID_Ciudad) {
+            <mat-option [value]="city.Nombre" (click)="selectCity(city)">
+              {{ city.Nombre }}
+            </mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field class="field">
+        <mat-label class="label">Destino</mat-label>
+        <input
+          matInput
+          required
+          class="input"
+          formControlName="destination"
+          placeholder="Ingrese el destino de la gira"
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field class="field">
+        <mat-label class="label">Motivo</mat-label>
+        <input
+          matInput
+          required
+          class="input"
+          formControlName="reason"
+          placeholder="Ingrese el destino de la gira"
+        >
+      </mat-form-field>
+
+      <mat-form-field class="field">
+        <input
+          matInput
+          required
+          readonly
+          placeholder="Hora Salida"
+          class="input pointer"
+          formControlName="departureTime"
+          [ngxTimepicker]="timeIn"
+        >
+        <ngx-material-timepicker #timeIn></ngx-material-timepicker>
+      </mat-form-field>
+
+      <mat-form-field class="field">
+        <input
+          matInput
+          required
+          readonly
+          placeholder="Hora Entrada"
+          class="input"
+          formControlName="returnTime"
+          [ngxTimepicker]="timeOut"
+        >
+        <ngx-material-timepicker #timeOut></ngx-material-timepicker>
+      </mat-form-field>
+
+      <mat-form-field class="field">
+        <mat-label>Pasajeros</mat-label>
+        <input
+          [matAutocomplete]="autoUsers"
+          matInput
+          type="text"
+          [placeholder]="display()"
+          formControlName="employees"
+        >
+        <mat-hint>Busque los empleados por nombre o número</mat-hint>
+      </mat-form-field>
+
+      <mat-autocomplete #autoUsers="matAutocomplete">
+        <mat-option *ngFor="let passenger of filteredEmployees | async" value="">
+            <mat-checkbox
+              [checked]="isPassengerSelected(passenger)"
+              (click)="toggleSelection(passenger)"
+            >
+              {{ passenger.Nombres }} {{ passenger.Apellidos }}
+            </mat-checkbox>
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+
+
+  </form>
+  <mat-error class="error" *ngIf="error">Llene todos los campos requeridos</mat-error>
+  <div class="buttons" *ngIf="showForm">
+    <app-primary-button class="btn" (btnClick)="onSubmit()">ENVIAR</app-primary-button>
+  </div>
+</div>

@@ -3,5 +3,6 @@ export enum Model {
   driver = 'drivers',
   log = 'logs',
   request = 'requests',
-  user = 'users'
+  user = 'users',
+  city = 'cities',
 }

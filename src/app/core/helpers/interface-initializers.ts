@@ -3,7 +3,8 @@ import {
   IVehicleStatus, IVehicleType, IGasRefill,
   IGasUnit, ILog, IDriver,
   IRequest, ICity, IRequestStatus,
-  IRequestType
+  IRequestType,
+  IUser
 } from "src/app/admin/interfaces";
 
 export const EMPTY_CITY: ICity = {
@@ -20,6 +21,12 @@ export const EMPTY_REQUEST_STATUS: IRequestStatus = {
 export const EMPTY_REQUEST_TYPE: IRequestType = {
   ID_Tipo_Solicitud: 0,
   Tipo_Solicitud: ""
+};
+
+export const EMPTY_USER: IUser = {
+  ID_Empleado: 0,
+  Nombres: '',
+  Apellidos: ''
 };
 
 export const EMPTY_REQUEST: IRequest = {
