@@ -40,7 +40,8 @@ export const EMPTY_REQUEST: IRequest = {
   Hora_Regreso: new Date(),
   Ciudad: EMPTY_CITY,
   Estado_Solicitud: EMPTY_REQUEST_STATUS,
-  Tipo_Solicitud: EMPTY_REQUEST_TYPE
+  Tipo_Solicitud: EMPTY_REQUEST_TYPE,
+  Pasajeros: ""
 };
 
 export const EMPTY_DRIVER: IDriver = {

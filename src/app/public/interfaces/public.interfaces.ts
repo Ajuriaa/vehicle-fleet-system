@@ -37,4 +37,5 @@ export interface IRequest {
   Hora_Regreso: Date;
   Ciudad: ICity;
   Tipo_Solicitud: IRequestType;
+  Pasajeros: String;
 }

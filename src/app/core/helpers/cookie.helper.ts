@@ -25,4 +25,21 @@ export class cookieHelper {
     }
     return 'CARGO IHTT';
   }
+
+  public getUsername(): string {
+    const cookies = document.cookie.split('; ');
+    for (const c of cookies) {
+      if (c.indexOf('usuario=') === 0) {
+        return c.substring(8);
+      }
+    }
+    return 'USUARIO IHTT';
+  }
+
+  public dataToSend(data: any): any {
+    return {
+      ...data,
+      Sistema_Usuario: this.getUsername()
+    };
+  }
 }

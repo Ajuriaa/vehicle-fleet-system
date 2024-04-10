@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="!requestCreated">
   <p class="title">Generar Solicitud de Vehículo</p>
   <mat-form-field *ngIf="!showForm" class="id-field">
     <mat-label>Número de empleado</mat-label>
@@ -9,7 +9,7 @@
       placeholder="Ingrese su número de empleado"
     />
   </mat-form-field>
-  <app-primary-button class="btn" *ngIf="!showForm" (btnClick)="getId()">SIGUIENTE</app-primary-button>
+  <app-primary-button class="alone-btn" *ngIf="!showForm" (btnClick)="getId()">SIGUIENTE</app-primary-button>
   <form *ngIf="showForm" [formGroup]="requestForm" class="form">
 
     <div class="form-row">
@@ -25,7 +25,7 @@
         <mat-label class="label">Tipo de Gira</mat-label>
         <mat-select formControlName="type">
           @for (type of requestTypes; track type) {
-            <mat-option [value]="type.Tipo_Solicitud">{{ type.Tipo_Solicitud }}</mat-option>
+            <mat-option [value]="type">{{ type.Tipo_Solicitud }}</mat-option>
           }
         </mat-select>
       </mat-form-field>
@@ -128,4 +128,8 @@
   <div class="buttons" *ngIf="showForm">
     <app-primary-button class="btn" (btnClick)="onSubmit()">ENVIAR</app-primary-button>
   </div>
+</div>
+
+<div class="container" *ngIf="requestCreated">
+  <p class="created-label">Solicitud creada Correctamente!</p>
 </div>

@@ -12,11 +12,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { PrimaryButtonComponent } from 'src/app/shared';
 import { MatSelectModule } from '@angular/material/select';
-import { EMPTY_CITY, EMPTY_REQUEST, EMPTY_USER } from 'src/app/core/helpers';
+import { cookieHelper, EMPTY_CITY, EMPTY_REQUEST, EMPTY_USER } from 'src/app/core/helpers';
 import { Model } from 'src/app/core/enums';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import moment from 'moment';
 
 @Component({
   selector: 'app-generate-requests',
@@ -27,7 +28,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatInputModule, MatSelectModule, MatDatepickerModule, AsyncPipe,
     NgxMaterialTimepickerModule
   ],
-  providers: [NameHelper, provideNativeDateAdapter()],
+  providers: [NameHelper, cookieHelper, provideNativeDateAdapter()],
   templateUrl: './generate-requests.component.html',
   styleUrl: './generate-requests.component.scss'
 })
@@ -46,6 +47,7 @@ export class GenerateRequestsComponent implements OnInit {
   public filteredCities!: Observable<ICity[]>;
   public request: IRequest = EMPTY_REQUEST;
   public selectedCity: ICity = EMPTY_CITY;
+  public requestCreated = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -60,7 +62,7 @@ export class GenerateRequestsComponent implements OnInit {
     this.requestForm = this.formBuilder.group({
       city: ['', Validators.required],
       type: ['', Validators.required],
-      employees: ['', Validators.required],
+      employees: [''],
       reason: ['', Validators.required],
       destination: ['', Validators.required],
       date: ['', Validators.required],
@@ -97,8 +99,32 @@ export class GenerateRequestsComponent implements OnInit {
     return names.join(', ');
   }
 
-  public onSubmit(): void {
-    true;
+  public async onSubmit(): Promise<void> {
+    const incompleteForm = this.checkControlsEmpty();
+
+    if (incompleteForm) {
+      this.error = true;
+      return;
+    }
+
+    const data = {
+      ID_Solicitud: 0,
+      ID_Empleado: this.id,
+      Destino: this.requestForm.controls.destination.value,
+      Motivo: this.requestForm.controls.reason.value,
+      Fecha: this.requestForm.controls.date.value,
+      Hora_Salida: moment(this.requestForm.controls.departureTime.value, 'h:mm A').toISOString(),
+      Hora_Regreso: moment(this.requestForm.controls.returnTime.value, 'h:mm A').toISOString(),
+      Ciudad: this.selectedCity,
+      Tipo_Solicitud: this.requestForm.controls.type.value,
+      Pasajeros: JSON.stringify('[' + this.selectedEmployees.map((passenger) => passenger.ID_Empleado).join(',') + ']')
+    };
+
+    const mutationResponse = await this.publicMutation.createRequest(data);
+
+    if (mutationResponse) {
+      this.requestCreated = true;
+    }
   }
 
   public getId(): void {
@@ -115,6 +141,13 @@ export class GenerateRequestsComponent implements OnInit {
 
   public selectCity(city: ICity): void {
     this.selectedCity = city;
+  }
+
+  private checkControlsEmpty(): boolean {
+    return Object.keys(this.requestForm.controls).some(controlName => {
+      const control = this.requestForm.controls[controlName];
+      return control.errors && control.errors.required && control.value === '';
+    });
   }
 
   private fetchData(): void {

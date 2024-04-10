@@ -6,11 +6,13 @@ import { provideToastr } from 'ngx-toastr';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { routes } from './app.routes';
+import { cookieHelper } from './core/helpers';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes), provideAnimationsAsync('noop'),
     provideAnimations(), provideToastr(), provideHttpClient(withFetch()), provideAnimationsAsync(),
-    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' }
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    cookieHelper
   ]
 };
