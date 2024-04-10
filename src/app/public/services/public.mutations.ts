@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environments';
-import { IRequest } from '../interfaces';
 import { cookieHelper } from 'src/app/core/helpers';
 
 @Injectable({

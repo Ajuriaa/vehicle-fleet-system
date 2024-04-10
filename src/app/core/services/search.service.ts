@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import moment from 'moment';
-import { ICity, IDriver, ILog, IRequest, IUser, IVehicle, IVehicleType } from 'src/app/admin/interfaces';
+import { ICity, IDriver, ILog, IRequest, IUser, IVehicle } from 'src/app/admin/interfaces';
 import { Model } from '../enums';
 
 @Injectable({

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ICity, IRequest, IRequestType, IUser } from '../../interfaces';
-import { EMPTY, map, Observable, startWith } from 'rxjs';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { map, Observable, startWith } from 'rxjs';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SearchService } from 'src/app/core/services';
-import { PublicMutations, PublicQueries } from '../../services';
 import { NameHelper } from 'src/app/admin/helpers';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -18,6 +16,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import moment from 'moment';
+import { PublicMutations, PublicQueries } from '../../services';
+import { ICity, IRequest, IRequestType, IUser } from '../../interfaces';
 
 @Component({
   selector: 'app-generate-requests',

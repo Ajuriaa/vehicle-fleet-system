@@ -14,7 +14,7 @@ export interface IRequest {
   Estado_Solicitud: IRequestStatus;
   Tipo_Solicitud: IRequestType;
   Conductor?: IDriver;
-  Pasajeros: String;
+  Pasajeros: string;
 }
 
 export interface IRequestStatus {
