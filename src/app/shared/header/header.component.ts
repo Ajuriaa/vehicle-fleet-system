@@ -51,11 +51,20 @@ export class HeaderComponent implements OnInit {
       case url.includes('requests'):
         this.title = 'Solicitudes';
         break;
-      case url.includes('logs'):
+      case url.includes('create-log'):
+        this.title = 'Crear Bitácoras'
+        break;
+      case url.includes('log'):
         this.title = 'Bitácoras';
         break;
+      case url.includes('vehicle'):
+        this.title = 'Vehículo';
+        break;
+      case url.includes('driver'):
+        this.title = 'Conductor';
+        break;
       default:
-          this.title = 'Default Title'; // Add a default title or handle other cases as needed
+        this.title = 'Sistema de Gestión de Vehículos';
     }
   }
 }

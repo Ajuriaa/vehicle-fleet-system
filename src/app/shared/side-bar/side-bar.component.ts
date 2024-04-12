@@ -16,24 +16,52 @@ export class SideBarComponent implements OnInit {
   public selectedOption = 'dashboard';
   public iconTopPosition = 4.5;
 
-  constructor(private _router: Router, private sharedData: SharedDataService){}
+  constructor(
+    private router: Router
+  ){}
 
   ngOnInit(): void {
-    this.selectedOption = this._router.url.split('/')[2];
+    this.selectedOption = this.router.url.split('/')[2];
     this.animateIcon();
+    this.routeOption();
   }
 
   public selectOption(option: string): void {
     this.selectedOption = option;
     this.animateIcon();
-    setTimeout(() => this._router.navigate([`admin/`, option]), 500);
+    setTimeout(() => this.router.navigate([`admin/`, option]), 500);
   }
 
   public logout(): void {
-    this._router.navigate([``]);
+    this.router.navigate([``]);
   }
 
-  animateIcon(): void {
+  private routeOption(): void {
+    const url = this.router.url;
+    switch(true) {
+      case url.includes('vehicle'):
+        this.selectedOption = 'vehicles';
+        break;
+      case url.includes('driver'):
+        this.selectedOption = 'drivers';
+        break;
+      case url.includes('create-log'):
+        this.selectedOption = 'logs'
+        break;
+      case url.includes('log'):
+        this.selectedOption = 'logs';
+        break;
+      case url.includes('vehicle'):
+        this.selectedOption = 'vehicles';
+        break;
+      default:
+        this.selectedOption = 'dashboard';
+    }
+    this.animateIcon();
+  }
+
+
+  private animateIcon(): void {
     switch (this.selectedOption) {
       case 'dashboard':
         this.iconTopPosition = 4.5;
