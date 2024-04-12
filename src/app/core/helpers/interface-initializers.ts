@@ -78,16 +78,6 @@ export const EMPTY_GAS_UNIT: IGasUnit = {
   Unidad: '',
 };
 
-export const EMPTY_GAS_REFILL: IGasRefill = {
-  ID_Llenado_Combustible: 0,
-  Cantidad: 0,
-  Estacion_Combustible: '',
-  Kilometraje_Recarga: 0,
-  Fecha: new Date(),
-  Precio: 0,
-  Unidad_Combustible: EMPTY_GAS_UNIT,
-};
-
 export const EMPTY_VEHICLE: IVehicle = {
   ID_Vehiculo: 0,
   Placa: '',
@@ -118,4 +108,15 @@ export const EMPTY_LOG: ILog = {
   Llenados_Combustible: [],
   Conductor: EMPTY_DRIVER,
   Vehiculo: EMPTY_VEHICLE
+};
+
+export const EMPTY_GAS_REFILL: IGasRefill = {
+  ID_Llenado_Combustible: 0,
+  Cantidad: 0,
+  Estacion_Combustible: '',
+  Kilometraje_Recarga: 0,
+  Fecha: new Date(),
+  Precio: 0,
+  Unidad_Combustible: EMPTY_GAS_UNIT,
+  Bitacora: EMPTY_LOG
 };

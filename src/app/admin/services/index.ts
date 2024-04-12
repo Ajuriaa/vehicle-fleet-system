@@ -6,3 +6,4 @@ export * from './requests.queries';
 export * from './requests.mutations';
 export * from './maintenance.mutations';
 export * from './logs.queries';
+export * from './logs.mutations';

@@ -29,6 +29,7 @@ export interface IGasRefill {
   Fecha: Date;
   Precio: number;
   Unidad_Combustible: IGasUnit;
+  Bitacora: ILog;
 }
 
 export interface IGasUnit {
@@ -46,4 +47,20 @@ export interface IUsersResponse {
 
 export interface IGasUnitsResponse {
   data: IGasUnit[];
+}
+
+export interface FuesWithLog {
+  ID_Vehiculo: number;
+  Kilometraje_Vehiculo: number;
+  Cantidad: number;
+  Estacion_Combustible: string;
+  Kilometraje_Recarga: number;
+  Fecha: Date;
+  Precio: number;
+  ID_Unidad_Combustible: number;
+}
+
+export interface exportData {
+  logs: any[];
+  refills: FuesWithLog[];
 }

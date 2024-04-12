@@ -43,6 +43,7 @@
   <div class="buttons-log" *ngIf="showTable">
     <app-primary-button styleClass="btn-red" class="btn" (btnClick)="return()">Cancelar</app-primary-button>
     <app-primary-button class="btn" (btnClick)="openLogModal()">Agregar bitácora</app-primary-button>
+    <app-primary-button class="btn" (btnClick)="onSubmit()">Guardar Bitácoras</app-primary-button>
   </div>
   <section class="table-container">
     <table #table mat-table [dataSource]="logs" class="table" *ngIf="showTable">

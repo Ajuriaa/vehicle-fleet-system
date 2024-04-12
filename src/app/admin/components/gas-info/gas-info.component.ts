@@ -80,7 +80,8 @@ export class GasInfoComponent implements OnInit {
       Kilometraje_Recarga: formControls.kms.value,
       Fecha: formControls.date.value,
       Precio: formControls.price.value,
-      Unidad_Combustible: gasUnit
+      Unidad_Combustible: gasUnit,
+      Bitacora: this.data.log
     };
     this.dialogRef.close(gasInfo);
   }

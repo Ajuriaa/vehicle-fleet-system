@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { EMPTY_DRIVER, EMPTY_VEHICLE } from 'src/app/core/helpers';
+import { cookieHelper, EMPTY_DRIVER, EMPTY_VEHICLE } from 'src/app/core/helpers';
 import { PrimaryButtonComponent } from 'src/app/shared';
 import { CommonModule, AsyncPipe, Location } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -13,11 +13,11 @@ import { SearchService } from 'src/app/core/services';
 import { Model } from 'src/app/core/enums';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import moment from 'moment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { DriverQueries, VehicleQueries } from '../../services';
+import { DriverQueries, LogsMutations, VehicleQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
-import { IDriver, IGasRefill, ILog, IVehicle } from '../../interfaces';
+import { exportData, FuesWithLog, IDriver, IGasRefill, ILog, IVehicle } from '../../interfaces';
 import { AddLogComponent, GasInfoComponent, ShowAddPassengersComponent } from '../../components';
 
 const TABLE_COLUMNS = [
@@ -62,6 +62,9 @@ export class CreateLogComponent implements OnInit {
     private searchEngine: SearchService,
     private route: ActivatedRoute,
     private location: Location,
+    private logMutation: LogsMutations,
+    private router: Router,
+    private cookieHelper: cookieHelper,
     private dialog: MatDialog
   ){}
 
@@ -171,6 +174,53 @@ export class CreateLogComponent implements OnInit {
       log.Llenados_Combustible.push(formattedGas);
       this.table.renderRows();
     });
+  }
+
+  public async onSubmit(): Promise<void> {
+    const refills: FuesWithLog[] = [];
+    const exportingLogs: any[] = [];
+
+    this.logs.forEach(log => {
+      const formattedLogs = {
+        ID_Vehiculo: log.Vehiculo.ID_Vehiculo,
+        ID_Conductor: log.Conductor.ID_Conductor,
+        Kilometraje_Entrada: log.Kilometraje_Entrada,
+        Kilometraje_Salida: log.Kilometraje_Salida,
+        Destino: log.Destino,
+        Hora_Salida: moment.utc(log.Hora_Salida, 'hh:mm:ss').toISOString(),
+        Hora_Entrada: moment.utc(log.Hora_Entrada, 'hh:mm:ss').toISOString(),
+        Fecha: log.Fecha,
+        Observaciones: log.Observaciones,
+        Pasajeros: log.Pasajeros
+      };
+      exportingLogs.push(this.cookieHelper.dataToSend(formattedLogs));
+
+      if (log.Llenados_Combustible.length > 0) {
+        const refill = log.Llenados_Combustible[0];
+        const extractedRefills: FuesWithLog = {
+          ID_Vehiculo: this.selectedVehicle.ID_Vehiculo,
+          Kilometraje_Vehiculo: log.Kilometraje_Entrada,
+          Cantidad: refill.Cantidad,
+          Estacion_Combustible: refill.Estacion_Combustible,
+          Kilometraje_Recarga: refill.Kilometraje_Recarga,
+          Fecha: refill.Fecha,
+          Precio: refill.Precio,
+          ID_Unidad_Combustible: refill.Unidad_Combustible.ID_Unidad_Combustible
+        };
+        refills.push(this.cookieHelper.dataToSend(extractedRefills));
+      }
+    });
+
+    const data: exportData = {
+      logs: exportingLogs,
+      refills
+    };
+
+    const mutationResponse = await this.logMutation.createMaintenance(data);
+
+    if (mutationResponse) {
+      this.router.navigate([`/admin/log/${this.selectedVehicle.ID_Vehiculo}`]);
+    }
   }
 
   private fetchData(): void {
