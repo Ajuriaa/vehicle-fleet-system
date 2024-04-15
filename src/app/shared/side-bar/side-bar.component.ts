@@ -50,6 +50,12 @@ export class SideBarComponent implements OnInit {
       case url.includes('log'):
         this.selectedOption = 'logs';
         break;
+      case url.includes('requests'):
+        this.selectedOption = 'requests';
+        break;
+      case url.includes('request'):
+        this.selectedOption = 'requests';
+        break;
       case url.includes('vehicles'):
         this.selectedOption = 'vehicles';
         break;
