@@ -13,6 +13,7 @@ import { Model } from 'src/app/core/enums';
 import { IDriver, IRequest, IVehicle } from '../../interfaces';
 import { RequestQueries } from '../../services';
 import { NameHelper, vehicleInfoHelper } from '../../helpers';
+import { UpdateRequestComponent } from '../../components';
 
 const TABLE_COLUMNS = [
   'status', 'name', 'date', 'timeOut', 'timeIn', 'city', 'vehicle', 'driver', 'actions'
@@ -89,6 +90,17 @@ export class RequestsComponent implements OnInit {
   public openVehicle(vehicle: IVehicle): void {
     if (!vehicle) return;
     this.router.navigate([`/admin/vehicle/${vehicle.ID_Vehiculo}`]);
+  }
+
+  public openUpdateRequestModal(request: IRequest): void {
+    this.dialog.open(UpdateRequestComponent, {
+      panelClass: 'dialog-style',
+      data: request
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.getAllRequests();
+      }
+    });
   }
 
   private getAllRequests(): void {

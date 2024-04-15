@@ -26,7 +26,7 @@ export class VehicleMutations {
           }
         },
         (error) => {
-          this.toaster.error(error, 'Error!');
+          this.toaster.error(error.message, 'Error!');
           reject(error);
         }
       );
@@ -46,7 +46,7 @@ export class VehicleMutations {
           }
         },
         (error) => {
-          this.toaster.error(error, 'Error!');
+          this.toaster.error(error.message, 'Error!');
           reject(error);
         }
       );
@@ -66,7 +66,7 @@ export class VehicleMutations {
           }
         },
         (error) => {
-          this.toaster.error(error, 'Error!');
+          this.toaster.error(error.message, 'Error!');
           reject(error);
         }
       );

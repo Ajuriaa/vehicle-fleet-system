@@ -1,4 +1,4 @@
-import { ICity, IVehicle, IDriver } from ".";
+import { ICity, IVehicle, IDriver, IUser } from ".";
 
 export interface IRequest {
   ID_Solicitud: number;
@@ -37,5 +37,5 @@ export interface IRequestResponse {
 export interface IAvaliableForRequestResponse {
   vehicles: IVehicle[];
   drivers: IDriver[];
-  states: IRequestStatus[];
+  employees: IUser[];
 }

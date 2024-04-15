@@ -25,7 +25,7 @@ export class MaintenanceMutations {
           }
         },
         (error) => {
-          this.toaster.error(error, 'Error!');
+          this.toaster.error(error.message, 'Error!');
           reject(error);
         }
       );

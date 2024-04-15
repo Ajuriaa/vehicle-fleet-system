@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { SharedDataService } from 'src/app/core/services';
 import { SideNavButtonComponent } from '../buttons';
 
 @Component({
@@ -46,12 +45,12 @@ export class SideBarComponent implements OnInit {
         this.selectedOption = 'drivers';
         break;
       case url.includes('create-log'):
-        this.selectedOption = 'logs'
+        this.selectedOption = 'logs';
         break;
       case url.includes('log'):
         this.selectedOption = 'logs';
         break;
-      case url.includes('vehicle'):
+      case url.includes('vehicles'):
         this.selectedOption = 'vehicles';
         break;
       default:

@@ -1,64 +1,117 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatInput } from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
 import { PrimaryButtonComponent } from 'src/app/shared';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { EMPTY_REQUEST } from 'src/app/core/helpers';
-import { IDriver, IRequest, IRequestStatus, IVehicle } from '../../interfaces';
-import { vehicleInfoHelper } from '../../helpers';
+import { cookieHelper, EMPTY_DRIVER, EMPTY_REQUEST, EMPTY_USER, EMPTY_VEHICLE } from 'src/app/core/helpers';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { map, Observable, startWith } from 'rxjs';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { Model } from 'src/app/core/enums';
+import { SearchService } from 'src/app/core/services';
 import { RequestMutations, RequestQueries } from '../../services';
+import { NameHelper, vehicleInfoHelper } from '../../helpers';
+import { IDriver, IRequest, IUser, IVehicle } from '../../interfaces';
 
 @Component({
   selector: 'app-update-request',
   standalone: true,
   imports: [
     PrimaryButtonComponent, FormsModule,
-    ReactiveFormsModule, MatInput,
-    CommonModule
+    ReactiveFormsModule, MatAutocompleteModule,
+    CommonModule, MatInputModule, MatCheckboxModule
   ],
+  providers: [vehicleInfoHelper, NameHelper, cookieHelper],
   templateUrl: './update-request.component.html',
   styleUrl: './update-request.component.scss'
 })
 export class UpdateRequestComponent implements OnInit {
   public requestForm!: FormGroup;
-  public driverList: IDriver[] = [];
-  public vehicleList: IVehicle[] = [];
-  public statusList: IRequestStatus[] = [];
+  public drivers: IDriver[] = [];
+  public employees: IUser[] = [];
+  public employee: IUser = EMPTY_USER;
+  public vehicles: IVehicle[] = [];
+  public filteredDrivers!: Observable<IDriver[]>;
+  public filteredEmployees!: Observable<IUser[]>;
+  public filteredVehicles!: Observable<IVehicle[]>;
+  public selectedVehicle: IVehicle = EMPTY_VEHICLE;
+  public selectedDriver: IDriver = EMPTY_DRIVER;
+  public selectedEmployees: IUser[] = [];
+  public error = false;
+  public emptyPassengers = false;
 
   constructor(
+    public vehicleInfoHelper: vehicleInfoHelper,
     private _formBuilder: FormBuilder,
-    private vehicleInfoHelper: vehicleInfoHelper,
     private requestQuery: RequestQueries,
     private requestMutations: RequestMutations,
+    private nameHelper: NameHelper,
     private dialogRef: MatDialogRef<UpdateRequestComponent>,
+    private searchEngine: SearchService,
     @Inject(MAT_DIALOG_DATA) public request: IRequest = EMPTY_REQUEST
   ){}
 
   ngOnInit(): void {
+    this.selectedVehicle = this.request.Vehiculo || EMPTY_VEHICLE;
     this.requestForm = this._formBuilder.group({
-      status: ['', [Validators.required]],
-      vehicle: ['', [Validators.required]],
-      driver: ['', [Validators.required]],
+      vehicle: [[''], [Validators.required]],
+      driver: [[''], [Validators.required]],
+      employees: []
     });
 
     this.fetchData();
     this.fillForm();
+    this.startFiltering();
+  }
+
+  public startFiltering(): void {
+    this.filteredEmployees = this.requestForm.controls.employees.valueChanges.pipe(
+      startWith(''),
+      map(value => this.searchEngine.filterData(this.employees, value.toString(), Model.user)),
+    );
+    this.filteredVehicles = this.requestForm.controls.vehicle.valueChanges.pipe(
+      startWith(''),
+      map(value => this.searchEngine.filterData(this.vehicles, value, Model.vehicle)),
+    );
+    this.filteredDrivers = this.requestForm.controls.driver.valueChanges.pipe(
+      startWith(''),
+      map(value => this.searchEngine.filterData(this.drivers, value, Model.driver)),
+    );
   }
 
   public onCancel(changesMade = false): void {
     this.dialogRef.close(changesMade);
   }
 
+  public selectDriver(driver: IDriver): void {
+    this.selectedDriver = driver;
+  }
+
+  public selectVehicle(vehicle: IVehicle): void {
+    this.selectedVehicle = vehicle;
+  }
+
   public async onSubmit(): Promise<void> {
+    this.error = false;
+    this.emptyPassengers = false;
+
     if (this.requestForm.invalid) {
+      this.error = true;
       return;
     }
+
+    if (this.selectedEmployees.length === 0) {
+      this.emptyPassengers = true;
+      return;
+    }
+
     const data = {
       ID_Solicitud: this.request.ID_Solicitud,
-      ID_Estado_Solicitud: this.requestForm.value.status,
-      ID_Vehiculo: this.requestForm.value.vehicle,
-      ID_Conductor: this.requestForm.value.driver
+      pastVehicle: this.request.Vehiculo?.ID_Vehiculo || null,
+      ID_Vehiculo: this.selectedVehicle.ID_Vehiculo,
+      ID_Conductor: this.selectedDriver.ID_Conductor,
+      Pasajeros: JSON.stringify('[' + this.selectedEmployees.map((passenger) => passenger.ID_Empleado).join(',') + ']')
     };
 
     const mutationResponse = await this.requestMutations.updateRequest(data);
@@ -68,9 +121,28 @@ export class UpdateRequestComponent implements OnInit {
     }
   }
 
+  public isPassengerSelected(user: IUser): boolean {
+    return this.selectedEmployees.includes(user);
+  }
+
+  public toggleSelection(user: IUser): void {
+    if (this.selectedEmployees.includes(user)) {
+      const index = this.selectedEmployees.indexOf(user);
+      this.selectedEmployees.splice(index, 1);
+    } else {
+      this.selectedEmployees.push(user);
+    }
+  }
+
+  public display(): string {
+    const names = this.selectedEmployees.map((passenger) => {
+      return this.nameHelper.getShortName(passenger.Nombres + " " + passenger.Apellidos);
+    });
+    return names.join(', ');
+  }
+
   private fillForm(): void {
     this.requestForm.patchValue({
-      status: this.request.Estado_Solicitud.Estado,
       vehicle: this.vehicleInfoHelper.getModel(this.request.Vehiculo),
       driver: this.request.Conductor?.Nombre || ''
     });
@@ -79,9 +151,9 @@ export class UpdateRequestComponent implements OnInit {
   private fetchData(): void {
     this.requestQuery.availableForRequest(this.request.ID_Solicitud).subscribe((data) => {
       if(data) {
-        this.driverList = data.drivers;
-        this.vehicleList = data.vehicles;
-        this.statusList = data.states;
+        this.drivers = data.drivers;
+        this.vehicles = data.vehicles;
+        this.employees = data.employees;
       }
     });
   }
