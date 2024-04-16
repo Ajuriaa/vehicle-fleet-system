@@ -42,6 +42,7 @@ export class GenerateRequestsComponent implements OnInit {
   public input = '';
   public id = 0;
   public error = false;
+  public noUser = false;
   public showForm = false;
   public selectedEmployees: IUser[] = [];
   public filteredCities!: Observable<ICity[]>;
@@ -128,8 +129,15 @@ export class GenerateRequestsComponent implements OnInit {
   }
 
   public getId(): void {
+    this.error = false;
+    this.noUser = false;
+
     if(this.input === '' || this.input === null) {
       this.error = true;
+      return;
+    }
+    if(this.employees.find(employee => employee.ID_Empleado === +this.input) === undefined ){
+      this.noUser = true;
       return;
     }
     this.id = +this.input;

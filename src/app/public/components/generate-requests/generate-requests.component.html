@@ -125,6 +125,7 @@
 
   </form>
   <mat-error class="error" *ngIf="error">Llene todos los campos requeridos</mat-error>
+  <mat-error class="error" *ngIf="noUser">No existe un usuario con ese ID</mat-error>
   <div class="buttons" *ngIf="showForm">
     <app-primary-button class="btn" (btnClick)="onSubmit()">ENVIAR</app-primary-button>
   </div>
