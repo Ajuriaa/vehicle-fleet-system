@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
-import { RequestMutations } from '../../services';
 import { CommonModule } from '@angular/common';
+import { RequestMutations } from '../../services';
 
 @Component({
   selector: 'app-confirm-component',
