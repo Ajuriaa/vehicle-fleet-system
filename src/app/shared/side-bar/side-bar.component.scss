@@ -2,7 +2,7 @@
 
 .container {
   @include flex-center;
-  height: 12rem;
+  height: 13.5rem;
   width: 55%;
   border-radius: 15rem;
   background-color: $blue;
@@ -11,7 +11,7 @@
     @include flex-center;
     position: relative;
     gap: 6.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 }
 
