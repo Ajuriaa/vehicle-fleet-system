@@ -1,4 +1,6 @@
-<div class="container">
+<app-loading *ngIf="loading" class="loading"></app-loading>
+
+<div class="container" *ngIf="!loading">
   <p class="title">Editar Solicitud</p>
   <form [formGroup]="requestForm" class="driver-form">
     <mat-form-field class="field">

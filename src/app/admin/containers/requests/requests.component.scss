@@ -45,10 +45,18 @@
       font-size: 2.5rem;
     }
 
-    .uil-edit {
-      color: $warning;
+    .uil {
       cursor: pointer;
       font-size: 3rem;
+    }
+
+    .uil-edit {
+      color: $warning;
+    }
+
+    .uil-times-circle {
+      color: $red;
+      margin-left: 1rem;
     }
   }
 

@@ -2,17 +2,17 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { PrimaryButtonComponent } from 'src/app/shared';
+import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { cookieHelper, EMPTY_DRIVER, EMPTY_REQUEST, EMPTY_USER, EMPTY_VEHICLE } from 'src/app/core/helpers';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { map, Observable, startWith } from 'rxjs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { Model } from 'src/app/core/enums';
+import { Model, RequestStatus } from 'src/app/core/enums';
 import { SearchService } from 'src/app/core/services';
 import { RequestMutations, RequestQueries } from '../../services';
 import { NameHelper, vehicleInfoHelper } from '../../helpers';
-import { IDriver, IRequest, IUser, IVehicle } from '../../interfaces';
+import { IDriver, IRequest, IRequestStatus, IUser, IVehicle } from '../../interfaces';
 
 @Component({
   selector: 'app-update-request',
@@ -20,7 +20,8 @@ import { IDriver, IRequest, IUser, IVehicle } from '../../interfaces';
   imports: [
     PrimaryButtonComponent, FormsModule,
     ReactiveFormsModule, MatAutocompleteModule,
-    CommonModule, MatInputModule, MatCheckboxModule
+    CommonModule, MatInputModule, MatCheckboxModule,
+    LoadingComponent
   ],
   providers: [vehicleInfoHelper, NameHelper, cookieHelper],
   templateUrl: './update-request.component.html',
@@ -28,10 +29,13 @@ import { IDriver, IRequest, IUser, IVehicle } from '../../interfaces';
 })
 export class UpdateRequestComponent implements OnInit {
   public requestForm!: FormGroup;
+  public loading = true;
+  public statuses: IRequestStatus[] = [];
   public drivers: IDriver[] = [];
   public employees: IUser[] = [];
   public employee: IUser = EMPTY_USER;
   public vehicles: IVehicle[] = [];
+  public passengerIds: number[] = [];
   public filteredDrivers!: Observable<IDriver[]>;
   public filteredEmployees!: Observable<IUser[]>;
   public filteredVehicles!: Observable<IVehicle[]>;
@@ -54,6 +58,8 @@ export class UpdateRequestComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectedVehicle = this.request.Vehiculo || EMPTY_VEHICLE;
+    this.selectedDriver = this.request.Conductor || EMPTY_DRIVER;
+    this.passengerIds = this.request.Pasajeros !== '' ? JSON.parse(this.request.Pasajeros) : [];
     this.requestForm = this._formBuilder.group({
       vehicle: [[''], [Validators.required]],
       driver: [[''], [Validators.required]],
@@ -106,13 +112,18 @@ export class UpdateRequestComponent implements OnInit {
       return;
     }
 
-    const data = {
+    this.loading = true;
+    const data: any = {
       ID_Solicitud: this.request.ID_Solicitud,
       pastVehicle: this.request.Vehiculo?.ID_Vehiculo || null,
       ID_Vehiculo: this.selectedVehicle.ID_Vehiculo,
       ID_Conductor: this.selectedDriver.ID_Conductor,
       Pasajeros: JSON.stringify('[' + this.selectedEmployees.map((passenger) => passenger.ID_Empleado).join(',') + ']')
     };
+
+    if(this.selectedDriver.ID_Conductor !== 0 && this.selectedVehicle.ID_Vehiculo !== 0) {
+      data.ID_Estado_Solicitud = this.statuses.find((status) => status.Estado === RequestStatus.active)?.ID_Estado_Solicitud;
+    }
 
     const mutationResponse = await this.requestMutations.updateRequest(data);
 
@@ -154,6 +165,13 @@ export class UpdateRequestComponent implements OnInit {
         this.drivers = data.drivers;
         this.vehicles = data.vehicles;
         this.employees = data.employees;
+        this.selectedEmployees = this.employees.filter((employee) => this.passengerIds.includes(employee.ID_Empleado));
+        this.loading = false;
+      }
+    });
+    this.requestQuery.getRequestStatuses().subscribe(({ data }) => {
+      if(data) {
+        this.statuses = data;
       }
     });
   }

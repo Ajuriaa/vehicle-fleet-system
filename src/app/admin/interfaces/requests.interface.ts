@@ -39,3 +39,7 @@ export interface IAvaliableForRequestResponse {
   drivers: IDriver[];
   employees: IUser[];
 }
+
+export interface IRequestStatusResponse {
+  data: IRequestStatus[];
+}

@@ -12,6 +12,27 @@ export class RequestMutations {
     private toaster: ToastrService
   ) {}
 
+  public cancelRequest(id: number): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.http.post<boolean>(`${environment.apiUrl}/cancel-request`, { id }).subscribe(
+        (response: boolean) => {
+          if (response) {
+            this.toaster.success('Solicitud cancelada exitosamente', 'Listo!');
+            resolve(response);
+          }
+          else {
+            this.toaster.success('Ocurrió un error durante la cancelación', 'Error!');
+            resolve(response);
+          }
+        },
+        (error) => {
+          this.toaster.error(error.message, 'Error!');
+          reject(error);
+        }
+      );
+    });
+  }
+
   public updateRequest(data: any): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       this.http.post<boolean>(`${environment.apiUrl}/update-request`, { data }).subscribe(

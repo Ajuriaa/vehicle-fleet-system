@@ -9,11 +9,11 @@ import moment from 'moment';
 import 'moment-timezone';
 import { Router } from '@angular/router';
 import { PDFHelper } from 'src/app/core/helpers';
-import { Model } from 'src/app/core/enums';
-import { IDriver, IRequest, IVehicle } from '../../interfaces';
+import { Model, RequestStatus } from 'src/app/core/enums';
+import { IDriver, IRequest, IRequestStatus, IVehicle } from '../../interfaces';
 import { RequestQueries } from '../../services';
 import { NameHelper, vehicleInfoHelper } from '../../helpers';
-import { UpdateRequestComponent } from '../../components';
+import { ConfirmComponentComponent, UpdateRequestComponent } from '../../components';
 
 const TABLE_COLUMNS = [
   'status', 'name', 'date', 'timeOut', 'timeIn', 'city', 'vehicle', 'driver', 'actions'
@@ -35,6 +35,7 @@ export class RequestsComponent implements OnInit {
   public pendingRequests = 0;
   public activeRequests = 0;
   public filteredRequests: IRequest[] = [];
+  public requestStatuses: IRequestStatus[] = [];
 
   constructor(
     public nameHelper: NameHelper,
@@ -47,6 +48,7 @@ export class RequestsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getRequestStatus();
     this.getAllRequests();
   }
 
@@ -64,6 +66,16 @@ export class RequestsComponent implements OnInit {
 
   public getTime(time: string): string {
     return moment(time).tz("America/Tegucigalpa").format('hh:mm');
+  }
+
+  public canEdit(request: IRequest): boolean {
+    const status = request.Estado_Solicitud.Estado;
+    if (status === RequestStatus.pendingByAdmin || status === RequestStatus.active) return true;
+    return false;
+  }
+
+  public canCancel(request: IRequest): boolean {
+    return request.Estado_Solicitud.Estado === RequestStatus.pendingByAdmin ;
   }
 
   public getVehicle(vehicle: IVehicle): string {
@@ -100,6 +112,23 @@ export class RequestsComponent implements OnInit {
       if(result) {
         this.getAllRequests();
       }
+    });
+  }
+
+  public cancelRequest(request: IRequest): void {
+    this.dialog.open(ConfirmComponentComponent, {
+      panelClass: 'dialog-style',
+      data: { type: 'cancel-request', id: request.ID_Solicitud }
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.getAllRequests();
+      }
+    });
+  }
+
+  private getRequestStatus(): void {
+    this.requestQuery.getRequestStatuses().subscribe(({data}) => {
+      this.requestStatuses = data;
     });
   }
 

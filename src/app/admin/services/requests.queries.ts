@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environments';
-import { IAvaliableForRequestResponse, IRequestResponse, IRequestsResponse } from '../interfaces';
+import { IAvaliableForRequestResponse, IRequestResponse, IRequestsResponse, IRequestStatusResponse } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +20,9 @@ export class RequestQueries {
 
   public availableForRequest(id: number): Observable<IAvaliableForRequestResponse> {
     return this.http.get<IAvaliableForRequestResponse>(`${environment.apiUrl}/available-request/${id}`);
+  }
+
+  public getRequestStatuses(): Observable<IRequestStatusResponse> {
+    return this.http.get<IRequestStatusResponse>(`${environment.apiUrl}/request-status`);
   }
 }
