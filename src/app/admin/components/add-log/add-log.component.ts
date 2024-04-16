@@ -57,7 +57,7 @@ export class AddLogComponent implements OnInit {
   public onSubmit(): void {
     if(!this.validateErrors()) {
       return;
-    }moment('02:54 PM', 'h:mm A').format('HH:mm:ss');
+    }
 
     const data = {
       ID_Bitacora: 0,

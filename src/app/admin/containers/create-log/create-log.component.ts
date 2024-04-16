@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { cookieHelper, EMPTY_DRIVER, EMPTY_VEHICLE } from 'src/app/core/helpers';
-import { PrimaryButtonComponent } from 'src/app/shared';
+import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { CommonModule, AsyncPipe, Location } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -30,7 +30,7 @@ const TABLE_COLUMNS = [
     PrimaryButtonComponent, MatFormFieldModule, FormsModule,
     ReactiveFormsModule, CommonModule, MatInputModule,
     MatAutocompleteModule, AsyncPipe, MatSelectModule,
-    MatTableModule
+    MatTableModule, LoadingComponent
   ],
   providers: [vehicleInfoHelper, provideNativeDateAdapter()],
   templateUrl: './create-log.component.html',
@@ -47,6 +47,7 @@ export class CreateLogComponent implements OnInit {
   public selectedDriver: IDriver = EMPTY_DRIVER;
   public displayedColumns: string[] = TABLE_COLUMNS;
   public readonly = false;
+  public loading = false;
   public showTable = false;
   public error = false;
   public currentKm = 0;
@@ -177,6 +178,7 @@ export class CreateLogComponent implements OnInit {
   }
 
   public async onSubmit(): Promise<void> {
+    this.loading = true;
     const refills: FuesWithLog[] = [];
     const exportingLogs: any[] = [];
 

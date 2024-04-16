@@ -1,4 +1,6 @@
-<div class="container">
+<app-loading class="loading" *ngIf="loading"></app-loading>
+
+<div class="container" *ngIf="!loading">
   <form [formGroup]="logForm" class="driver-form" *ngIf="!showTable">
     <mat-form-field class="field">
       <mat-label class="label">Vehículo</mat-label>
