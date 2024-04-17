@@ -9,6 +9,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { VehicleMutations, VehicleQueries } from '../../services';
 import { IBrand, IModel, IVehicle, IVehicleStatus, IVehicleType } from '../../interfaces';
+import { VehicleStatus } from 'src/app/core/enums';
 
 @Component({
   selector: 'app-create-update-vehicle',
@@ -23,7 +24,7 @@ import { IBrand, IModel, IVehicle, IVehicleStatus, IVehicleType } from '../../in
   templateUrl: './create-update-vehicle.component.html',
   styleUrl: './create-update-vehicle.component.scss'
 })
-export class CreateUpdateVehicleComponent implements OnInit{
+export class CreateUpdateVehicleComponent implements OnInit {
   public isCreate = false;
   public vehicleType = '';
   public currentYear = new Date().getFullYear();
@@ -154,5 +155,19 @@ export class CreateUpdateVehicleComponent implements OnInit{
       status: this.data.vehicle.Estado_Vehiculo.ID_Estado_Vehiculo,
       vehicleType: this.data.vehicle.Modelo.Tipo_Vehiculo.Tipo_Vehiculo
     });
+    this.disableFields();
+  }
+
+  private disableFields(): void {
+    const vehicleState = this.data.vehicle.Estado_Vehiculo.Estado_Vehiculo;
+    vehicleState === VehicleStatus.inUse ? this.vehicleForm.controls.status.disable() : '';
+
+    this.vehicleForm.controls.model.disable();
+    this.vehicleForm.controls.brand.disable();
+    this.vehicleForm.controls.plate.disable();
+    this.vehicleForm.controls.kms.disable();
+    this.vehicleForm.controls.chasis.disable();
+    this.vehicleForm.controls.motor.disable();
+    this.vehicleForm.controls.year.disable();
   }
 }
