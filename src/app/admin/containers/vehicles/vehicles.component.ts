@@ -12,6 +12,7 @@ import { CreateUpdateVehicleComponent, DeleteVehicleComponent } from '../../comp
 import { VehicleQueries } from '../../services';
 import { IVehicle } from '../../interfaces';
 import { vehicleInfoHelper } from '../../helpers';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 const TABLE_COLUMNS = [ 'plate', 'model', 'type','status', 'edit'];
 @Component({
@@ -19,7 +20,8 @@ const TABLE_COLUMNS = [ 'plate', 'model', 'type','status', 'edit'];
   standalone: true,
   imports: [
     CommonModule, MatTableModule, FormsModule,
-    PrimaryButtonComponent, LoadingComponent, NoResultComponent
+    PrimaryButtonComponent, LoadingComponent, NoResultComponent,
+    NgxPaginationModule
   ],
   providers: [VehicleQueries, vehicleInfoHelper, PDFHelper],
   templateUrl: './vehicles.component.html',
@@ -35,6 +37,7 @@ export class VehiclesComponent implements OnInit {
   public maintenanceVehicle: IVehicle = EMPTY_VEHICLE;
   public displayedColumns: string[] = TABLE_COLUMNS;
   public loading = true;
+  public page = 1;
 
   constructor(
     public vehicleInfoHelper: vehicleInfoHelper,

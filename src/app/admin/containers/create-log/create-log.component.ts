@@ -19,6 +19,7 @@ import { DriverQueries, LogsMutations, VehicleQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
 import { exportData, FuesWithLog, IDriver, IGasRefill, ILog, IVehicle } from '../../interfaces';
 import { AddLogComponent, GasInfoComponent, ShowAddPassengersComponent } from '../../components';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 const TABLE_COLUMNS = [
   'date'  ,'destination', 'timeOut', 'timeIn', 'kmsOut', 'kmsIn', 'gas', 'passengers', 'observation','delete'
@@ -30,7 +31,7 @@ const TABLE_COLUMNS = [
     PrimaryButtonComponent, MatFormFieldModule, FormsModule,
     ReactiveFormsModule, CommonModule, MatInputModule,
     MatAutocompleteModule, AsyncPipe, MatSelectModule,
-    MatTableModule, LoadingComponent
+    MatTableModule, LoadingComponent, NgxPaginationModule
   ],
   providers: [vehicleInfoHelper, provideNativeDateAdapter()],
   templateUrl: './create-log.component.html',
@@ -53,6 +54,7 @@ export class CreateLogComponent implements OnInit {
   public currentKm = 0;
   public currentTime = new Date().toLocaleTimeString();
   public vehicle: IVehicle = EMPTY_VEHICLE;
+  public page = 1;
   @ViewChild(MatTable) table!: MatTable<any>;
 
   constructor(

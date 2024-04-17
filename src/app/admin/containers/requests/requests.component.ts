@@ -14,6 +14,7 @@ import { IDriver, IRequest, IRequestStatus, IVehicle } from '../../interfaces';
 import { RequestQueries } from '../../services';
 import { NameHelper, vehicleInfoHelper } from '../../helpers';
 import { ConfirmComponentComponent, UpdateRequestComponent } from '../../components';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 const TABLE_COLUMNS = [
   'status', 'name', 'date', 'timeOut', 'timeIn', 'city', 'vehicle', 'driver', 'actions'
@@ -22,7 +23,10 @@ const TABLE_COLUMNS = [
 @Component({
   selector: 'app-requests',
   standalone: true,
-  imports: [CommonModule, MatTableModule, FormsModule, PrimaryButtonComponent, LoadingComponent],
+  imports: [
+    CommonModule, MatTableModule, FormsModule,
+    PrimaryButtonComponent, LoadingComponent, NgxPaginationModule
+  ],
   providers: [RequestQueries, PDFHelper, vehicleInfoHelper, NameHelper],
   templateUrl: './requests.component.html',
   styleUrl: './requests.component.scss'
@@ -36,6 +40,7 @@ export class RequestsComponent implements OnInit {
   public activeRequests = 0;
   public filteredRequests: IRequest[] = [];
   public requestStatuses: IRequestStatus[] = [];
+  public page = 1;
 
   constructor(
     public nameHelper: NameHelper,

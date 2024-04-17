@@ -77,3 +77,15 @@ a {
   justify-content: center;
   align-items: center;
 }
+
+.my-pagination {
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  margin-top: 1rem;
+  justify-content: flex-end;
+
+  .ngx-pagination .current {
+    background-color: $blue;
+  }
+}

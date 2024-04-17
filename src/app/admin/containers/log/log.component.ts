@@ -13,6 +13,7 @@ import { GasInfoComponent, ShowAddPassengersComponent } from '../../components';
 import { vehicleInfoHelper } from '../../helpers';
 import { VehicleQueries } from '../../services';
 import { ILog, IVehicle } from '../../interfaces';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 const TABLE_COLUMNS = [
   'date', 'driver', 'destination', 'kmsOut', 'kmsIn', 'timeOut', 'timeIn', 'observation', 'passengers', 'gas'
@@ -22,7 +23,8 @@ const TABLE_COLUMNS = [
   standalone: true,
   imports: [
     CommonModule, MatTableModule, FormsModule,
-    PrimaryButtonComponent, LoadingComponent, NoResultComponent
+    PrimaryButtonComponent, LoadingComponent, NoResultComponent,
+    NgxPaginationModule
   ],
   providers: [vehicleInfoHelper],
   templateUrl: './log.component.html',
@@ -35,6 +37,7 @@ export class LogComponent implements OnInit {
   public logs: ILog[] = [];
   public filteredLogs: ILog[] = [];
   public vehicle: IVehicle = EMPTY_VEHICLE;
+  public page = 1;
 
   constructor(
     public vehicleHelper: vehicleInfoHelper,

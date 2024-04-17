@@ -12,6 +12,7 @@ import { IDriver } from '../../interfaces';
 import { DriverQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
 import { CreateUpdateDriverComponent, DeleteDriverComponent } from '../../components';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 const TABLE_COLUMNS = ['id', 'name', 'endedRequestCount', 'available', 'edit'];
 
@@ -20,7 +21,8 @@ const TABLE_COLUMNS = ['id', 'name', 'endedRequestCount', 'available', 'edit'];
   standalone: true,
   imports: [
     CommonModule, MatTableModule, FormsModule,
-    PrimaryButtonComponent, LoadingComponent, NoResultComponent
+    PrimaryButtonComponent, LoadingComponent, NoResultComponent,
+    NgxPaginationModule
   ],
   providers: [DriverQueries, PDFHelper, vehicleInfoHelper],
   templateUrl: './drivers.component.html',
@@ -33,6 +35,7 @@ export class DriversComponent implements OnInit {
   public drivers: IDriver[] = [];
   public filteredDrivers: IDriver[] = [];
   public loading = true;
+  public page = 1;
 
   constructor(
     private driverQuery: DriverQueries,
