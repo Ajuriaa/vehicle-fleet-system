@@ -50,7 +50,7 @@ export class ShowAddPassengersComponent implements OnInit {
       if (data) {
         this.passengers = data;
         if(!this.isCreate) {
-          const passengerIds = JSON.parse(this.data.passengers);
+          const passengerIds = this.data.passengers.split(',').map(Number);
           this.currentPassengers = this.passengers.filter(passenger => passengerIds.includes(passenger.ID_Empleado));
         }
       }

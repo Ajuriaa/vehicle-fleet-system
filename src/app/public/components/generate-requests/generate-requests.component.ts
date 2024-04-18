@@ -118,7 +118,7 @@ export class GenerateRequestsComponent implements OnInit {
       Hora_Regreso: moment(this.requestForm.controls.returnTime.value, 'h:mm A').toISOString(),
       Ciudad: this.selectedCity,
       Tipo_Solicitud: this.requestForm.controls.type.value,
-      Pasajeros: JSON.stringify('[' + this.selectedEmployees.map((passenger) => passenger.ID_Empleado).join(',') + ']')
+      Pasajeros: this.selectedEmployees.map((passenger) => passenger.ID_Empleado).join(',')
     };
 
     const mutationResponse = await this.publicMutation.createRequest(data);

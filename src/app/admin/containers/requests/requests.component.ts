@@ -10,11 +10,11 @@ import 'moment-timezone';
 import { Router } from '@angular/router';
 import { PDFHelper } from 'src/app/core/helpers';
 import { Model, RequestStatus } from 'src/app/core/enums';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { IDriver, IRequest, IRequestStatus, IVehicle } from '../../interfaces';
 import { RequestQueries } from '../../services';
 import { NameHelper, vehicleInfoHelper } from '../../helpers';
 import { ConfirmComponentComponent, UpdateRequestComponent } from '../../components';
-import { NgxPaginationModule } from 'ngx-pagination';
 
 const TABLE_COLUMNS = [
   'status', 'name', 'date', 'timeOut', 'timeIn', 'city', 'vehicle', 'driver', 'actions'

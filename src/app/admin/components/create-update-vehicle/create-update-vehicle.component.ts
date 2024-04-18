@@ -7,9 +7,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { VehicleStatus } from 'src/app/core/enums';
 import { VehicleMutations, VehicleQueries } from '../../services';
 import { IBrand, IModel, IVehicle, IVehicleStatus, IVehicleType } from '../../interfaces';
-import { VehicleStatus } from 'src/app/core/enums';
 
 @Component({
   selector: 'app-create-update-vehicle',

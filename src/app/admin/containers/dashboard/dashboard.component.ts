@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { SideBarComponent } from 'src/app/shared';
+import { Chart } from 'chart.js';
 import { DashboardQueries } from '../../services';
 import { IVehicle } from '../../interfaces';
 import { vehicleInfoHelper } from '../../helpers';
-import { Chart } from 'chart.js';
 
 interface test {
   vehiculo: IVehicle;

@@ -10,7 +10,8 @@ import {
 export const EMPTY_CITY: ICity = {
   ID_Ciudad: 0,
   Nombre: "",
-  Kms: 0
+  Kms: 0,
+  Coordenadas: ""
 };
 
 export const EMPTY_REQUEST_STATUS: IRequestStatus = {

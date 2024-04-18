@@ -9,11 +9,11 @@ import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import moment from 'moment';
 import { Model } from 'src/app/core/enums';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { GasInfoComponent, ShowAddPassengersComponent } from '../../components';
 import { vehicleInfoHelper } from '../../helpers';
 import { VehicleQueries } from '../../services';
 import { ILog, IVehicle } from '../../interfaces';
-import { NgxPaginationModule } from 'ngx-pagination';
 
 const TABLE_COLUMNS = [
   'date', 'driver', 'destination', 'kmsOut', 'kmsIn', 'timeOut', 'timeIn', 'observation', 'passengers', 'gas'

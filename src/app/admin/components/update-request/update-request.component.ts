@@ -59,7 +59,7 @@ export class UpdateRequestComponent implements OnInit {
   ngOnInit(): void {
     this.selectedVehicle = this.request.Vehiculo || EMPTY_VEHICLE;
     this.selectedDriver = this.request.Conductor || EMPTY_DRIVER;
-    this.passengerIds = this.request.Pasajeros !== '' ? JSON.parse(this.request.Pasajeros) : [];
+    this.passengerIds = this.request.Pasajeros !== '' ? this.request.Pasajeros.split(',').map(Number) : [];
     this.requestForm = this._formBuilder.group({
       vehicle: [[''], [Validators.required]],
       driver: [[''], [Validators.required]],
@@ -118,7 +118,7 @@ export class UpdateRequestComponent implements OnInit {
       pastVehicle: this.request.Vehiculo?.ID_Vehiculo || null,
       ID_Vehiculo: this.selectedVehicle.ID_Vehiculo,
       ID_Conductor: this.selectedDriver.ID_Conductor,
-      Pasajeros: JSON.stringify('[' + this.selectedEmployees.map((passenger) => passenger.ID_Empleado).join(',') + ']')
+      Pasajeros: this.selectedEmployees.map((passenger) => passenger.ID_Empleado).join(',')
     };
 
     if(this.selectedDriver.ID_Conductor !== 0 && this.selectedVehicle.ID_Vehiculo !== 0) {

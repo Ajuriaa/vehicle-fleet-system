@@ -15,11 +15,11 @@ import { MatTable, MatTableModule } from '@angular/material/table';
 import moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { DriverQueries, LogsMutations, VehicleQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
 import { exportData, FuesWithLog, IDriver, IGasRefill, ILog, IVehicle } from '../../interfaces';
 import { AddLogComponent, GasInfoComponent, ShowAddPassengersComponent } from '../../components';
-import { NgxPaginationModule } from 'ngx-pagination';
 
 const TABLE_COLUMNS = [
   'date'  ,'destination', 'timeOut', 'timeIn', 'kmsOut', 'kmsIn', 'gas', 'passengers', 'observation','delete'
