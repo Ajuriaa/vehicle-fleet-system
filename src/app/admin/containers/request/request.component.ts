@@ -4,15 +4,15 @@ import { EMPTY_REQUEST } from 'src/app/core/helpers';
 import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { CommonModule } from '@angular/common';
 import { ICoordinate, MapsService } from 'src/app/core/services';
-import { RequestQueries } from '../../services';
-import { IRequest } from '../../interfaces';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { NameHelper, vehicleInfoHelper } from '../../helpers';
 import { MatDialog } from '@angular/material/dialog';
-import { UpdateRequestComponent } from '../../components';
 import moment from 'moment';
+import { NameHelper, vehicleInfoHelper } from '../../helpers';
+import { UpdateRequestComponent } from '../../components';
+import { IRequest } from '../../interfaces';
+import { RequestQueries } from '../../services';
 
 @Component({
   selector: 'app-request',
