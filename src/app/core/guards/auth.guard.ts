@@ -17,7 +17,6 @@ function findToken(): boolean {
   let hasToken = false;
   let hasName = false;
   for (const c of cookies) {
-    debugger;
     if (c.includes('session_key=')) {
       hasToken = true;
     }
