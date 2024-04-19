@@ -23,11 +23,13 @@
 
       <mat-form-field class="field">
         <mat-label class="label">Tipo de Gira</mat-label>
-        <mat-select formControlName="type">
-          @for (type of requestTypes; track type) {
-            <mat-option [value]="type">{{ type.Tipo_Solicitud }}</mat-option>
-          }
-        </mat-select>
+        <input
+          matInput
+          required
+          readonly
+          formControlName="type"
+          placeholder="Seleccione la ciudad"
+        >
       </mat-form-field>
 
       <mat-form-field class="field">

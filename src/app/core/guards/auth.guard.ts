@@ -14,13 +14,19 @@ export const authGuard = (state: RouterStateSnapshot) => {
 
 function findToken(): boolean {
   const cookies = document.cookie.split('; ');
+  let hasToken = false;
+  let hasName = false;
   for (const c of cookies) {
+    debugger;
     if (c.includes('session_key=')) {
-      return true;
+      hasToken = true;
+    }
+    if(c.includes('nombre=')) {
+      hasName = true;
     }
   }
 
-  return false;
+  return hasToken && hasName;
 }
 
 

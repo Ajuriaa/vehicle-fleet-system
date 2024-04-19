@@ -1,4 +1,6 @@
-<div class="container">
+<app-loading class="loading" *ngIf="loading"></app-loading>
+
+<div class="container" *ngIf="!loading">
   <p class="title" *ngIf="isCreate">Agregar Pasajeros</p>
   <p class="title" *ngIf="!isCreate">Lista de Pasajeros</p>
   <form [formGroup]="passengerForm" class="driver-form" *ngIf="isCreate">

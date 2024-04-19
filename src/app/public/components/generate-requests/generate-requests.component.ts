@@ -11,7 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { PrimaryButtonComponent } from 'src/app/shared';
 import { MatSelectModule } from '@angular/material/select';
 import { cookieHelper, EMPTY_CITY, EMPTY_REQUEST, EMPTY_USER } from 'src/app/core/helpers';
-import { Model } from 'src/app/core/enums';
+import { City, Model } from 'src/app/core/enums';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -117,7 +117,7 @@ export class GenerateRequestsComponent implements OnInit {
       Hora_Salida: moment(this.requestForm.controls.departureTime.value, 'h:mm A').toISOString(),
       Hora_Regreso: moment(this.requestForm.controls.returnTime.value, 'h:mm A').toISOString(),
       Ciudad: this.selectedCity,
-      Tipo_Solicitud: this.requestForm.controls.type.value,
+      Tipo_Solicitud: this.getRequestType(),
       Pasajeros: this.selectedEmployees.map((passenger) => passenger.ID_Empleado).join(',')
     };
 
@@ -149,6 +149,14 @@ export class GenerateRequestsComponent implements OnInit {
 
   public selectCity(city: ICity): void {
     this.selectedCity = city;
+
+    const typeControl = this.requestForm.controls.type;
+    this.selectedCity.Nombre === City.TGU ? typeControl.setValue('Interna') : typeControl.setValue('Externa');
+  }
+
+  private getRequestType(): IRequestType {
+    const type = this.requestForm.controls.type.value;
+    return this.requestTypes.find(requestType => requestType.Tipo_Solicitud === type) || this.requestTypes[0];
   }
 
   private checkControlsEmpty(): boolean {

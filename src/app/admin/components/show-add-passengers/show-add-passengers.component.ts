@@ -4,7 +4,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { PrimaryButtonComponent } from 'src/app/shared';
+import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { map, Observable, startWith } from 'rxjs';
 import { SearchService } from 'src/app/core/services';
 import { Model } from 'src/app/core/enums';
@@ -20,7 +20,7 @@ import { NameHelper } from '../../helpers';
   imports: [
     PrimaryButtonComponent, MatFormFieldModule, MatAutocompleteModule,
     FormsModule, MatCheckboxModule, CommonModule, ReactiveFormsModule,
-    MatInputModule
+    MatInputModule, LoadingComponent
   ],
   providers: [NameHelper],
   templateUrl: './show-add-passengers.component.html',
@@ -33,6 +33,7 @@ export class ShowAddPassengersComponent implements OnInit {
   public passengerForm!: FormGroup;
   public error = false;
   public isCreate = false;
+  public loading = true;
   public currentPassengers: IUser[] = [];
 
   constructor(
@@ -52,6 +53,7 @@ export class ShowAddPassengersComponent implements OnInit {
         if(!this.isCreate) {
           const passengerIds = this.data.passengers.split(',').map(Number);
           this.currentPassengers = this.passengers.filter(passenger => passengerIds.includes(passenger.ID_Empleado));
+          this.loading = false;
         }
       }
     });
