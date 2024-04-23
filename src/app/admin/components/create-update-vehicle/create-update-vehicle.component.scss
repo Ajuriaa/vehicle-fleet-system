@@ -31,7 +31,6 @@
 
 .form-half {
   width: 50%;
-  height: 48rem;
 }
 
 .field {
@@ -41,4 +40,8 @@
   .label, .input {
     font-size: 2rem;
   }
+}
+
+.file-uploader {
+  width: 100%;
 }

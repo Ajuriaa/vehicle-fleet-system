@@ -8,3 +8,4 @@ export * from './maintenance.mutations';
 export * from './logs.queries';
 export * from './logs.mutations';
 export * from './dashboard.queries';
+export * from './uploader.mutation';

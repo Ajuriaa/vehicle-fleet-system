@@ -23,6 +23,7 @@
     "@angular/platform-browser": "^17.2.0",
     "@angular/platform-browser-dynamic": "^17.2.0",
     "@angular/router": "^17.2.0",
+    "@iplab/ngx-file-upload": "^17.1.0",
     "@types/google.maps": "^3.55.7",
     "chart.js": "^4.4.2",
     "jspdf": "^2.5.1",

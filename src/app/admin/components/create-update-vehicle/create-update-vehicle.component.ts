@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { PrimaryButtonComponent } from 'src/app/shared';
+import { FileDropComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -7,10 +7,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { VehicleStatus } from 'src/app/core/enums';
-import { VehicleMutations, VehicleQueries } from '../../services';
+import { Upload, VehicleStatus } from 'src/app/core/enums';
+import { UploaderService, VehicleMutations, VehicleQueries } from '../../services';
 import { IBrand, IModel, IVehicle, IVehicleStatus, IVehicleType } from '../../interfaces';
+import { FileUploadControl, FileUploadModule, FileUploadValidators } from '@iplab/ngx-file-upload';
+import { FileNameHelper } from '../../helpers';
+import { environment } from 'src/environments/environments';
 
+const FILE_BASE_URL = environment.filesUrl;
 @Component({
   selector: 'app-create-update-vehicle',
   standalone: true,
@@ -18,9 +22,10 @@ import { IBrand, IModel, IVehicle, IVehicleStatus, IVehicleType } from '../../in
     PrimaryButtonComponent, CommonModule,
     FormsModule, ReactiveFormsModule,
     FormsModule, MatInputModule, MatFormFieldModule,
-    MatOptionModule, MatSelectModule
+    MatOptionModule, MatSelectModule, FileUploadModule,
+    FileDropComponent
   ],
-  providers: [VehicleMutations],
+  providers: [VehicleMutations, FileNameHelper],
   templateUrl: './create-update-vehicle.component.html',
   styleUrl: './create-update-vehicle.component.scss'
 })
@@ -34,12 +39,19 @@ export class CreateUpdateVehicleComponent implements OnInit {
   public filteredModels: IModel[] = [];
   public vehicleTypes: IVehicleType[] = [];
   public statuses: IVehicleStatus[] = [];
+  public selectedFile!: File;
+  public filesControl = new FileUploadControl(undefined, FileUploadValidators.filesLimit(2));
+  public error = false;
+  public fileError = false;
+  private readonly fileUrl = FILE_BASE_URL;
 
   constructor(
     private _formBuilder: FormBuilder,
     private vehicleMutation: VehicleMutations,
     private vehicleQuery: VehicleQueries,
+    private fileNameHelper: FileNameHelper,
     public dialogRef: MatDialogRef<CreateUpdateVehicleComponent>,
+    private uploaderService: UploaderService,
     @Inject(MAT_DIALOG_DATA) public data: { vehicle: IVehicle, modalType: string }
   ){}
 
@@ -51,7 +63,6 @@ export class CreateUpdateVehicleComponent implements OnInit {
       chasis: ['', [Validators.required]],
       motor: ['', [Validators.required]],
       kpg: ['', [Validators.required]],
-      img: ['', [Validators.required]],
       year: ['', [Validators.required]],
       color: ['', [Validators.required]],
       model: ['', [Validators.required]],
@@ -85,17 +96,25 @@ export class CreateUpdateVehicleComponent implements OnInit {
     this.dialogRef.close(true);
   }
 
-  public isFormInvalid(): boolean {
-    return Object.keys(this.vehicleForm.controls).some(controlName => {
-      const control = this.vehicleForm.controls[controlName];
-      return control.errors && control.errors.required && control.value === '';
-    });
+  public getFiles(files: File[]): void {
+    this.selectedFile = files[0];
   }
 
   public async onSubmit(): Promise<void> {
+    this.error = false;
+    this.fileError = false;
+
     if (this.vehicleForm.invalid) {
+      this.error = true;
+      return;
+    } else if (!this.selectedFile) {
+      this.fileError = true;
       return;
     }
+
+    const plate = this.vehicleForm.controls.plate.value;
+    const fileName = this.fileNameHelper.getFileName(plate, this.selectedFile);
+    console.log(fileName);
     const data = {
       ID_Vehiculo: this.data.vehicle.ID_Vehiculo,
       Placa: this.vehicleForm.controls.plate.value,
@@ -103,23 +122,25 @@ export class CreateUpdateVehicleComponent implements OnInit {
       Chasis: this.vehicleForm.controls.chasis.value,
       Motor: this.vehicleForm.controls.motor.value,
       KPG: this.vehicleForm.controls.kpg.value,
-      Imagen_URL: this.vehicleForm.controls.img.value,
+      Imagen_URL: this.fileUrl + 'vehicles/' + fileName,
       Anio: this.vehicleForm.controls.year.value,
       Color: this.vehicleForm.controls.color.value,
       ID_Modelo: this.vehicleForm.controls.model.value,
       ID_Estado_Vehiculo: this.vehicleForm.controls.status.value
     };
 
-    let mutationResponse;
-    if (this.isCreate) {
-      mutationResponse = await this.vehicleMutation.createVehicle(data);
-    } else {
-      mutationResponse = await this.vehicleMutation.editVehicle(data);
+    const fileUploaded = await this.uploaderService.uploadFile(this.selectedFile, Upload.vehicle, fileName);
+
+    if(fileUploaded){
+      const mutationResponse = this.isCreate
+      ? await this.vehicleMutation.createVehicle(data)
+      : await this.vehicleMutation.editVehicle(data);
+
+      if (mutationResponse) {
+        this.onCancel();
+      }
     }
 
-    if (mutationResponse) {
-      this.onCancel();
-    }
   }
 
   public filterModels(brandId: number): void {

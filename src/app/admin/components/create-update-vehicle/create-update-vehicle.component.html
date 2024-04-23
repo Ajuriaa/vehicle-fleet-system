@@ -57,18 +57,6 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field class="field">
-        <mat-label class="label">Estado</mat-label>
-        <mat-select formControlName="status">
-          <mat-option
-            *ngFor="let status of statuses"
-            [value]="status.ID_Estado_Vehiculo"
-            [disabled]="status.Estado_Vehiculo === 'En Uso'"
-          >
-            {{ status.Estado_Vehiculo }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
     </div>
     <div class="form-half">
       <mat-form-field class="field">
@@ -83,14 +71,16 @@
         >
       </mat-form-field>
       <mat-form-field class="field">
-        <mat-label class="label">Imagen</mat-label>
-        <input
-          matInput
-          required
-          class="input"
-          formControlName="img"
-          placeholder="Ingrese el URL de la imagen del vehículo"
-        >
+        <mat-label class="label">Estado</mat-label>
+        <mat-select formControlName="status">
+          <mat-option
+            *ngFor="let status of statuses"
+            [value]="status.ID_Estado_Vehiculo"
+            [disabled]="status.Estado_Vehiculo === 'En Uso'"
+          >
+            {{ status.Estado_Vehiculo }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field class="field">
         <mat-label class="label">Año</mat-label>
@@ -124,7 +114,9 @@
       </mat-form-field>
     </div>
   </form>
-  <mat-error class="error" *ngIf="isFormInvalid()">Recuerda llenar todos los campos requeridos*</mat-error>
+  <app-file-drop class="file-uploader" (selectedFiles)="getFiles($event)"></app-file-drop>
+  <mat-error class="error" *ngIf="error">Recuerda llenar todos los campos requeridos*</mat-error>
+  <mat-error class="error" *ngIf="fileError">Recuerda adjuntar la imagen del vehículo*</mat-error>
   <div class="buttons">
     <app-primary-button styleClass="btn-red" class="btn" (btnClick)="onCancel()">Cancelar</app-primary-button>
     <app-primary-button class="btn" (btnClick)="onSubmit()">Confirmar</app-primary-button>
