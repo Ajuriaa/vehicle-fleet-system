@@ -28,7 +28,9 @@ export class SideBarComponent implements OnInit {
   public selectOption(option: string): void {
     this.selectedOption = option;
     this.animateIcon();
-    setTimeout(() => this.router.navigate([`admin/`, option]), 500);
+    setTimeout(() => {
+      option === 'requests' ? this.router.navigate(['admin/requests/0']) : this.router.navigate([`admin/`, option]);
+    }, 500);
   }
 
   public logout(): void {

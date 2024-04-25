@@ -44,7 +44,7 @@ export const adminRoutes: Routes = [{
       component: MaintenanceComponent
     },
     {
-      path: 'requests',
+      path: 'requests/:id',
       title: 'Solicitudes',
       component: RequestsComponent
     },

@@ -14,6 +14,10 @@ export class RequestQueries {
     return this.http.get<IRequestsResponse>(`${environment.apiUrl}/requests`);
   }
 
+  public getVehicleRequests(vehicleId: number): Observable<IRequestsResponse> {
+    return this.http.get<IRequestsResponse>(`${environment.apiUrl}/requests/${vehicleId}`);
+  }
+
   public getRequest(id: number): Observable<IRequestResponse> {
     return this.http.get<IRequestResponse>(`${environment.apiUrl}/request/${id}`);
   }

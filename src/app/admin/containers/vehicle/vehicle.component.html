@@ -1,2 +1,29 @@
-<p>vehicle works!</p>
-<p>{{ model }}</p>
+<app-loading class="loading" *ngIf="loading"></app-loading>
+<div class="container" *ngIf="!loading">
+  <section class="panel">
+    <div class="car-info">
+      <img class="img" [src]="vehicle.Imagen_URL"/>
+      <div class="info-wrapper">
+        <p class="panel-title">{{ vehicleHelper.getModel(vehicle) }}</p>
+        <div class="info">
+          <span>
+            <p class="panel-label"> Kilometraje: <strong>{{vehicle.Kilometraje}} Km</strong></p>
+            <p class="panel-label"> Placa <strong>{{vehicle.Placa}}</strong></p>
+          </span>
+          <span>
+            <p class="panel-label">Tipo: <strong>{{ vehicleHelper.getType(vehicle) }}</strong></p>
+            <p class="panel-label">Estado: <strong>{{ vehicleHelper.getVehicleStatus(vehicle) }}</strong></p>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="btn-container">
+      <app-primary-button class="button" (btnClick)="goToLogs()">
+        VER BITACORAS
+      </app-primary-button>
+      <app-primary-button class="button" (btnClick)="goToRequests()">
+        VER SOLICITUDES
+      </app-primary-button>
+    </div>
+  </section>
+</div>

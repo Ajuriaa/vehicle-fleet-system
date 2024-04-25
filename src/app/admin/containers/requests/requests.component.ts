@@ -7,7 +7,7 @@ import { SearchService } from 'src/app/core/services';
 import { MatDialog } from '@angular/material/dialog';
 import moment from 'moment';
 import 'moment-timezone';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PDFHelper } from 'src/app/core/helpers';
 import { Model, RequestStatus } from 'src/app/core/enums';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -32,6 +32,7 @@ const TABLE_COLUMNS = [
   styleUrl: './requests.component.scss'
 })
 export class RequestsComponent implements OnInit {
+  public vehicleId = +this.route.snapshot.params.id;
   public loading = true;
   public searchInput = '';
   public displayedColumns: string[] = TABLE_COLUMNS;
@@ -48,6 +49,7 @@ export class RequestsComponent implements OnInit {
     private searchEngine: SearchService,
     private vehicleInfoHelper: vehicleInfoHelper,
     private router: Router,
+    private route: ActivatedRoute,
     private dialog: MatDialog,
     private pdfHelper: PDFHelper
   ) {}
@@ -138,16 +140,30 @@ export class RequestsComponent implements OnInit {
   }
 
   private getAllRequests(): void {
-    this.requestQuery.getAllRequests().subscribe(({data}) => {
-      this.requests = data;
-      this.pendingRequests = this.requests.filter(
-        (request) => request.Estado_Solicitud.Estado === 'Pendiente por admin'
-      ).length;
-      this.activeRequests = this.requests.filter(
-        (request) => request.Estado_Solicitud.Estado === 'Activo'
-      ).length;
-      this.filteredRequests = this.requests;
-      this.loading = false;
-    });
+    if(this.vehicleId === 0) {
+      this.requestQuery.getAllRequests().subscribe(({data}) => {
+        this.requests = data;
+        this.pendingRequests = this.requests.filter(
+          (request) => request.Estado_Solicitud.Estado === 'Pendiente por admin'
+        ).length;
+        this.activeRequests = this.requests.filter(
+          (request) => request.Estado_Solicitud.Estado === 'Activo'
+        ).length;
+        this.filteredRequests = this.requests;
+        this.loading = false;
+      });
+    } else {
+      this.requestQuery.getVehicleRequests(this.vehicleId).subscribe(({data}) => {
+        this.requests = data;
+        this.pendingRequests = this.requests.filter(
+          (request) => request.Estado_Solicitud.Estado === 'Pendiente por admin'
+        ).length;
+        this.activeRequests = this.requests.filter(
+          (request) => request.Estado_Solicitud.Estado === 'Activo'
+        ).length;
+        this.filteredRequests = this.requests;
+        this.loading = false;
+      });
+    }
   }
 }
