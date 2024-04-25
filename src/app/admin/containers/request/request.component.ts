@@ -73,9 +73,7 @@ export class RequestComponent implements OnInit {
       data: this.request
     }).afterClosed().subscribe((result) => {
       this.loading = true;
-      if(result) {
-        this.getRequest();
-      }
+      result ? this.getRequest() : this.loading = false;
     });
   }
 
