@@ -100,19 +100,18 @@ export class RequestComponent implements OnInit {
   }
 
   private fillForm(): void {
-    console.log(this.request.Hora_Regreso);
     const passengerFullNames = this.request.Nombres_Pasajeros?.split(',') || [];
     const passengerShortNames = passengerFullNames.map((name) => this.nameHelper.getShortName(name));
     this.requestForm.patchValue({
-      vehicle: this.vehicleInfoHelper.getModel(this.request.Vehiculo),
-      driver: this.request.Conductor?.Nombre || '',
+      vehicle: this.request.Vehiculo ? this.vehicleInfoHelper.getModel(this.request.Vehiculo) : 'No Asignado',
+      driver: this.request.Conductor?.Nombre || 'No Asignado',
       city: this.request.Ciudad.Nombre,
       type: this.request.Tipo_Solicitud.Tipo_Solicitud,
       employee: this.nameHelper.getShortName(this.request.Nombre_Empleado),
       passengers: passengerShortNames,
       motive: this.request.Motivo,
       destination: this.request.Destino,
-      date: moment.utc(this.request.Fecha, 'YYYY-DD-MM').format('DD/MM/YYYY'),
+      date: moment.utc(this.request.Fecha).format('DD/MM/YYYY'),
       departureTime: moment.utc(this.request.Hora_Salida).format('HH:mm A'),
       returnTime: moment.utc(this.request.Hora_Regreso).format('HH:mm A'),
       status: this.request.Estado_Solicitud.Estado

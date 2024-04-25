@@ -6,9 +6,9 @@ import { provideToastr } from 'ngx-toastr';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { routes } from './app.routes';
 import { cookieHelper } from './core/helpers';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [

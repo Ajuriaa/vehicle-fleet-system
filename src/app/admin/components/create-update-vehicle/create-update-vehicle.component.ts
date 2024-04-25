@@ -8,11 +8,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { Upload, VehicleStatus } from 'src/app/core/enums';
+import { FileUploadControl, FileUploadModule, FileUploadValidators } from '@iplab/ngx-file-upload';
+import { environment } from 'src/environments/environments';
 import { UploaderService, VehicleMutations, VehicleQueries } from '../../services';
 import { IBrand, IModel, IVehicle, IVehicleStatus, IVehicleType } from '../../interfaces';
-import { FileUploadControl, FileUploadModule, FileUploadValidators } from '@iplab/ngx-file-upload';
 import { FileNameHelper } from '../../helpers';
-import { environment } from 'src/environments/environments';
 
 const FILE_BASE_URL = environment.filesUrl;
 @Component({
