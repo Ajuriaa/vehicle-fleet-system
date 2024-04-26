@@ -76,6 +76,24 @@
   align-items: flex-start;
 }
 
+.item {
+  display: flex;
+  align-items: center;
+
+  .uil {
+    font-size: 3rem;
+    margin-left: 1rem;
+  }
+
+  .up {
+    color: $green
+  }
+
+  .down {
+    color: $red;
+  }
+}
+
 .first-row, .second-row {
   @include flex-center;
   justify-content: flex-start;
@@ -85,7 +103,8 @@
 
 .first-row {
   height: 20%;
-  margin-left: 3rem;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .second-row {
@@ -107,7 +126,7 @@
   gap: 3rem;
   flex-direction: column;
   justify-content: flex-start;
-  margin: 2rem 0 0 3rem;
+  margin-top: 2rem;
 }
 
 .chart-container {

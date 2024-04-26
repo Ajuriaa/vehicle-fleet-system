@@ -72,6 +72,22 @@ export class VehicleComponent implements OnInit {
     this.router.navigate([`/admin/requests/${this.vehicleId}`]);
   }
 
+  public currentMonthBigger(prop: string): boolean {
+    switch (prop) {
+      case 'gas':
+        return this.lastMonth.gas < this.currentMonth.gas;
+      case 'cost':
+        return this.lastMonth.cost < this.currentMonth.cost;
+      case 'kpg':
+        return this.lastMonth.kpg < this.currentMonth.kpg;
+      case 'cpk':
+        return this.lastMonth.cpk < this.currentMonth.cpk;
+      case 'kms':
+        return this.lastMonth.kms < this.currentMonth.kms;
+    }
+    return false;
+  }
+
   private getVehicle(): void {
     this.vehicleQuery.getVehicle(this.vehicleId).subscribe(({data}) => {
       this.vehicle = data;

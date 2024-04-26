@@ -30,33 +30,53 @@
     <div class="gas-container">
       <div class="first-row">
         <span class="item">
-          <p>KPG</p>
-          <p class="panel-label">{{ currentMonth.kpg }}</p>
+          <div>
+            <p>KPG</p>
+            <p class="panel-label">{{ currentMonth.kpg }}</p>
+          </div>
+          <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('kpg')"></i>
+          <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('kpg')"></i>
         </span>
         <span class="item">
-          <p>CPK</p>
-          <p class="panel-label">L.{{ currentMonth.cpk }}</p>
+          <div>
+            <p>CPK</p>
+            <p class="panel-label">L.{{ currentMonth.cpk }}</p>
+          </div>
+          <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('cpk')"></i>
+          <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('cpk')"></i>
         </span>
         <span class="item">
-          <p>Cantidad llenada</p>
-          <p class="panel-label">{{ currentMonth.gas }} Galon{{ currentMonth.gas > 1 ? 'es': ''}}</p>
+          <div>
+            <p>Precio</p>
+            <p class="panel-label">L.{{ currentMonth.cost }}</p>
+          </div>
+          <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('cost')"></i>
+          <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('cost')"></i>
         </span>
         <span class="item">
-          <p>Precio</p>
-          <p class="panel-label">L.{{ currentMonth.cost }}</p>
-        </span>
-        <span class="item">
-          <p>Distancia Recorrida</p>
-          <p class="panel-label">{{ currentMonth.kms }} KM</p>
+          <div>
+            <p>Distancia Recorrida</p>
+            <p class="panel-label">{{ currentMonth.kms }} KM</p>
+          </div>
+          <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('kms')"></i>
+          <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('kms')"></i>
         </span>
       </div>
       <div class="second-row">
         <div class="display">
           <span class="item">
+            <div>
+              <p>Cantidad llenada</p>
+              <p class="panel-label">{{ currentMonth.gas }} Galon{{ currentMonth.gas > 1 ? 'es': ''}}</p>
+            </div>
+            <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('gas')"></i>
+            <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('gas')"></i>
+          </span>
+          <span>
             <p>Fecha Últ. Mantenimiento</p>
             <p class="panel-label">{{ date }}</p>
           </span>
-          <span class="item">
+          <span>
             <p>Restante para Mantenimiento</p>
             <p class="panel-label">{{ maintenanceInfo.km }} KM</p>
           </span>
