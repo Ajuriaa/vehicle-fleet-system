@@ -35,15 +35,15 @@
         </span>
         <span class="item">
           <p>CPK</p>
-          <p class="panel-label">{{ currentMonth.cpk }}</p>
+          <p class="panel-label">L.{{ currentMonth.cpk }}</p>
         </span>
         <span class="item">
           <p>Cantidad llenada</p>
-          <p class="panel-label">{{ currentMonth.gas }} Galones</p>
+          <p class="panel-label">{{ currentMonth.gas }} Galon{{ currentMonth.gas > 1 ? 'es': ''}}</p>
         </span>
         <span class="item">
           <p>Precio</p>
-          <p class="panel-label">L. {{ currentMonth.cost }}</p>
+          <p class="panel-label">L.{{ currentMonth.cost }}</p>
         </span>
         <span class="item">
           <p>Distancia Recorrida</p>
@@ -58,7 +58,7 @@
           </span>
           <span class="item">
             <p>Restante para Mantenimiento</p>
-            <p class="panel-label">{{ maintenanceInfo.km }}</p>
+            <p class="panel-label">{{ maintenanceInfo.km }} KM</p>
           </span>
         </div>
         <div class="chart-container">
