@@ -1,17 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY_VEHICLE } from 'src/app/core/helpers';
-import { IVehicle } from '../../interfaces';
+import { EMPTY_REQUEST, EMPTY_VEHICLE } from 'src/app/core/helpers';
+import { IRequest, IVehicle, IVehicleInfo } from '../../interfaces';
 import { VehicleQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
 import { CommonModule } from '@angular/common';
 import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
+import { ICoordinate, MapsService } from 'src/app/core/services';
+import { MarkerUrl } from 'src/app/core/enums';
+import moment from 'moment';
+import { Chart, ChartItem } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 
+const MAINTENANCE_COORDS = { lat: 14.09926541800526, lng: -87.15743413863002 };
+const DEFAULT_COORDS = { lat: 14.089656466933825, lng: -87.1869442583274 };
+const OPTIONS = {
+
+  scales: {
+    y: { beginAtZero: true}
+  }
+};
 @Component({
   selector: 'app-vehicle',
   standalone: true,
   imports: [
-    CommonModule, LoadingComponent, PrimaryButtonComponent
+    CommonModule, LoadingComponent, PrimaryButtonComponent,
+    BaseChartDirective
   ],
   providers: [vehicleInfoHelper],
   templateUrl: './vehicle.component.html',
@@ -21,17 +35,34 @@ export class VehicleComponent implements OnInit {
   public loading = true;
   public vehicleId = this.route.snapshot.params.id;
   public vehicle: IVehicle = EMPTY_VEHICLE;
+  public map!: google.maps.Map;
+  public initialMarker!: google.maps.marker.AdvancedMarkerElement;
+  public finalMarker!: google.maps.marker.AdvancedMarkerElement;
+  public directionRenderer!: google.maps.DirectionsRenderer;
+  public lastMonth: IVehicleInfo = { kms: 0, gas: 0, cost: 0, kpg: 0, cpk: 0 };
+  public currentMonth: IVehicleInfo = { kms: 0, gas: 0, cost: 0, kpg: 0, cpk: 0 };
+  public maintenanceInfo: { date: Date, km: number} = { date: new Date(), km: 0 };
+  public history: { months: string[]; kms: number[]; } = { months: [], kms: [] };
   public model = '';
+  public maintenanceCoords: ICoordinate = MAINTENANCE_COORDS;
+  public defaultCoords: ICoordinate = DEFAULT_COORDS;
+  public request: IRequest = EMPTY_REQUEST;
+  public date = '';
+  public datasets: any[] = [];
+  public options = OPTIONS;
+  @ViewChild('map', { static: true }) public mapRef!: ElementRef;
 
   constructor(
     public vehicleHelper: vehicleInfoHelper,
     private route: ActivatedRoute,
     private router: Router,
+    private mapService: MapsService,
     private vehicleQuery: VehicleQueries
   ){}
 
   ngOnInit(): void {
     this.getVehicle();
+    this.getGasAndMaintenanceInfo();
   }
 
   public goToLogs(): void {
@@ -45,8 +76,50 @@ export class VehicleComponent implements OnInit {
   private getVehicle(): void {
     this.vehicleQuery.getVehicle(this.vehicleId).subscribe(({data}) => {
       this.vehicle = data;
+
+      if (this.vehicle.Estado_Vehiculo.Estado_Vehiculo === 'En Uso') {
+        this.request = this.vehicle.Solicitudes[0];
+      }
       this.model = this.vehicleHelper.getModel(this.vehicle);
-      this.loading = false;
+      this.initializeMap();
     });
+  }
+
+  private getGasAndMaintenanceInfo(): void {
+    this.vehicleQuery.getVehicleInfo(this.vehicleId).subscribe((data) => {
+      this.lastMonth = data.last;
+      this.currentMonth = data.current;
+      this.maintenanceInfo = data.maintenance;
+      this.history = data.history;
+      this.datasets = [{
+        data: this.history.kms,
+        label: 'kms recorridos'
+      }];
+      this.date = moment.utc(this.maintenanceInfo.date).format('DD/MM/YYYY');
+    });
+  }
+
+  private initializeMap(): void {
+    this.map = this.mapService.generateDefaultMap(this.mapRef);
+    switch (this.vehicle.Estado_Vehiculo.Estado_Vehiculo) {
+      case 'En Mantenimiento':
+        this.initialMarker = this.mapService.addMarker(this.map, this.maintenanceCoords, MarkerUrl.warningCar);
+        this.map.setCenter(this.maintenanceCoords);
+        break;
+      case 'Disponible':
+        this.initialMarker = this.mapService.addMarker(this.map, this.defaultCoords, MarkerUrl.car);
+        break;
+      case 'Inactivo':
+        this.initialMarker = this.mapService.addMarker(this.map, this.defaultCoords, MarkerUrl.warningCar);
+        break;
+      case 'En Uso':
+        this.initialMarker = this.mapService.addMarker(this.map, JSON.parse(this.request.Ciudad.Coordenadas), MarkerUrl.car);
+        this.map.setCenter(JSON.parse(this.request.Ciudad.Coordenadas));
+        break;
+      default:
+        this.initialMarker = this.mapService.addMarker(this.map, this.defaultCoords, MarkerUrl.car);
+        break;
+    }
+    this.loading = false;
   }
 }

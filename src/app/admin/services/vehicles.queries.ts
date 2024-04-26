@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environments';
-import { IBrandsResponse, IModelResponse, IStatusesReponse, ITypeResponse, IVehicleResponse, IVehiclesResponse } from '../interfaces';
+import { IBrandsResponse, IModelResponse, IStatusesReponse, ITypeResponse, IVehicleInfoResponse, IVehicleResponse, IVehiclesResponse } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,10 @@ export class VehicleQueries {
 
   public getVehicle(id: number): Observable<IVehicleResponse> {
     return this.http.get<IVehicleResponse>(`${environment.apiUrl}/vehicle/${id}`);
+  }
+
+  public getVehicleInfo(id: number): Observable<IVehicleInfoResponse> {
+    return this.http.get<IVehicleInfoResponse>(`${environment.apiUrl}/vehicle-info/${id}`);
   }
 
   public getAllVehicles(): Observable<IVehiclesResponse> {

@@ -1,5 +1,5 @@
 <app-loading class="loading" *ngIf="loading"></app-loading>
-<div class="container" *ngIf="!loading">
+<div class="container">
   <section class="panel">
     <div class="car-info">
       <img class="img" [src]="vehicle.Imagen_URL"/>
@@ -25,5 +25,54 @@
         VER SOLICITUDES
       </app-primary-button>
     </div>
+  </section>
+  <section class="info-container">
+    <div class="gas-container">
+      <div class="first-row">
+        <span class="item">
+          <p>KPG</p>
+          <p class="panel-label">{{ currentMonth.kpg }}</p>
+        </span>
+        <span class="item">
+          <p>CPK</p>
+          <p class="panel-label">{{ currentMonth.cpk }}</p>
+        </span>
+        <span class="item">
+          <p>Cantidad llenada</p>
+          <p class="panel-label">{{ currentMonth.gas }} Galones</p>
+        </span>
+        <span class="item">
+          <p>Precio</p>
+          <p class="panel-label">L. {{ currentMonth.cost }}</p>
+        </span>
+        <span class="item">
+          <p>Distancia Recorrida</p>
+          <p class="panel-label">{{ currentMonth.kms }} KM</p>
+        </span>
+      </div>
+      <div class="second-row">
+        <div class="display">
+          <span class="item">
+            <p>Fecha Últ. Mantenimiento</p>
+            <p class="panel-label">{{ date }}</p>
+          </span>
+          <span class="item">
+            <p>Restante para Mantenimiento</p>
+            <p class="panel-label">{{ maintenanceInfo.km }}</p>
+          </span>
+        </div>
+        <div class="chart-container">
+          <canvas
+            baseChart
+            class="chart"
+            type="line"
+            [options]="options"
+            [labels]="history.months"
+            [datasets]="datasets"
+          ></canvas>
+        </div>
+      </div>
+    </div>
+    <div #map class="map"></div>
   </section>
 </div>

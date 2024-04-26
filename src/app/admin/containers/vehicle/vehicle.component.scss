@@ -3,6 +3,8 @@
 .container {
   @include flex-center-column;
   width: 100%;
+  height: 100%;
+  justify-content: flex-start;
 
   .panel {
     @include flex-center;
@@ -13,6 +15,13 @@
     margin: 2rem;
     border: 0.2rem solid $gray;
     border-radius: 2rem;
+  }
+
+  .info-container {
+    @include flex-center;
+    width: 90%;
+    height: 48%;
+    gap: 2rem;
   }
 
   .btn-container {
@@ -58,4 +67,61 @@
   .panel-label {
     font-size: 2rem;
   }
+}
+
+.gas-container {
+  @include flex-center-column;
+  align-items: flex-start;
+  border: 0.2rem solid $gray;
+}
+
+.first-row, .second-row {
+  @include flex-center;
+  justify-content: flex-start;
+  gap: 5rem;
+  font-size: 2rem;
+}
+
+.first-row {
+  height: 30%;
+  margin-left: 3rem;
+}
+
+.second-row {
+  height: 70%;
+  width: 100%;
+  gap: 2rem;
+  position: relative;
+}
+
+.panel-label {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.display {
+  height: 100%;
+  width: 30%;
+  display: flex;
+  gap: 3rem;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-left: 3rem;
+}
+
+.chart-container {
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
+  height: 30rem;
+
+  .chart {
+    height: 100%;
+  }
+}
+
+.map, .gas-container {
+  width: 50%;
+  height: 100%;
+  border-radius: 2rem;
 }

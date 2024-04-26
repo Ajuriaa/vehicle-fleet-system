@@ -1,4 +1,4 @@
-import { ILog } from ".";
+import { ILog, IRequest } from ".";
 
 export interface IVehicle {
   ID_Vehiculo: number;
@@ -12,6 +12,7 @@ export interface IVehicle {
   Color: string;
   Estado_Vehiculo: IVehicleStatus;
   Modelo: IModel;
+  Solicitudes: IRequest[];
   Bitacoras: ILog[];
   Mantenimientos: IMaintenance[];
   Siguiente_Mantenimiento?: number;
@@ -49,6 +50,21 @@ export interface IVehicleType {
 
 export interface IVehicleResponse {
   data: IVehicle;
+}
+
+export interface IVehicleInfo {
+  kms: number;
+  gas: number;
+  cost: number;
+  kpg: number;
+  cpk: number;
+}
+
+export interface IVehicleInfoResponse {
+  current: IVehicleInfo;
+  last: IVehicleInfo;
+  maintenance: { date: Date, km: number };
+  history: { months: string[], kms: number[] };
 }
 
 export interface IVehiclesResponse {
