@@ -16,12 +16,12 @@ import moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ToastrService } from 'ngx-toastr';
+import { PublicQueries } from 'src/app/public/services';
 import { DriverQueries, LogsMutations, VehicleQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
 import { exportData, FuesWithLog, ICity, IDriver, IGasRefill, ILog, IVehicle } from '../../interfaces';
 import { AddLogComponent, GasInfoComponent, ShowAddPassengersComponent } from '../../components';
-import { ToastrService } from 'ngx-toastr';
-import { PublicQueries } from 'src/app/public/services';
 
 const TABLE_COLUMNS = [
   'date'  ,'destination', 'timeOut', 'timeIn', 'kmsOut', 'kmsIn', 'gas', 'passengers', 'observation','delete'
