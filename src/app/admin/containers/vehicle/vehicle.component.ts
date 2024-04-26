@@ -1,16 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY_REQUEST, EMPTY_VEHICLE } from 'src/app/core/helpers';
-import { IRequest, IVehicle, IVehicleInfo } from '../../interfaces';
-import { VehicleQueries } from '../../services';
-import { vehicleInfoHelper } from '../../helpers';
 import { CommonModule } from '@angular/common';
 import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { ICoordinate, MapsService } from 'src/app/core/services';
 import { MarkerUrl } from 'src/app/core/enums';
 import moment from 'moment';
-import { Chart, ChartItem } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { vehicleInfoHelper } from '../../helpers';
+import { VehicleQueries } from '../../services';
+import { IRequest, IVehicle, IVehicleInfo } from '../../interfaces';
 
 const MAINTENANCE_COORDS = { lat: 14.09926541800526, lng: -87.15743413863002 };
 const DEFAULT_COORDS = { lat: 14.089656466933825, lng: -87.1869442583274 };
