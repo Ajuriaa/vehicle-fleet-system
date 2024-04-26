@@ -1,4 +1,4 @@
-import { IDriver, IVehicle } from ".";
+import { ICity, IDriver, IVehicle } from ".";
 
 export interface ILog {
   ID_Bitacora: number;
@@ -13,6 +13,7 @@ export interface ILog {
   Llenados_Combustible: IGasRefill[];
   Vehiculo: IVehicle;
   Conductor: IDriver
+  Ciudad: ICity;
 }
 
 export interface IUser {

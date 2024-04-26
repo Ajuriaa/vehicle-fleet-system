@@ -109,7 +109,8 @@ export const EMPTY_LOG: ILog = {
   Observaciones: '',
   Llenados_Combustible: [],
   Conductor: EMPTY_DRIVER,
-  Vehiculo: EMPTY_VEHICLE
+  Vehiculo: EMPTY_VEHICLE,
+  Ciudad: EMPTY_CITY
 };
 
 export const EMPTY_GAS_REFILL: IGasRefill = {

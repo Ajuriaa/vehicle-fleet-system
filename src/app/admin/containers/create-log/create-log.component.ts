@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { cookieHelper, EMPTY_DRIVER, EMPTY_VEHICLE } from 'src/app/core/helpers';
+import { cookieHelper, EMPTY_CITY, EMPTY_DRIVER, EMPTY_VEHICLE } from 'src/app/core/helpers';
 import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { CommonModule, AsyncPipe, Location } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -18,8 +18,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DriverQueries, LogsMutations, VehicleQueries } from '../../services';
 import { vehicleInfoHelper } from '../../helpers';
-import { exportData, FuesWithLog, IDriver, IGasRefill, ILog, IVehicle } from '../../interfaces';
+import { exportData, FuesWithLog, ICity, IDriver, IGasRefill, ILog, IVehicle } from '../../interfaces';
 import { AddLogComponent, GasInfoComponent, ShowAddPassengersComponent } from '../../components';
+import { ToastrService } from 'ngx-toastr';
+import { PublicQueries } from 'src/app/public/services';
 
 const TABLE_COLUMNS = [
   'date'  ,'destination', 'timeOut', 'timeIn', 'kmsOut', 'kmsIn', 'gas', 'passengers', 'observation','delete'
@@ -42,8 +44,11 @@ export class CreateLogComponent implements OnInit {
   public vehicles: IVehicle[] = [];
   public filteredVehicles!: Observable<IVehicle[]>;
   public selectedVehicle: IVehicle = EMPTY_VEHICLE;
+  public selectedCity: ICity = EMPTY_CITY;
   public drivers: IDriver[] = [];
   public logs: ILog[] = [];
+  public cities: ICity[] = [];
+  public filteredCities!: Observable<ICity[]>;
   public filteredDrivers!: Observable<IDriver[]>;
   public selectedDriver: IDriver = EMPTY_DRIVER;
   public displayedColumns: string[] = TABLE_COLUMNS;
@@ -67,14 +72,17 @@ export class CreateLogComponent implements OnInit {
     private location: Location,
     private logMutation: LogsMutations,
     private router: Router,
+    private toaster: ToastrService,
     private cookieHelper: cookieHelper,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private publicQuery: PublicQueries
   ){}
 
   ngOnInit(): void {
     this.logForm = this._formBuilder.group({
       vehicle: ['', [Validators.required]],
       driver: ['', [Validators.required]],
+      city: ['', [Validators.required]]
     });
     this.fetchData();
     this.startAutocomplete();
@@ -83,6 +91,10 @@ export class CreateLogComponent implements OnInit {
   public selectVehicle(vehicle: IVehicle): void {
     this.selectedVehicle = vehicle;
     this.currentKm = vehicle.Kilometraje;
+  }
+
+  public selectCity(city: ICity): void {
+    this.selectedCity = city;
   }
 
   public openPassengerModal(log: ILog, modalType = 'create'): void {
@@ -147,6 +159,7 @@ export class CreateLogComponent implements OnInit {
       formattedLog.Pasajeros = '';
       formattedLog.Conductor = this.selectedDriver;
       formattedLog.Vehiculo = this.selectedVehicle;
+      formattedLog.Ciudad = this.selectedCity;
       this.logs.push(formattedLog);
       this.currentTime = formattedLog.Hora_Entrada.toString();
       this.currentKm = formattedLog.Kilometraje_Entrada;
@@ -180,6 +193,11 @@ export class CreateLogComponent implements OnInit {
   }
 
   public async onSubmit(): Promise<void> {
+    if( this.logs.length === 0 ) {
+      this.toaster.error('No se han agregado registros', 'Error');
+      return;
+    }
+
     this.loading = true;
     const refills: FuesWithLog[] = [];
     const exportingLogs: any[] = [];
@@ -195,7 +213,8 @@ export class CreateLogComponent implements OnInit {
         Hora_Entrada: moment.utc(log.Hora_Entrada, 'hh:mm:ss').toISOString(),
         Fecha: log.Fecha,
         Observaciones: log.Observaciones,
-        Pasajeros: log.Pasajeros
+        Pasajeros: log.Pasajeros,
+        ID_Ciudad: 1
       };
       exportingLogs.push(this.cookieHelper.dataToSend(formattedLogs));
 
@@ -248,6 +267,9 @@ export class CreateLogComponent implements OnInit {
         this.vehicles = data;
       }
     });
+    this.publicQuery.getCities().subscribe(({ data }) => {
+      this.cities = data;
+    });
   }
 
   private startAutocomplete(): void {
@@ -258,6 +280,10 @@ export class CreateLogComponent implements OnInit {
     this.filteredDrivers = this.logForm.controls.driver.valueChanges.pipe(
       startWith(''),
       map(value => this.searchEngine.filterData(this.drivers, value, Model.driver)),
+    );
+    this.filteredCities = this.logForm.controls.city.valueChanges.pipe(
+      startWith(''),
+      map(value => this.searchEngine.filterData(this.cities, value.toString(), Model.city)),
     );
   }
 

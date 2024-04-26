@@ -39,6 +39,24 @@
         }
       </mat-autocomplete>
     </mat-form-field>
+    <mat-form-field class="field">
+      <mat-label class="label">Ciudad</mat-label>
+      <input
+        matInput
+        required
+        class="input"
+        [matAutocomplete]="autoCity"
+        formControlName="city"
+        placeholder="Ingrese la ciudad de la gira"
+      >
+      <mat-autocomplete #autoCity="matAutocomplete">
+        @for (city of filteredCities | async; track city.ID_Ciudad) {
+          <mat-option [value]="city.Nombre" (click)="selectCity(city)">
+            {{ city.Nombre }}
+          </mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
   </form>
   <mat-error class="error" *ngIf="error">Llena todos los campos requeridos!</mat-error>
 

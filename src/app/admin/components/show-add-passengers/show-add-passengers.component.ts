@@ -55,6 +55,7 @@ export class ShowAddPassengersComponent implements OnInit {
           this.currentPassengers = this.passengers.filter(passenger => passengerIds.includes(passenger.ID_Empleado));
           this.loading = false;
         }
+        this.loading = false;
       }
     });
     this.passengerForm = this._formBuilder.group({
