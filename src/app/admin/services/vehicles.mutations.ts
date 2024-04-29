@@ -33,6 +33,48 @@ export class VehicleMutations {
     });
   }
 
+  public createBrand(brand: string): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.http.post<boolean>(`${environment.apiUrl}/create-brand`, {brand}).subscribe(
+        (response: boolean) => {
+          if (response) {
+            this.toaster.success('Marca creada correctamente', 'Listo!');
+            resolve(response);
+          }
+          else {
+            this.toaster.success('Ocurrió un error durante la creación', 'Error!');
+            resolve(response);
+          }
+        },
+        (error) => {
+          this.toaster.error(error.message, 'Error!');
+          reject(error);
+        }
+      );
+    });
+  }
+
+  public createModel(data: any): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.http.post<boolean>(`${environment.apiUrl}/create-model`, data).subscribe(
+        (response: boolean) => {
+          if (response) {
+            this.toaster.success('Modelo creado correctamente', 'Listo!');
+            resolve(response);
+          }
+          else {
+            this.toaster.success('Ocurrió un error durante la creación', 'Error!');
+            resolve(response);
+          }
+        },
+        (error) => {
+          this.toaster.error(error.message, 'Error!');
+          reject(error);
+        }
+      );
+    });
+  }
+
   public createVehicle(data: any): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       this.http.post<boolean>(`${environment.apiUrl}/create-vehicle`, data).subscribe(

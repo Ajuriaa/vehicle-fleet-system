@@ -45,3 +45,16 @@
 .file-uploader {
   width: 100%;
 }
+
+.add {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  font-size: 3rem;
+
+  .label {
+    font-size: 2rem;
+  }
+}

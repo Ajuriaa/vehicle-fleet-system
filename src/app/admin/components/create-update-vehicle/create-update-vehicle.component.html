@@ -57,6 +57,10 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <div class="add" *ngIf="isCreate" (click)="openModal('brand')">
+        <i class="uil uil-plus-circle"></i>
+        <p class="label">Agregar Marca</p>
+      </div>
     </div>
     <div class="form-half">
       <mat-form-field class="field">
@@ -112,6 +116,10 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <div class="add" *ngIf="isCreate" (click)="openModal('model')">
+        <i class="uil uil-plus-circle"></i>
+        <p class="label">Agregar Modelo</p>
+      </div>
     </div>
   </form>
   <app-file-drop class="file-uploader" (selectedFiles)="getFiles($event)"></app-file-drop>

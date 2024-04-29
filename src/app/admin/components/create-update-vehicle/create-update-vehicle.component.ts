@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FileDropComponent, PrimaryButtonComponent } from 'src/app/shared';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environments';
 import { UploaderService, VehicleMutations, VehicleQueries } from '../../services';
 import { IBrand, IModel, IVehicle, IVehicleStatus, IVehicleType } from '../../interfaces';
 import { FileNameHelper } from '../../helpers';
+import { CreateBrandComponent, CreateModelComponent } from '..';
 
 const FILE_BASE_URL = environment.filesUrl;
 @Component({
@@ -51,6 +52,7 @@ export class CreateUpdateVehicleComponent implements OnInit {
     private vehicleQuery: VehicleQueries,
     private fileNameHelper: FileNameHelper,
     public dialogRef: MatDialogRef<CreateUpdateVehicleComponent>,
+    private dialog: MatDialog,
     private uploaderService: UploaderService,
     @Inject(MAT_DIALOG_DATA) public data: { vehicle: IVehicle, modalType: string }
   ){}
@@ -155,6 +157,31 @@ export class CreateUpdateVehicleComponent implements OnInit {
     this.vehicleForm.patchValue({
       vehicleType: model.Tipo_Vehiculo.Tipo_Vehiculo
     });
+    this.vehicleForm.patchValue({
+      brand: model.Marca_Vehiculo.ID_Marca_Vehiculo
+    });
+  }
+
+
+  public openModal(type: string): void {
+    if (type === 'brand') {
+      this.dialog.open(CreateBrandComponent, {
+        panelClass: 'dialog-style'
+      }).afterClosed().subscribe((result) => {
+        if(result) {
+          this.fetchData();
+        }
+      });
+    }
+    if (type === 'model') {
+      this.dialog.open(CreateModelComponent, {
+        panelClass: 'dialog-style'
+      }).afterClosed().subscribe((result) => {
+        if(result) {
+          this.fetchData();
+        }
+      });
+    }
   }
 
   private fillForm(): void {

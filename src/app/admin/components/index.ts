@@ -8,3 +8,5 @@ export * from './gas-info/gas-info.component';
 export * from './add-log/add-log.component';
 export * from './show-add-passengers/show-add-passengers.component';
 export * from './confirm-component/confirm-component.component';
+export * from './create-brand/create-brand.component';
+export * from './create-model/create-model.component';
