@@ -1,10 +1,83 @@
-<div class="container">
-  <p>{{test[0].KilometrosRecorridos}}</p>
-
-  <canvas baseChart class="chart"
-    [datasets]="datasets"
-    [labels]="labels"
-    chartType="line"
-  >
-  </canvas>
+<app-loading *ngIf="loading" class="loading"></app-loading>
+<div class="container" *ngIf="!loading">
+  <section class="panel">
+    <span class="item">
+      <div>
+        <p>Gasolina</p>
+        <p class="panel-label">{{ currentMonthInfo.gas }} Galon{{ currentMonthInfo.gas > 1 ? 'es': ''}}</p>
+      </div>
+      <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('gas')"></i>
+      <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('gas')"></i>
+    </span>
+    <span class="item">
+      <div>
+        <p>Giras</p>
+        <p class="panel-label">{{ currentMonthInfo.trips }}</p>
+      </div>
+      <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('gas')"></i>
+      <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('gas')"></i>
+    </span>
+    <span class="item">
+      <div>
+        <p>Costo</p>
+        <p class="panel-label">L.{{ currentMonthInfo.cost }}</p>
+      </div>
+      <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('gas')"></i>
+      <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('gas')"></i>
+    </span>
+    <span class="item">
+      <div>
+        <p>Solicitudes</p>
+        <p class="panel-label">{{ currentMonthInfo.requests }}</p>
+      </div>
+      <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('gas')"></i>
+      <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('gas')"></i>
+    </span>
+    <span class="item">
+      <div>
+        <p>Kilometros Recorridos</p>
+        <p class="panel-label">{{ currentMonthInfo.kms }} Kilometros</p>
+      </div>
+      <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('kms')"></i>
+      <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('kms')"></i>
+    </span>
+  </section>
+  <section class="info-container">
+    <div class="chart-container">
+      <canvas baseChart class="chart"
+        [datasets]="kmsDatasets"
+        [options]="barOptions"
+        [labels]="kmsLabels"
+        type="bar"
+      >
+      </canvas>
+    </div>
+    <div class="pie-container">
+      <canvas baseChart class="chart"
+        [datasets]="cityDatasets"
+        [options]="pieOptions"
+        [labels]="cityLabels"
+        type="pie"
+      >
+      </canvas>
+    </div>
+    <div class="chart-container">
+      <div class="line-graph">
+        <canvas baseChart class="chart"
+          [datasets]="costDatasets"
+          [options]="lineOptions"
+          [labels]="costLabels"
+          type="line"
+        >
+        </canvas>
+      </div>
+      <div class="car" (click)="goToVehicle()">
+        <img class="img" [src]="vehicle.Imagen_URL" alt="Car">
+        <span class="labels">
+          <p class="title">Vehículo más usado del mes</p>
+          <p>{{ vehicleInfoHelper.getModel(vehicle) }}</p>
+        </span>
+      </div>
+    </div>
+  </section>
 </div>

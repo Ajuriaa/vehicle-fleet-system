@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environments';
+import { IDashboardQuery } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { environment } from 'src/environments/environments';
 export class DashboardQueries {
   constructor(private http: HttpClient) {}
 
-  public test(): Observable<any> {
-    return this.http.get<any>(`${environment.apiUrl}/test`);
+  public dashboardQuery(): Observable<IDashboardQuery> {
+    return this.http.get<IDashboardQuery>(`${environment.apiUrl}/dashboard`);
   }
 }
