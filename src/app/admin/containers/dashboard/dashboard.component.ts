@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { LoadingComponent, SideBarComponent } from 'src/app/shared';
-import { DashboardQueries } from '../../services';
-import { IVehicle, monthData } from '../../interfaces';
-import { vehicleInfoHelper } from '../../helpers';
 import { EMPTY_VEHICLE } from 'src/app/core/helpers';
 import { CommonModule } from '@angular/common';
-import { ChartConfiguration, scales } from 'chart.js';
+import { ChartConfiguration } from 'chart.js';
 import { Router } from '@angular/router';
+import { vehicleInfoHelper } from '../../helpers';
+import { IVehicle, monthData } from '../../interfaces';
+import { DashboardQueries } from '../../services';
 
 const PIE_OPTIONS: ChartConfiguration['options'] = {
   plugins: {
