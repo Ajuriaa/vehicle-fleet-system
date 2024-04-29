@@ -33,6 +33,27 @@ export class RequestMutations {
     });
   }
 
+  public finishRequest(id: number): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.http.post<boolean>(`${environment.apiUrl}/finish-request`, { id }).subscribe(
+        (response: boolean) => {
+          if (response) {
+            this.toaster.success('Solicitud finzalizada exitosamente', 'Listo!');
+            resolve(response);
+          }
+          else {
+            this.toaster.success('Ocurrió un error durante la finzalización', 'Error!');
+            resolve(response);
+          }
+        },
+        (error) => {
+          this.toaster.error(error.message, 'Error!');
+          reject(error);
+        }
+      );
+    });
+  }
+
   public updateRequest(data: any): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       this.http.post<boolean>(`${environment.apiUrl}/update-request`, { data }).subscribe(

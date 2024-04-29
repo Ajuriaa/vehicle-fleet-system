@@ -14,6 +14,7 @@ import { RequestMutations } from '../../services';
 export class ConfirmComponentComponent implements OnInit {
   public title = '';
   public loading = false;
+  public label = '';
 
   constructor(
     private dialogRef: MatDialogRef<ConfirmComponentComponent>,
@@ -22,7 +23,8 @@ export class ConfirmComponentComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    this.title = this.getTitle();
+
+    this.getInfo();
   }
 
   public onCancel(changesMade = false): void {
@@ -34,6 +36,9 @@ export class ConfirmComponentComponent implements OnInit {
     switch (this.data.type) {
       case 'cancel-request':
         this.cancelRequest();
+        break;
+      case 'finish-request':
+        this.finishRequest();
         break;
       default: this.onCancel();
         break;
@@ -48,13 +53,28 @@ export class ConfirmComponentComponent implements OnInit {
     }
   }
 
-  private getTitle(): string {
+  private async finishRequest(): Promise<void> {
+    const mutationResponse = await this.requestMutation.finishRequest(this.data.id);
+
+    if (mutationResponse) {
+      this.onCancel(true);
+    }
+  }
+
+  private getInfo(): void {
     switch (this.data.type) {
       case 'cancel-request':
-        return 'Eliminar solicitud';
+        this.title = 'Cancelar solicitud';
+        this.label = 'Cancelar';
+        break;
+      case 'finish-request':
+        this.title = 'Finalizar solicitud';
+        this.label = 'Finalizar';
         break;
       default:
-        return '';
+        this.title = 'Cancelar solicitud';
+        this.label = 'Cancelar';
+        break;
     }
   }
 }

@@ -81,6 +81,10 @@ export class RequestsComponent implements OnInit {
     return false;
   }
 
+  public canFinish(request: IRequest): boolean {
+    return request.Estado_Solicitud.Estado === RequestStatus.active;
+  }
+
   public canCancel(request: IRequest): boolean {
     return request.Estado_Solicitud.Estado === RequestStatus.pendingByAdmin ;
   }
@@ -122,10 +126,10 @@ export class RequestsComponent implements OnInit {
     });
   }
 
-  public cancelRequest(request: IRequest): void {
+  public openRequestModal(request: IRequest, type: string = 'cancel-request'): void {
     this.dialog.open(ConfirmComponentComponent, {
       panelClass: 'dialog-style',
-      data: { type: 'cancel-request', id: request.ID_Solicitud }
+      data: { type, id: request.ID_Solicitud }
     }).afterClosed().subscribe((result) => {
       if(result) {
         this.getAllRequests();
