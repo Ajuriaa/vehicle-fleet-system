@@ -14,24 +14,24 @@
         <p>Giras</p>
         <p class="panel-label">{{ currentMonthInfo.trips }}</p>
       </div>
-      <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('gas')"></i>
-      <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('gas')"></i>
+      <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('trip')"></i>
+      <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('trip')"></i>
     </span>
     <span class="item">
       <div>
         <p>Costo</p>
         <p class="panel-label">L.{{ currentMonthInfo.cost }}</p>
       </div>
-      <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('gas')"></i>
-      <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('gas')"></i>
+      <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('cost')"></i>
+      <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('cost')"></i>
     </span>
     <span class="item">
       <div>
         <p>Solicitudes</p>
         <p class="panel-label">{{ currentMonthInfo.requests }}</p>
       </div>
-      <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('gas')"></i>
-      <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('gas')"></i>
+      <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('request')"></i>
+      <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('request')"></i>
     </span>
     <span class="item">
       <div>
