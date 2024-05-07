@@ -125,7 +125,6 @@ export class DashboardComponent implements OnInit {
   }
 
   private generateGraphData(): void {
-    console.log(this.kms);
     this.kmsDatasets = [{ data: this.kms.map((k) => k.kms), label: 'Total de Kilometros recorridos por mes' }];
     this.kmsLabels = this.kms.map((k) => k.month);
     this.cityDatasets = [{ data: this.cities.map((c) => c.trips), label: 'Viajes' }];
