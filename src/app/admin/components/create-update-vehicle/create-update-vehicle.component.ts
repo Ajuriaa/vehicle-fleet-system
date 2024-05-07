@@ -41,7 +41,7 @@ export class CreateUpdateVehicleComponent implements OnInit {
   public vehicleTypes: IVehicleType[] = [];
   public statuses: IVehicleStatus[] = [];
   public selectedFile!: File;
-  public filesControl = new FileUploadControl(undefined, FileUploadValidators.filesLimit(2));
+  public filesControl = new FileUploadControl(undefined, FileUploadValidators.filesLimit(1));
   public error = false;
   public fileError = false;
   private readonly fileUrl = FILE_BASE_URL;
@@ -109,14 +109,22 @@ export class CreateUpdateVehicleComponent implements OnInit {
     if (this.vehicleForm.invalid) {
       this.error = true;
       return;
-    } else if (!this.selectedFile) {
+    } else if (!this.selectedFile && this.isCreate) {
       this.fileError = true;
       return;
     }
 
     const plate = this.vehicleForm.controls.plate.value;
-    const fileName = this.fileNameHelper.getFileName(plate, this.selectedFile);
-    console.log(fileName);
+    let file = this.data.vehicle.Imagen_URL;
+    let fileUploaded = true;
+    console.log(this.selectedFile, !this.selectedFile);
+
+    if(this.selectedFile){
+      const fileName = this.fileNameHelper.getFileName(plate, this.selectedFile);
+      file = this.fileUrl + 'vehicles/' + fileName
+      fileUploaded = await this.uploaderService.uploadFile(this.selectedFile, Upload.vehicle, fileName);
+    }
+
     const data = {
       ID_Vehiculo: this.data.vehicle.ID_Vehiculo,
       Placa: this.vehicleForm.controls.plate.value,
@@ -124,14 +132,12 @@ export class CreateUpdateVehicleComponent implements OnInit {
       Chasis: this.vehicleForm.controls.chasis.value,
       Motor: this.vehicleForm.controls.motor.value,
       KPG: this.vehicleForm.controls.kpg.value,
-      Imagen_URL: this.fileUrl + 'vehicles/' + fileName,
+      Imagen_URL: file,
       Anio: this.vehicleForm.controls.year.value,
       Color: this.vehicleForm.controls.color.value,
       ID_Modelo: this.vehicleForm.controls.model.value,
       ID_Estado_Vehiculo: this.vehicleForm.controls.status.value
     };
-
-    const fileUploaded = await this.uploaderService.uploadFile(this.selectedFile, Upload.vehicle, fileName);
 
     if(fileUploaded){
       const mutationResponse = this.isCreate
