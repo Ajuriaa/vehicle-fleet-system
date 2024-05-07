@@ -1,27 +1,24 @@
-# VehicleFleetSystem
+# Vehicle Fleet System
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2. Created for manage IHTT's vehicle fleet.
+
+## Required Dependencies
+You must install [Angular CLI](https://github.com/angular/angular-cli) with the required [NodeJS](https://nodejs.org/en) version.
+
+## Recommended Dependencies
+Is strongly recommended to use [Bun](https://bun.sh/) instead of npm. The bun binaries are included in the repository.
+
+## Environment Variables
+This system is related to the [Vehicle System Api](https://github.com/Ajuriaa/api-vehicle-fleet.git), you are required to put the API_URL and FILES_URL in the /src/environments/environments.ts file, a template is found in the same folder.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `bun run dev` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `bun run build` to build the project. The build artifacts will be stored in the `dist/vehicle-fleet-system/browser` directory.
 
-## Running unit tests
+## Running linter
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Run `bun run lint` to execute the linter, and fix fixable linting errors, via [Eslint for Typescript](https://typescript-eslint.io/)
