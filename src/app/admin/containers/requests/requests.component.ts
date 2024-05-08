@@ -64,7 +64,7 @@ export class RequestsComponent implements OnInit {
   }
 
   public generatePdf(): void {
-    this.pdfHelper.generateRequestsPdf(this.requests);
+    this.pdfHelper.generateRequestsPdf(this.filteredRequests);
   }
 
   public getDate(date: string): string {

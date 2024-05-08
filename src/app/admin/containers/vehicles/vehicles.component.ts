@@ -67,6 +67,7 @@ export class VehiclesComponent implements OnInit {
     }).afterClosed().subscribe((result) => {
       if(result) {
         this.getAllVehicles();
+        this.searchInput = '';
       }
     });
   }
@@ -83,7 +84,7 @@ export class VehiclesComponent implements OnInit {
   }
 
   public generatePdf(): void {
-    this.pdfHelper.generateVehiclesPDF(this.vehicles);
+    this.pdfHelper.generateVehiclesPDF(this.filteredVehicles);
   }
 
   public vehicleInfo(vehicleId: number): void {

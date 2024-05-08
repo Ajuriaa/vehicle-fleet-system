@@ -38,8 +38,8 @@ export class CreateUpdateDriverComponent implements OnInit {
     this.fillForm();
   }
 
-  public onCancel(): void {
-    this.dialogRef.close(true);
+  public onCancel(changesMade = false): void {
+    this.dialogRef.close(changesMade);
   }
 
   public async onSubmit(): Promise<void> {
@@ -59,7 +59,7 @@ export class CreateUpdateDriverComponent implements OnInit {
     }
 
     if (mutationResponse) {
-      this.onCancel();
+      this.onCancel(true);
     }
   }
 
