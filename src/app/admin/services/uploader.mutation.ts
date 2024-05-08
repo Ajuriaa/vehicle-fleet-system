@@ -12,11 +12,10 @@ export class UploaderService {
     private toaster: ToastrService
   ) {}
 
-  public uploadFile(file: File, type: string, name: string = ''): Promise<boolean> {
+  public uploadFile(file: File, name: string = ''): Promise<boolean> {
     const fileName = name === '' ? file.name : name;
     const fd = new FormData();
     fd.append('file', file, fileName);
-    fd.append('type', type);
     return new Promise<boolean>((resolve, reject) => {
       this.http.post<boolean>(`${environment.apiUrl}/upload`, fd).subscribe(
         (response: boolean) => {

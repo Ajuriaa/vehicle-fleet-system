@@ -121,9 +121,10 @@ export class CreateUpdateVehicleComponent implements OnInit {
     let fileUploaded = true;
 
     if(this.selectedFile){
-      const fileName = this.fileNameHelper.getFileName(plate, this.selectedFile);
-      file = this.fileUrl + 'vehicles/' + fileName;
-      fileUploaded = await this.uploaderService.uploadFile(this.selectedFile, Upload.vehicle, fileName);
+      const fileName = this.fileNameHelper.getFileName(Upload.vehicle, plate, this.selectedFile);
+      const realFileName = this.fileNameHelper.getRealFileName(fileName);
+      file = this.fileUrl + 'vehicles/' + realFileName;
+      fileUploaded = await this.uploaderService.uploadFile(this.selectedFile, fileName);
     }
 
     const data = {
