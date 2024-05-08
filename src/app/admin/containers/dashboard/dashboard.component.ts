@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { vehicleInfoHelper } from '../../helpers';
 import { IVehicle, monthData } from '../../interfaces';
 import { DashboardQueries } from '../../services';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const PIE_OPTIONS: ChartConfiguration['options'] = {
   plugins: {
@@ -61,7 +62,7 @@ const BAR_OPTIONS: ChartConfiguration['options'] = {
   standalone: true,
   imports: [
     SideBarComponent, BaseChartDirective, LoadingComponent,
-    CommonModule, BaseChartDirective
+    CommonModule, BaseChartDirective, MatTooltipModule
   ],
   providers: [vehicleInfoHelper],
   templateUrl: './dashboard.component.html',

@@ -94,6 +94,10 @@ export class LogComponent implements OnInit {
     return log.Llenados_Combustible.length > 0;
   }
 
+  public goToVehicle(): void {
+    this.router.navigate(['/admin/vehicle/', this.vehicle.ID_Vehiculo]);
+  }
+
   private getVehicle(): void {
     const vehicleId = this.route.snapshot.params.id;
 

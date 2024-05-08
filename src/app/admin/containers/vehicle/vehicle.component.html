@@ -34,32 +34,32 @@
             <p>KPG</p>
             <p class="panel-label">{{ currentMonth.kpg }}</p>
           </div>
-          <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('kpg')"></i>
-          <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('kpg')"></i>
+          <i class="uil uil-arrow-circle-up up" [matTooltip]="'Mes Pasado: ' + lastMonth.kpg" *ngIf="currentMonthBigger('kpg')"></i>
+          <i class="uil uil-arrow-circle-down down" [matTooltip]="'Mes Pasado: ' + lastMonth.kpg" *ngIf="!currentMonthBigger('kpg')"></i>
         </span>
         <span class="item">
           <div>
             <p>CPK</p>
             <p class="panel-label">L.{{ currentMonth.cpk }}</p>
           </div>
-          <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('cpk')"></i>
-          <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('cpk')"></i>
+          <i class="uil uil-arrow-circle-up up" [matTooltip]="'Mes Pasado: L.' + lastMonth.cpk" *ngIf="currentMonthBigger('cpk')"></i>
+          <i class="uil uil-arrow-circle-down down" [matTooltip]="'Mes Pasado: L.' + lastMonth.cpk" *ngIf="!currentMonthBigger('cpk')"></i>
         </span>
         <span class="item">
           <div>
             <p>Precio</p>
             <p class="panel-label">L.{{ currentMonth.cost }}</p>
           </div>
-          <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('cost')"></i>
-          <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('cost')"></i>
+          <i class="uil uil-arrow-circle-up up" [matTooltip]="'Mes Pasado: L.' + lastMonth.cost" *ngIf="currentMonthBigger('cost')"></i>
+          <i class="uil uil-arrow-circle-down down" [matTooltip]="'Mes Pasado: L.' + lastMonth.cost" *ngIf="!currentMonthBigger('cost')"></i>
         </span>
         <span class="item">
           <div>
             <p>Distancia Recorrida</p>
             <p class="panel-label">{{ currentMonth.kms }} KM</p>
           </div>
-          <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('kms')"></i>
-          <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('kms')"></i>
+          <i class="uil uil-arrow-circle-up up" [matTooltip]="'Mes Pasado: ' + lastMonth.kms + ' Km'" *ngIf="currentMonthBigger('kms')"></i>
+          <i class="uil uil-arrow-circle-down down" [matTooltip]="'Mes Pasado: ' + lastMonth.kms  + ' Km'" *ngIf="!currentMonthBigger('kms')"></i>
         </span>
       </div>
       <div class="second-row">
@@ -69,8 +69,8 @@
               <p>Cantidad llenada</p>
               <p class="panel-label">{{ currentMonth.gas }} Galon{{ currentMonth.gas > 1 ? 'es': ''}}</p>
             </div>
-            <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('gas')"></i>
-            <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('gas')"></i>
+            <i class="uil uil-arrow-circle-up up" [matTooltip]="'Mes Pasado: ' + lastMonth.gas" *ngIf="currentMonthBigger('gas')"></i>
+            <i class="uil uil-arrow-circle-down down" [matTooltip]="'Mes Pasado: ' + lastMonth.gas" *ngIf="!currentMonthBigger('gas')"></i>
           </span>
           <span>
             <p>Fecha Últ. Mantenimiento</p>

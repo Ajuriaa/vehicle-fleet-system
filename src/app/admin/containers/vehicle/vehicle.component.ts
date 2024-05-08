@@ -10,6 +10,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { vehicleInfoHelper } from '../../helpers';
 import { VehicleQueries } from '../../services';
 import { IRequest, IVehicle, IVehicleInfo } from '../../interfaces';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const MAINTENANCE_COORDS = { lat: 14.09926541800526, lng: -87.15743413863002 };
 const DEFAULT_COORDS = { lat: 14.089656466933825, lng: -87.1869442583274 };
@@ -23,7 +24,7 @@ const OPTIONS = {
   standalone: true,
   imports: [
     CommonModule, LoadingComponent, PrimaryButtonComponent,
-    BaseChartDirective
+    BaseChartDirective, MatTooltipModule
   ],
   providers: [vehicleInfoHelper],
   templateUrl: './vehicle.component.html',

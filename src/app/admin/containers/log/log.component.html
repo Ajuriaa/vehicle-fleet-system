@@ -12,7 +12,7 @@
       />
     </div>
     <div class="car-info">
-      <img class="img" [src]="vehicle.Imagen_URL"/>
+      <img class="img" [src]="vehicle.Imagen_URL" (click)="goToVehicle()"/>
       <div class="info-wrapper">
         <p class="panel-title">{{ vehicleHelper.getModel(vehicle) }}</p>
         <div class="info">

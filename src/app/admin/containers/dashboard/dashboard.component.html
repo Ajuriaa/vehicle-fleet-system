@@ -4,42 +4,42 @@
     <span class="item">
       <div>
         <p>Gasolina</p>
-        <p class="panel-label">{{ currentMonthInfo.gas }} Galon{{ currentMonthInfo.gas > 1 ? 'es': ''}}</p>
+        <p class="panel-label">{{ currentMonthInfo.gas.toFixed(2) }} Galon{{ currentMonthInfo.gas > 1 ? 'es': ''}}</p>
       </div>
-      <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('gas')"></i>
-      <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('gas')"></i>
+      <i class="uil uil-arrow-circle-up up" [matTooltip]="'Mes Pasado: ' + lastMonthInfo.gas.toFixed(2)" *ngIf="currentMonthBigger('gas')"></i>
+      <i class="uil uil-arrow-circle-down down" [matTooltip]="'Mes Pasado: ' + lastMonthInfo.gas.toFixed(2)" *ngIf="!currentMonthBigger('gas')"></i>
     </span>
     <span class="item">
       <div>
         <p>Giras</p>
         <p class="panel-label">{{ currentMonthInfo.trips }}</p>
       </div>
-      <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('trip')"></i>
-      <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('trip')"></i>
+      <i class="uil uil-arrow-circle-up up" [matTooltip]="'Mes Pasado: ' + lastMonthInfo.trips" *ngIf="currentMonthBigger('trip')"></i>
+      <i class="uil uil-arrow-circle-down down" [matTooltip]="'Mes Pasado: ' + lastMonthInfo.trips" *ngIf="!currentMonthBigger('trip')"></i>
     </span>
     <span class="item">
       <div>
         <p>Costo</p>
         <p class="panel-label">L.{{ currentMonthInfo.cost }}</p>
       </div>
-      <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('cost')"></i>
-      <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('cost')"></i>
+      <i class="uil uil-arrow-circle-up up" [matTooltip]="'Mes Pasado: L.' + lastMonthInfo.cost" *ngIf="currentMonthBigger('cost')"></i>
+      <i class="uil uil-arrow-circle-down down" [matTooltip]="'Mes Pasado: L.' + lastMonthInfo.cost" *ngIf="!currentMonthBigger('cost')"></i>
     </span>
     <span class="item">
       <div>
         <p>Solicitudes</p>
         <p class="panel-label">{{ currentMonthInfo.requests }}</p>
       </div>
-      <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('request')"></i>
-      <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('request')"></i>
+      <i class="uil uil-arrow-circle-up up" [matTooltip]="'Mes Pasado: ' + lastMonthInfo.requests" *ngIf="currentMonthBigger('request')"></i>
+      <i class="uil uil-arrow-circle-down down" [matTooltip]="'Mes Pasado: ' + lastMonthInfo.requests" *ngIf="!currentMonthBigger('request')"></i>
     </span>
     <span class="item">
       <div>
         <p>Kilometros Recorridos</p>
         <p class="panel-label">{{ currentMonthInfo.kms }} Kilometros</p>
       </div>
-      <i class="uil uil-arrow-circle-up up" *ngIf="currentMonthBigger('kms')"></i>
-      <i class="uil uil-arrow-circle-down down" *ngIf="!currentMonthBigger('kms')"></i>
+      <i class="uil uil-arrow-circle-up up" [matTooltip]="'Mes Pasado: ' + lastMonthInfo.kms + ' Km'" *ngIf="currentMonthBigger('kms')"></i>
+      <i class="uil uil-arrow-circle-down down" [matTooltip]="'Mes Pasado: ' + lastMonthInfo.kms + ' Km'" *ngIf="!currentMonthBigger('kms')"></i>
     </span>
   </section>
   <section class="info-container">
