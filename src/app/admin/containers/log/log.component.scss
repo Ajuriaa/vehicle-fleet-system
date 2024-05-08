@@ -15,9 +15,15 @@
     border-radius: 2rem;
   }
 
-  .button {
-    margin-right: 2rem;
+  .buttons {
+    @include flex-center-column;
+    gap: 1rem;
     width: 20%;
+    margin-right: 2rem;
+
+    .button {
+      width: 100%;
+    }
   }
 
   .table-container {

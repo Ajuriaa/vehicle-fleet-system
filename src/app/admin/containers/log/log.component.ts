@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EMPTY_VEHICLE } from 'src/app/core/helpers';
+import { EMPTY_VEHICLE, PDFHelper } from 'src/app/core/helpers';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,7 +16,7 @@ import { VehicleQueries } from '../../services';
 import { ILog, IVehicle } from '../../interfaces';
 
 const TABLE_COLUMNS = [
-  'date', 'driver', 'destination', 'kmsOut', 'kmsIn', 'timeOut', 'timeIn', 'observation', 'passengers', 'gas'
+  'date', 'driver', 'destination', 'city', 'kmsOut', 'kmsIn', 'timeOut', 'timeIn', 'observation', 'passengers', 'gas'
 ];
 @Component({
   selector: 'app-log',
@@ -26,7 +26,7 @@ const TABLE_COLUMNS = [
     PrimaryButtonComponent, LoadingComponent, NoResultComponent,
     NgxPaginationModule
   ],
-  providers: [vehicleInfoHelper],
+  providers: [vehicleInfoHelper, PDFHelper],
   templateUrl: './log.component.html',
   styleUrl: './log.component.scss'
 })
@@ -45,11 +45,16 @@ export class LogComponent implements OnInit {
     private vehicleQuery: VehicleQueries,
     private dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private pdfHelper: PDFHelper
   ){}
 
   ngOnInit(): void {
     this.getVehicle();
+  }
+
+  public generatePdf(): void {
+    this.pdfHelper.generateLogsPdf(this.filteredLogs, this.vehicle);
   }
 
   public onSearch(term: string): void {

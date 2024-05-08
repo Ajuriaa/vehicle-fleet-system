@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import moment from 'moment';
-import { IDriver, IRequest, IVehicle } from 'src/app/admin/interfaces';
+import { IDriver, ILog, IRequest, IVehicle } from 'src/app/admin/interfaces';
 import { vehicleInfoHelper } from 'src/app/admin/helpers';
 
 @Injectable({
@@ -71,6 +71,12 @@ export class PDFHelper {
     this.generatePDF(formattedDrivers, columns, 'Listado de Conductores');
   }
 
+  public generateLogsPdf(logs: ILog[], vehicle: IVehicle): void {
+    const columns = ['Fecha', 'Hora Salida', 'Hora Regreso', 'Conductor', 'Pasajeros', 'Ciudad', 'Kilometraje Salida', 'Kilometraje Entrada'];
+    const formattedLogs = this.formatLogsForPDF(logs);
+    this.generatePDF(formattedLogs, columns, 'Listado de Bitácoras - ' + this.getVehicle(vehicle));
+  }
+
   public generateRequestsPdf(requests: IRequest[]): void {
     const columns = ['Estado', 'Empleado', 'Fecha', 'Hora Salida', 'Hora Entrada', 'Ciudad', 'Vehículo', 'Conductor'];
     const formattedDrivers = this.formatRequestsForPDF(requests);
@@ -88,6 +94,21 @@ export class PDFHelper {
         request.Ciudad.Nombre,
         this.getVehicle(request.Vehiculo),
         this.getDriver(request.Conductor)
+      ];
+    });
+  }
+
+  private formatLogsForPDF(logs: ILog[]): any[] {
+    return logs.map(log => {
+      return [
+        this.getDate(log.Fecha.toString()),
+        this.getTime(log.Hora_Salida.toString()),
+        this.getTime(log.Hora_Entrada.toString()),
+        this.getDriver(log.Conductor),
+        log.Pasajeros.length,
+        log.Ciudad.Nombre,
+        log.Kilometraje_Salida,
+        log.Kilometraje_Entrada
       ];
     });
   }

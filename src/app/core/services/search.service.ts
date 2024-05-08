@@ -29,7 +29,8 @@ export class SearchService {
         moment.utc(log.Fecha).format('DD/MM/YYYY').includes(term.toLowerCase()) ||
         moment.utc(log.Hora_Entrada).format('hh:mm A').includes(term.toLowerCase()) ||
         moment.utc(log.Hora_Salida).format('hh:mm A').includes(term.toLowerCase()) ||
-        log.Conductor.Nombre.toLowerCase().includes(term.toLowerCase())
+        log.Conductor.Nombre.toLowerCase().includes(term.toLowerCase()) ||
+        log.Ciudad.Nombre.toLowerCase().includes(term.toLowerCase())
       );
     }
     if(dataModel === Model.request) {
