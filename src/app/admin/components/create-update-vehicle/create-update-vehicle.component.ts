@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FileDropComponent, PrimaryButtonComponent } from 'src/app/shared';
+import { FileDropComponent, LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -24,7 +24,7 @@ const FILE_BASE_URL = environment.filesUrl;
     FormsModule, ReactiveFormsModule,
     FormsModule, MatInputModule, MatFormFieldModule,
     MatOptionModule, MatSelectModule, FileUploadModule,
-    FileDropComponent
+    FileDropComponent, LoadingComponent
   ],
   providers: [VehicleMutations, FileNameHelper],
   templateUrl: './create-update-vehicle.component.html',
@@ -32,6 +32,7 @@ const FILE_BASE_URL = environment.filesUrl;
 })
 export class CreateUpdateVehicleComponent implements OnInit {
   public isCreate = false;
+  public loading = false;
   public vehicleType = '';
   public currentYear = new Date().getFullYear();
   public vehicleForm!: FormGroup;
@@ -113,15 +114,15 @@ export class CreateUpdateVehicleComponent implements OnInit {
       this.fileError = true;
       return;
     }
+    this.loading = true;
 
     const plate = this.vehicleForm.controls.plate.value;
     let file = this.data.vehicle.Imagen_URL;
     let fileUploaded = true;
-    console.log(this.selectedFile, !this.selectedFile);
 
     if(this.selectedFile){
       const fileName = this.fileNameHelper.getFileName(plate, this.selectedFile);
-      file = this.fileUrl + 'vehicles/' + fileName
+      file = this.fileUrl + 'vehicles/' + fileName;
       fileUploaded = await this.uploaderService.uploadFile(this.selectedFile, Upload.vehicle, fileName);
     }
 
