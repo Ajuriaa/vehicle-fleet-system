@@ -25,7 +25,7 @@ export class UploaderService {
             resolve(response);
           }
           else {
-            this.toaster.success('Ocurrió un error durante la subida', 'Error!');
+            this.toaster.error('Ocurrió un error durante la subida', 'Error!');
             resolve(response);
           }
         },
