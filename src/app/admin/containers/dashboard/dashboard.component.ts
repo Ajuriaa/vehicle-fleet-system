@@ -5,10 +5,10 @@ import { EMPTY_VEHICLE } from 'src/app/core/helpers';
 import { CommonModule } from '@angular/common';
 import { ChartConfiguration } from 'chart.js';
 import { Router } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { vehicleInfoHelper } from '../../helpers';
 import { IVehicle, monthData } from '../../interfaces';
 import { DashboardQueries } from '../../services';
-import { MatTooltipModule } from '@angular/material/tooltip';
 
 const PIE_OPTIONS: ChartConfiguration['options'] = {
   plugins: {
