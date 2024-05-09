@@ -90,7 +90,7 @@ export class ShowAddPassengersComponent implements OnInit {
       return;
     }
     const passengerIds = this.selectedPassengers.map(passenger => passenger.ID_Empleado);
-    this.dialogRef.close(JSON.stringify(passengerIds));
+    this.dialogRef.close(passengerIds.join(', '));
   }
 
   public display(): string {
