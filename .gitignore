@@ -3,6 +3,7 @@
 src/environments/environments.ts
 
 # Compiled output
+/documentation
 /dist
 /tmp
 /out-tsc
