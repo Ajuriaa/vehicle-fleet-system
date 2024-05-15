@@ -16,7 +16,7 @@
       <mat-autocomplete #autoVehicle="matAutocomplete">
         @for (vehicle of filteredVehicles | async; track vehicle.ID_Vehiculo) {
           <mat-option [value]="vehicleInfoHelper.getModel(vehicle)" (click)="selectVehicle(vehicle)">
-            {{ vehicleInfoHelper.getModel(vehicle) }}
+            {{ vehicle.Placa }} {{ vehicleInfoHelper.getModel(vehicle) }}
           </mat-option>
         }
       </mat-autocomplete>

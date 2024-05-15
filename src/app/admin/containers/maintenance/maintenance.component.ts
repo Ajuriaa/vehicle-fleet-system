@@ -5,6 +5,9 @@ import { LoadingComponent, PrimaryButtonComponent, NoResultComponent, VehicleCar
 import { SearchService } from 'src/app/core/services';
 import { MatDialog } from '@angular/material/dialog';
 import { Model } from 'src/app/core/enums';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { CreateMaintenanceComponent } from '../../components';
 import { VehicleQueries } from '../../services';
 import { IVehicle } from '../../interfaces';
@@ -15,7 +18,8 @@ import { IVehicle } from '../../interfaces';
   imports: [
     VehicleCardComponent, LoadingComponent,
     CommonModule, FormsModule, PrimaryButtonComponent,
-    NoResultComponent
+    NoResultComponent, MatFormFieldModule, MatInputModule,
+    MatSelectModule, FormsModule
   ],
   templateUrl: './maintenance.component.html',
   styleUrl: './maintenance.component.scss'
@@ -26,6 +30,8 @@ export class MaintenanceComponent implements OnInit {
   public vehicles: IVehicle[] = [];
   public filteredVehicles: IVehicle[] = [];
   public lastMonthMaintenanceVehicles = 0;
+  public selectedFilter = 'Todos';
+  public filterOptions = ['Todos', 'En Mantenimiento', 'Disponible', 'En Uso', 'Mantenimiento Cercano'];
 
   constructor(
     private searchEngine: SearchService,
@@ -60,6 +66,33 @@ export class MaintenanceComponent implements OnInit {
         this.getAllVehicles();
       }
     });
+  }
+
+  public onFilterChange(filter: string): void {
+    switch(filter) {
+      case 'Todos':
+        this.filteredVehicles = this.vehicles;
+        break;
+      case 'En Mantenimiento':
+        this.filteredVehicles = this.vehicles.filter(vehicle => vehicle.Estado_Vehiculo.Estado_Vehiculo === 'En Mantenimiento');
+        break;
+      case 'Disponible':
+        this.filteredVehicles = this.vehicles.filter(vehicle => vehicle.Estado_Vehiculo.Estado_Vehiculo === 'Disponible');
+        break;
+      case 'En Uso':
+        this.filteredVehicles = this.vehicles.filter(vehicle => vehicle.Estado_Vehiculo.Estado_Vehiculo === 'En Uso');
+        break;
+      case 'Mantenimiento Cercano':
+        this.filteredVehicles = this.vehicles.filter(vehicle => {
+          if (vehicle.Mantenimientos.length > 0) {
+            const latestMaintenance = vehicle.Mantenimientos[0];
+            const difference = vehicle.Kilometraje - latestMaintenance.Kilometraje;
+            return difference >= 4000;
+          }
+          return false;
+        });
+        break;
+    }
   }
 
   private getVehiclesMaintenancesLastMonth(): void {

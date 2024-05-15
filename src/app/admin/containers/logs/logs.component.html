@@ -23,6 +23,17 @@
       <app-primary-button class="button" (btnClick)="createLog()">
         INGRESAR BITACORA
       </app-primary-button>
+      <mat-form-field class="button">
+        <mat-label>Filtro</mat-label>
+        <mat-select
+          [(ngModel)]="selectedFilter"
+          (selectionChange)="onFilterChange($event.value)"
+        >
+          @for (filter of filterOptions; track filter) {
+            <mat-option [value]="filter">{{ filter }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
     </div>
   </section>
   <section class="cards-container">
