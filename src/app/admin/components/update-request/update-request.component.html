@@ -68,6 +68,7 @@
   <mat-error class="error" *ngIf="emptyPassengers">
     La lista de pasajeros no puede estar vacía
   </mat-error>
+  <p *ngIf="showKms" class="kms-label">El vehículo tiene {{ nextMaintenance }} KM restantes antes de su siguiente mantenimiento</p>
   <div class="buttons">
     <app-primary-button styleClass="btn-red" class="btn" (btnClick)="onCancel()">Cancelar</app-primary-button>
     <app-primary-button class="btn" (btnClick)="onSubmit()">Confirmar</app-primary-button>

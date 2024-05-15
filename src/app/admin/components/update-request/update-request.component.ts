@@ -43,7 +43,9 @@ export class UpdateRequestComponent implements OnInit {
   public selectedDriver: IDriver = EMPTY_DRIVER;
   public selectedEmployees: IUser[] = [];
   public error = false;
+  public nextMaintenance = 0;
   public emptyPassengers = false;
+  public showKms = false;
 
   constructor(
     public vehicleInfoHelper: vehicleInfoHelper,
@@ -96,6 +98,7 @@ export class UpdateRequestComponent implements OnInit {
 
   public selectVehicle(vehicle: IVehicle): void {
     this.selectedVehicle = vehicle;
+    this.setMaintenance();
   }
 
   public async onSubmit(): Promise<void> {
@@ -174,5 +177,14 @@ export class UpdateRequestComponent implements OnInit {
         this.statuses = data;
       }
     });
+  }
+
+  private setMaintenance(): void {
+    this.showKms = true;
+    if(this.selectedVehicle.Mantenimientos.length === 0) this.nextMaintenance = 0;
+    const lastMaintenance = this.selectedVehicle.Mantenimientos.filter(m => m.Tipo_Mantenimiento === 'Preventivo')[0];
+    const lastMaintenanceKms = lastMaintenance.Kilometraje;
+    const nextMaintenance = lastMaintenanceKms + 5000;
+    this.nextMaintenance = nextMaintenance - this.selectedVehicle.Kilometraje;
   }
 }
