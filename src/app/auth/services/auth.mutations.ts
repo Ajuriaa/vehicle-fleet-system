@@ -48,13 +48,12 @@ export class AuthService {
           const name = data[1].perfil.Nombre;
           const position = data[1].ID_Area.Cargo;
 
-          this._cookie._setCookie(token, user, name, position);
-
-          if(this.isAdmin(data[1].roles)) {
+          if(!this.isAdmin(data[1].roles)) {
             this._toaster.error('No tienes los permisos para ingresar a esta aplicación', 'Error');
             return false;
           }
 
+          this._cookie._setCookie(token, user, name, position);
           this._sharedData.setRole(+this.getRole(data[1].roles));
           this._toaster.success('Inicio de sesión exitoso', 'Bienvenido');
           return true;
