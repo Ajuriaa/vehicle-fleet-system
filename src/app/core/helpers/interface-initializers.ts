@@ -33,6 +33,7 @@ export const EMPTY_USER: IUser = {
 export const EMPTY_REQUEST: IRequest = {
   ID_Solicitud: 0,
   ID_Empleado: 0,
+  Departamento: "",
   Nombre_Empleado: "",
   Destino: "",
   Motivo: "",

@@ -17,7 +17,7 @@ import { NameHelper, vehicleInfoHelper } from '../../helpers';
 import { ConfirmComponentComponent, UpdateRequestComponent } from '../../components';
 
 const TABLE_COLUMNS = [
-  'status', 'name', 'date', 'timeOut', 'timeIn', 'city', 'vehicle', 'driver', 'actions'
+  'status', 'name', 'department', 'date', 'timeOut', 'timeIn', 'city', 'vehicle', 'driver', 'actions'
 ];
 
 @Component({

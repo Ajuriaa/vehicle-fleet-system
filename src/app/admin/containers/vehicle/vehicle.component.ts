@@ -1,10 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY_REQUEST, EMPTY_VEHICLE } from 'src/app/core/helpers';
+import { EMPTY_REQUEST, EMPTY_VEHICLE, PDFHelper } from 'src/app/core/helpers';
 import { CommonModule } from '@angular/common';
 import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { ICoordinate, MapsService } from 'src/app/core/services';
-import { MarkerUrl } from 'src/app/core/enums';
+import { MarkerUrl, Report } from 'src/app/core/enums';
 import moment from 'moment';
 import { BaseChartDirective } from 'ng2-charts';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -26,7 +26,7 @@ const OPTIONS = {
     CommonModule, LoadingComponent, PrimaryButtonComponent,
     BaseChartDirective, MatTooltipModule
   ],
-  providers: [vehicleInfoHelper],
+  providers: [vehicleInfoHelper, PDFHelper],
   templateUrl: './vehicle.component.html',
   styleUrl: './vehicle.component.scss'
 })
@@ -56,7 +56,8 @@ export class VehicleComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private mapService: MapsService,
-    private vehicleQuery: VehicleQueries
+    private vehicleQuery: VehicleQueries,
+    private pdfHelper: PDFHelper
   ){}
 
   ngOnInit(): void {
@@ -86,6 +87,10 @@ export class VehicleComponent implements OnInit {
         return this.lastMonth.kms < this.currentMonth.kms;
     }
     return false;
+  }
+
+  public printReport(): void {
+    this.pdfHelper.generateReport(Report.vehicle, this.vehicle, 'Reporte de Vehículo');
   }
 
   private getVehicle(): void {
