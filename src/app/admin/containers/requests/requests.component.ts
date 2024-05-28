@@ -68,11 +68,11 @@ export class RequestsComponent implements OnInit {
   }
 
   public getDate(date: string): string {
-    return moment(date).format('DD/MM/YYYY');
+    return moment.utc(date).format('DD/MM/YYYY');
   }
 
   public getTime(time: string): string {
-    return moment(time).tz("America/Tegucigalpa").format('hh:mm');
+    return moment.utc(time).format('hh:mm');
   }
 
   public canEdit(request: IRequest): boolean {

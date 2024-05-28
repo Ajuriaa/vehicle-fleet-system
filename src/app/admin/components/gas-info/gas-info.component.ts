@@ -54,8 +54,8 @@ export class GasInfoComponent implements OnInit {
       station: ['', [Validators.required]],
       quantity: [0, [Validators.required]],
       unit: ['', [Validators.required]],
-      bill: ['', [Validators.required]],
-      order: ['', [Validators.required]],
+      bill: [0, [Validators.required]],
+      order: [0, [Validators.required]],
       price: ['', [Validators.required]]
     });
     this.setData();

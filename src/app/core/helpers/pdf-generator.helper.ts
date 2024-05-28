@@ -252,9 +252,9 @@ export class PDFHelper {
       return [
         request.Estado_Solicitud.Estado,
         request.Nombre_Empleado,
-        this.getDate(request.Fecha.toString()),
-        this.getTime(request.Hora_Salida.toString()),
-        this.getTime(request.Hora_Regreso.toString()),
+        this.getDate(request.Fecha),
+        this.getTime(request.Hora_Salida),
+        this.getTime(request.Hora_Regreso),
         request.Ciudad.Nombre,
         this.getVehicle(request.Vehiculo),
         this.getDriver(request.Conductor),
@@ -268,7 +268,7 @@ export class PDFHelper {
       const unitPlural = unit === 'Litro' ? 's' : 'es';
       const quantity = fuelOrder.Cantidad + ' ' + unit + unitPlural;
       return [
-        this.getDate(fuelOrder.Fecha.toString()),
+        this.getDate(fuelOrder.Fecha),
         fuelOrder.Estacion_Combustible,
         fuelOrder.Kilometraje_Recarga,
         'L. ' + fuelOrder.Precio,
@@ -282,9 +282,9 @@ export class PDFHelper {
   private formatLogsForPDF(logs: ILog[]): any[] {
     return logs.map((log) => {
       return [
-        this.getDate(log.Fecha.toString()),
-        this.getTime(log.Hora_Salida.toString()),
-        this.getTime(log.Hora_Entrada.toString()),
+        this.getDate(log.Fecha),
+        this.getTime(log.Hora_Salida),
+        this.getTime(log.Hora_Entrada),
         this.getDriver(log.Conductor),
         log.Pasajeros.length,
         log.Ciudad.Nombre,
@@ -317,12 +317,12 @@ export class PDFHelper {
     });
   }
 
-  private getDate(date: string): string {
-    return moment(date).format('DD/MM/YYYY');
+  private getDate(date: Date): string {
+    return moment.utc(date).format('DD/MM/YYYY');
   }
 
-  private getTime(time: string): string {
-    return moment(time).tz('America/Tegucigalpa').format('hh:mm');
+  private getTime(time: Date): string {
+    return moment.utc(time).format('hh:mm A');
   }
 
   private getVehicle(vehicle: IVehicle | undefined): string {
