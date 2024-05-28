@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import moment from 'moment';
-import { IDriver, ILog, IRequest, IVehicle } from 'src/app/admin/interfaces';
+import { FuesWithLog, IDriver, IGasRefill, ILog, IRequest, IVehicle, IVehicleInfo } from 'src/app/admin/interfaces';
 import { vehicleInfoHelper } from 'src/app/admin/helpers';
 
 @Injectable({
@@ -12,61 +12,134 @@ export class PDFHelper {
   private isFirstPageDrawn = false;
   constructor(private vehicleInfoHelper: vehicleInfoHelper) {}
 
-  public generateReport(reportType: string, data: any, title: string): void {
+  public generateVehicleReport(vehicle: IVehicle, month: IVehicleInfo): void {
     this.isFirstPageDrawn = false;
     const doc = new jsPDF('landscape');
     doc.setTextColor(40);
-
     const blue = '#88CFE0';
-    const pageSize = doc.internal.pageSize;
+
+    doc.text('Estado:', 20, 55);
+    doc.text('Kilometraje:', 65, 55);
+    doc.text('KPG:', 120, 55);
+    doc.text('CPK:', 165, 55);
+    doc.text('Distancia Recorrida:', 210, 55);
+    doc.setFont('Helvetica', 'bold');
+    doc.setFontSize(12);
+    doc.text(vehicle.Estado_Vehiculo.Estado_Vehiculo, 20, 62);
+    doc.text(vehicle.Kilometraje + ' Km', 65, 62);
+    doc.text(month.kpg + ' Km/Gal', 120, 62);
+    doc.text(month.cpk + ' Lps/Km', 165, 62);
+    doc.text(month.kms + ' Km', 210, 62);
+    doc.setFont('Helvetica', 'normal');
+
+    doc.setFontSize(20);
+    const logColumns = [
+      'Fecha',
+      'Hora Salida',
+      'Hora Regreso',
+      'Conductor',
+      'Pasajeros',
+      'Ciudad',
+      'Kilometraje Salida',
+      'Kilometraje Entrada',
+    ];
+    // filter logs by the current month
+    const currentLogs = vehicle.Bitacoras.filter((log) => {
+      const logDate = moment(log.Fecha);
+      const now = moment();
+      return logDate.month() === now.month() && logDate.year() === now.year();
+    });
+
+    const formattedLogs = this.formatLogsForPDF(currentLogs);
+
     autoTable(doc, {
+      head: [logColumns],
+      body: formattedLogs,
+      margin: { top: 85, right: 10, bottom: 20, left: 20 },
+      styles: { halign: 'center', valign: 'middle' },
+      headStyles: { fillColor: blue },
       didDrawPage: (data: any) => {
+
         doc.setFontSize(20);
         const pageSize = doc.internal.pageSize;
+        moment.locale('es');
+        const month = moment.utc().format('MMMM');
+        const capitalizedMonth = month.charAt(0).toUpperCase() + month.slice(1);
+        const title = 'Reporte de Vehículo' + ' - ' + capitalizedMonth;
+        const centerX = pageSize.width / 2;
+        const subtitle = this.vehicleInfoHelper.getModel(vehicle) + ' - ' + vehicle.Placa;
+        doc.text(title, centerX - doc.getTextWidth(title) / 2, 25);
+        doc.text(subtitle, centerX - doc.getTextWidth(subtitle) / 2, 35);
+        doc.text('Bitácoras', centerX - doc.getTextWidth('Bitácoras')/2, 80);
 
         // Header
         if (!this.isFirstPageDrawn) {
           data.settings.margin.top = 4;
-          const centerX = pageSize.width / 2;
-          doc.text(title, centerX - doc.getTextWidth(title) / 2, 25);
-
           doc.addImage('assets/pdf.jpg', 'JPEG', 20, 5, 40, 40);
-          doc.addImage(
-            'assets/pdf2.jpg',
-            'JPEG',
-            pageSize.width - 50,
-            2,
-            40,
-            40
-          );
+          doc.addImage('assets/pdf2.jpg', 'JPEG', pageSize.width - 50, 2, 40, 40);
           this.isFirstPageDrawn = true;
         }
-      // Left stripe
-      const margin = 4;
-      doc.setFillColor(blue);
-      doc.rect(margin, margin, 10, pageSize.height - 2 * margin, 'F');
-    },
-  });
-  const pageCount = (doc as any).internal.getNumberOfPages();
-  const footerHeight = doc.internal.pageSize.height - 7;
+        // Left stripe
+        const margin = 4;
+        doc.setFillColor(blue);
+        doc.rect(margin, margin, 10, pageSize.height - 2 * margin, 'F');
+      },
+    });
+    doc.addPage();
+    const fuelColumns = [
+      'Fecha',
+      'Estación',
+      'Kilometraje',
+      'Precio',
+      'Cantidad',
+      'Factura',
+      'Orden',
+    ];
+    const formattedFuelOrders = this.formatFuelOrdersForPDF(currentLogs.map((log) => log.Llenados_Combustible).flat());
+    autoTable(doc, {
+      head: [fuelColumns],
+      body: formattedFuelOrders,
+      margin: { top: 45, right: 10, bottom: 20, left: 20 },
+      styles: { halign: 'center', valign: 'middle' },
+      headStyles: { fillColor: blue },
+      didDrawPage: (data: any) => {
+        const pageSize = doc.internal.pageSize;
+        const centerX = pageSize.width / 2;
+        doc.text('Llenados de Combustible', centerX - doc.getTextWidth('Llenados de Combustible')/2, 15);
+        doc.setFontSize(17);
+        doc.text('Cantidad de Gasolina:', 20, 30);
+        doc.text('Costo:', 120, 30);
+        doc.setFont('Helvetica', 'bold');
+        doc.setFontSize(12);
+        doc.text(month.gas + ' Galones', 20, 37);
+        doc.text('L. ' + month.cost, 120, 37);
 
-  // Footer
-  for (let i = 1; i <= pageCount; i++) {
-    doc.setPage(i);
-    doc.setFontSize(10);
-    doc.text(
-      'Página ' + i + ' de ' + pageCount,
-      doc.internal.pageSize.width - 35,
-      footerHeight
-    );
-    doc.text(
-      'Lista generada el ' + moment().format('DD/MM/YYYY'),
-      25,
-      footerHeight
-    );
-  }
+        // Left stripe
+        const margin = 4;
+        doc.setFillColor(blue);
+        doc.rect(margin, margin, 10, pageSize.height - 2 * margin, 'F');
+      },
+    });
+    const pageCount = (doc as any).internal.getNumberOfPages();
+    const footerHeight = doc.internal.pageSize.height - 7;
 
-  doc.output('dataurlnewwindow');
+    // Footer
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(10);
+      doc.text(
+        'Página ' + i + ' de ' + pageCount,
+        doc.internal.pageSize.width - 35,
+        footerHeight
+      );
+      doc.text(
+        'Reporte generado el ' + moment().format('DD/MM/YYYY'),
+        25,
+        footerHeight
+      );
+    }
+
+    doc.output('dataurlnewwindow');
   }
 
   public generatePDF(
@@ -96,14 +169,7 @@ export class PDFHelper {
           doc.text(title, centerX - doc.getTextWidth(title) / 2, 25);
 
           doc.addImage('assets/pdf.jpg', 'JPEG', 20, 5, 40, 40);
-          doc.addImage(
-            'assets/pdf2.jpg',
-            'JPEG',
-            pageSize.width - 50,
-            2,
-            40,
-            40
-          );
+          doc.addImage('assets/pdf2.jpg', 'JPEG', pageSize.width - 50, 2, 40, 40);
           this.isFirstPageDrawn = true;
         }
 
@@ -192,6 +258,23 @@ export class PDFHelper {
         request.Ciudad.Nombre,
         this.getVehicle(request.Vehiculo),
         this.getDriver(request.Conductor),
+      ];
+    });
+  }
+
+  private formatFuelOrdersForPDF(fuelOrders: IGasRefill[]): any[] {
+    return fuelOrders.map((fuelOrder) => {
+      const unit = fuelOrder.Unidad_Combustible.Unidad;
+      const unitPlural = unit === 'Litro' ? 's' : 'es';
+      const quantity = fuelOrder.Cantidad + ' ' + unit + unitPlural;
+      return [
+        this.getDate(fuelOrder.Fecha.toString()),
+        fuelOrder.Estacion_Combustible,
+        fuelOrder.Kilometraje_Recarga,
+        'L. ' + fuelOrder.Precio,
+        quantity,
+        fuelOrder.Numero_Factura,
+        fuelOrder.Numero_Orden,
       ];
     });
   }

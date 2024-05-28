@@ -54,6 +54,8 @@ export class GasInfoComponent implements OnInit {
       station: ['', [Validators.required]],
       quantity: [0, [Validators.required]],
       unit: ['', [Validators.required]],
+      bill: ['', [Validators.required]],
+      order: ['', [Validators.required]],
       price: ['', [Validators.required]]
     });
     this.setData();
@@ -80,6 +82,8 @@ export class GasInfoComponent implements OnInit {
       Kilometraje_Recarga: formControls.kms.value,
       Fecha: formControls.date.value,
       Precio: formControls.price.value,
+      Numero_Factura: formControls.bill.value,
+      Numero_Orden: formControls.order.value,
       Unidad_Combustible: gasUnit,
       Bitacora: this.data.log
     };

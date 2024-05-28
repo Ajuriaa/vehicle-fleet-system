@@ -28,6 +28,8 @@ export interface IGasRefill {
   Estacion_Combustible: string;
   Kilometraje_Recarga: number;
   Fecha: Date;
+  Numero_Factura: number;
+  Numero_Orden: number;
   Precio: number;
   Unidad_Combustible: IGasUnit;
   Bitacora: ILog;
@@ -58,6 +60,8 @@ export interface FuesWithLog {
   Kilometraje_Recarga: number;
   Fecha: Date;
   Precio: number;
+  Numero_Factura: number;
+  Numero_Orden: number;
   ID_Unidad_Combustible: number;
 }
 

@@ -7,6 +7,8 @@
     <p>Cantidad:  <strong>{{ quantity }}</strong></p>
     <p>Kilometraje:  <strong>{{ gasRefill.Kilometraje_Recarga }} Km</strong></p>
     <p>Costo:  <strong>L.{{ gasRefill.Precio }}</strong></p>
+    <p>Orden de combustible:  <strong>{{ gasRefill.Numero_Orden }}</strong></p>
+    <p>Número de factura:  <strong>{{ gasRefill.Numero_Factura }}</strong></p>
   </div>
 
   <form *ngIf="isCreate" [formGroup]="gasForm" class="form">
@@ -25,6 +27,26 @@
         class="input"
         formControlName="station"
         placeholder="Ingrese el nombre de la estación de combustible"
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label class="label">Orden de Combustible</mat-label>
+      <input
+        matInput
+        required
+        class="input"
+        formControlName="order"
+        placeholder="Ingrese el número de orden de combustible"
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label class="label">Número de Factura</mat-label>
+      <input
+        matInput
+        required
+        class="input"
+        formControlName="bill"
+        placeholder="Ingrese el número de la factura"
       >
     </mat-form-field>
     <mat-form-field>

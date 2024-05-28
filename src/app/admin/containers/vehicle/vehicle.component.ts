@@ -90,7 +90,7 @@ export class VehicleComponent implements OnInit {
   }
 
   public printReport(): void {
-    this.pdfHelper.generateReport(Report.vehicle, this.vehicle, 'Reporte de Vehículo');
+    this.pdfHelper.generateVehicleReport(this.vehicle, this.currentMonth);
   }
 
   private getVehicle(): void {

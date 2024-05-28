@@ -117,6 +117,8 @@ export const EMPTY_LOG: ILog = {
 export const EMPTY_GAS_REFILL: IGasRefill = {
   ID_Llenado_Combustible: 0,
   Cantidad: 0,
+  Numero_Factura: 0,
+  Numero_Orden: 0,
   Estacion_Combustible: '',
   Kilometraje_Recarga: 0,
   Fecha: new Date(),
