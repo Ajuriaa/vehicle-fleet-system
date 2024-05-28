@@ -88,3 +88,19 @@
 .pie-container {
   width: 26%;
 }
+
+.report {
+  @include flex-center;
+  gap: 2rem;
+  color: $dark-blue;
+  position: absolute;
+  font-size: 2rem;
+  right: 1rem;
+  z-index: 3;
+  cursor: pointer;
+  bottom: 2rem;
+
+  .uil {
+    font-size: 5rem;
+  }
+}

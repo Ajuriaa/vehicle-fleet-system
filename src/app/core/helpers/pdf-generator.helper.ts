@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import moment from 'moment';
-import { FuesWithLog, IDriver, IGasRefill, ILog, IRequest, IVehicle, IVehicleInfo } from 'src/app/admin/interfaces';
+import { IDriver, IGasRefill, ILog, IRequest, IVehicle, IVehicleInfo, monthData } from 'src/app/admin/interfaces';
 import { vehicleInfoHelper } from 'src/app/admin/helpers';
 
 @Injectable({
@@ -11,6 +11,74 @@ import { vehicleInfoHelper } from 'src/app/admin/helpers';
 export class PDFHelper {
   private isFirstPageDrawn = false;
   constructor(private vehicleInfoHelper: vehicleInfoHelper) {}
+
+  public generateMainReport(vehicle: IVehicle, monthData: monthData, bar: string, pie: string, line: string): void {
+    this.isFirstPageDrawn = false;
+    const doc = new jsPDF('landscape');
+    // Left stripe
+    const pageSize = doc.internal.pageSize;
+    const margin = 4;
+    moment.locale('es');
+    const month = moment.utc().format('MMMM');
+    const capitalizedMonth = month.charAt(0).toUpperCase() + month.slice(1);
+    const title = 'Reporte General' + ' - ' + capitalizedMonth;
+    const centerX = pageSize.width / 2;
+    const subtitle = 'Sistema de Administración de Vehículos';
+    doc.setFont('Helvetica', 'bold');
+    doc.text(title, centerX - doc.getTextWidth(title) / 2, 25);
+    doc.text(subtitle, centerX - doc.getTextWidth(subtitle) / 2, 35);
+    doc.setFillColor('#88CFE0');
+    doc.rect(margin, margin, 10, pageSize.height - 2 * margin, 'F');
+    doc.setFont('Helvetica', 'normal');
+    doc.text('Gasolina:', 20, 55);
+    doc.text('Solicitudes:', 65, 55);
+    doc.text('Costo:', 120, 55);
+    doc.text('Giras:', 165, 55);
+    doc.text('Kilometros Recorridos:', 215, 55);
+    doc.setFont('Helvetica', 'bold');
+    doc.setFontSize(12);
+    doc.text(monthData.gas.toFixed(2) + ' Galones', 20, 62);
+    doc.text(monthData.requests + ' Solicitudes', 65, 62);
+    doc.text('L. ' + monthData.cost, 120, 62);
+    doc.text(monthData.trips + ' Giras', 165, 62);
+    doc.text(monthData.kms + ' Km', 215, 62);
+    doc.addImage(bar, 'png', 17, 80, 90,80);
+    doc.addImage(pie, 'png', centerX - 40, 80, 80,80);
+    doc.addImage(line, 'png', 190, 80, 102,80);
+
+    const vehicleLabel = 'Vehículo más usado: ' + this.vehicleInfoHelper.getModel(vehicle) + ' - ' + vehicle.Placa
+    doc.setFontSize(20);
+    doc.text(vehicleLabel, centerX - doc.getTextWidth(vehicleLabel)/2, 180);
+
+    autoTable(doc, {
+      didDrawPage: (data: any) => {
+        if (!this.isFirstPageDrawn) {
+          data.settings.margin.top = 4;
+          doc.addImage('assets/pdf.jpg', 'JPEG', 20, 5, 40, 40);
+          doc.addImage('assets/pdf2.jpg', 'JPEG', pageSize.width - 50, 2, 40, 40);
+          this.isFirstPageDrawn = true;
+        }
+      }
+    });
+
+    const pageCount = (doc as any).internal.getNumberOfPages();
+    const footerHeight = doc.internal.pageSize.height - 7;
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(10);
+      doc.text(
+        'Página ' + i + ' de ' + pageCount,
+        doc.internal.pageSize.width - 35,
+        footerHeight
+      );
+      doc.text(
+        'Reporte generado el ' + moment().format('DD/MM/YYYY'),
+        25,
+        footerHeight
+      );
+    }
+    doc.output('dataurlnewwindow');
+  }
 
   public generateVehicleReport(vehicle: IVehicle, month: IVehicleInfo): void {
     this.isFirstPageDrawn = false;

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { LoadingComponent, SideBarComponent } from 'src/app/shared';
-import { EMPTY_VEHICLE } from 'src/app/core/helpers';
+import { EMPTY_VEHICLE, PDFHelper } from 'src/app/core/helpers';
 import { CommonModule } from '@angular/common';
 import { ChartConfiguration } from 'chart.js';
 import { Router } from '@angular/router';
@@ -64,7 +64,7 @@ const BAR_OPTIONS: ChartConfiguration['options'] = {
     SideBarComponent, BaseChartDirective, LoadingComponent,
     CommonModule, BaseChartDirective, MatTooltipModule
   ],
-  providers: [vehicleInfoHelper],
+  providers: [vehicleInfoHelper, PDFHelper],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -85,11 +85,15 @@ export class DashboardComponent implements OnInit {
   public pieOptions = PIE_OPTIONS;
   public lineOptions = LINE_OPTIONS;
   public barOptions = BAR_OPTIONS;
+  @ViewChild('pie', { static: false }) public pie!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('bar', { static: false }) public bar!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('line', { static: false }) public line!: ElementRef<HTMLCanvasElement>;
 
   constructor(
     private dashboardQuery: DashboardQueries,
     public vehicleInfoHelper: vehicleInfoHelper,
-    private router: Router
+    private router: Router,
+    private pdfHelper: PDFHelper
   ){}
 
   ngOnInit(): void {
@@ -123,6 +127,13 @@ export class DashboardComponent implements OnInit {
         return this.lastMonthInfo.requests < this.currentMonthInfo.requests;
     }
     return false;
+  }
+
+  public generateReport(): void {
+    const pie = this.pie.nativeElement.toDataURL('image/png', 1.0);
+    const bar = this.bar.nativeElement.toDataURL('image/png', 1.0);
+    const line = this.line.nativeElement.toDataURL('image/png', 1.0);
+    this.pdfHelper.generateMainReport(this.vehicle, this.currentMonthInfo, bar, pie, line);
   }
 
   private generateGraphData(): void {
