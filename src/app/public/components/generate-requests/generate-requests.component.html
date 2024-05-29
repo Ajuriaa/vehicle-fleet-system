@@ -1,16 +1,7 @@
+<app-loading *ngIf="loading" class="loading"></app-loading>
 <div class="container" *ngIf="!requestCreated">
   <p class="title">Generar Solicitud de Vehículo</p>
-  <mat-form-field *ngIf="!showForm" class="id-field">
-    <mat-label>Número de empleado</mat-label>
-    <input
-      matInput
-      type="number"
-      [(ngModel)]="input"
-      placeholder="Ingrese su número de empleado"
-    />
-  </mat-form-field>
-  <app-primary-button class="alone-btn" *ngIf="!showForm" (btnClick)="getId()">SIGUIENTE</app-primary-button>
-  <form *ngIf="showForm" [formGroup]="requestForm" class="form">
+  <form [formGroup]="requestForm" class="form">
 
     <div class="form-row">
       <mat-form-field class="field">
@@ -126,7 +117,7 @@
   </form>
   <mat-error class="error" *ngIf="error">Llene todos los campos requeridos</mat-error>
   <mat-error class="error" *ngIf="noUser">No existe un usuario con ese ID</mat-error>
-  <div class="buttons" *ngIf="showForm">
+  <div class="buttons">
     <app-primary-button class="btn" (btnClick)="onSubmit()">ENVIAR</app-primary-button>
   </div>
 </div>

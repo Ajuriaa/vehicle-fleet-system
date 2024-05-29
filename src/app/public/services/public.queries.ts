@@ -21,4 +21,8 @@ export class PublicQueries {
   public getRequestTypes(): Observable<IRequestTypeResponse> {
     return this.http.get<IRequestTypeResponse>(`${environment.apiUrl}/request-types`);
   }
+
+  public getUserId(username: string): Observable<number> {
+    return this.http.get<number>(`${environment.apiUrl}/get-id/${username}`);
+  }
 }
