@@ -8,7 +8,7 @@ import { Role } from 'src/app/core/enums';
 
 const API_URL = 'https://satt.transporte.gob.hn/api_login.php';
 const APP_ID = '89b473b3ea9d5b6719c8ee8ce0c247d5';
-const MODULE_NUMBER = 3;
+const MODULE_NUMBER = 33;
 const ACTION = 'do-login-web';
 
 @Injectable({
@@ -48,10 +48,10 @@ export class AuthService {
           const name = data[1].perfil.Nombre;
           const position = data[1].ID_Area.Cargo;
 
-          // if(!this.isAdmin(data[1].roles)) {
-          //   this._toaster.error('No tienes los permisos para ingresar a esta aplicación', 'Error');
-          //   return false;
-          // }
+          if(!this.isAdmin(data[1].roles)) {
+            this._toaster.error('No tienes los permisos para ingresar a esta aplicación', 'Error');
+            return false;
+          }
 
           this._cookie._setCookie(token, user, name, position);
           this._sharedData.setRole(+this.getRole(data[1].roles));
@@ -73,6 +73,7 @@ export class AuthService {
   }
 
   private isAdmin(roles: { modulo: string, rol: string }[]): boolean {
+    debugger;
     const role = +this.getRole(roles);
     return role === Role.admin;
   }
