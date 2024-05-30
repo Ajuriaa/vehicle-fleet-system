@@ -228,6 +228,8 @@ export class CreateLogComponent implements OnInit {
           Kilometraje_Recarga: refill.Kilometraje_Recarga,
           Fecha: refill.Fecha,
           Precio: refill.Precio,
+          Numero_Orden: refill.Numero_Orden,
+          Numero_Factura: refill.Numero_Factura,
           ID_Unidad_Combustible: refill.Unidad_Combustible.ID_Unidad_Combustible
         };
         refills.push(this.cookieHelper.dataToSend(extractedRefills));

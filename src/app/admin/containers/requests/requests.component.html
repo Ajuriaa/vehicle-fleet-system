@@ -37,6 +37,12 @@
           {{ nameHelper.getShortName(element.Nombre_Empleado)  }}
         </td>
       </ng-container>
+      <ng-container matColumnDef="department">
+        <th mat-header-cell *matHeaderCellDef class="table-cell title">Departamento</th>
+        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+          {{ element.Departamento }}
+        </td>
+      </ng-container>
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Fecha</th>
         <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="openRequest(element.ID_Solicitud)">

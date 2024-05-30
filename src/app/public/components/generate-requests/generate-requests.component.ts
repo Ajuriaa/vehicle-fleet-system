@@ -8,7 +8,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { PrimaryButtonComponent } from 'src/app/shared';
+import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { MatSelectModule } from '@angular/material/select';
 import { cookieHelper, EMPTY_CITY, EMPTY_REQUEST, EMPTY_USER } from 'src/app/core/helpers';
 import { City, Model } from 'src/app/core/enums';
@@ -26,24 +26,23 @@ import { ICity, IRequest, IRequestType, IUser } from '../../interfaces';
     PrimaryButtonComponent, MatFormFieldModule, MatAutocompleteModule,
     FormsModule, MatCheckboxModule, CommonModule, ReactiveFormsModule,
     MatInputModule, MatSelectModule, MatDatepickerModule, AsyncPipe,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule, LoadingComponent
   ],
   providers: [NameHelper, cookieHelper, provideNativeDateAdapter()],
   templateUrl: './generate-requests.component.html',
   styleUrl: './generate-requests.component.scss'
 })
 export class GenerateRequestsComponent implements OnInit {
+  public loading = true;
   public cities: ICity[] = [];
   public requestTypes: IRequestType[] = [];
   public employees: IUser[] = [];
   public employee: IUser = EMPTY_USER;
   public filteredEmployees!: Observable<IUser[]>;
   public requestForm!: FormGroup;
-  public input = '';
   public id = 0;
   public error = false;
   public noUser = false;
-  public showForm = false;
   public selectedEmployees: IUser[] = [];
   public filteredCities!: Observable<ICity[]>;
   public request: IRequest = EMPTY_REQUEST;
@@ -54,6 +53,7 @@ export class GenerateRequestsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private searchEngine: SearchService,
     private publicQuery: PublicQueries,
+    private cookieHelper: cookieHelper,
     private publicMutation: PublicMutations,
     private nameHelper: NameHelper
   ){}
@@ -107,6 +107,7 @@ export class GenerateRequestsComponent implements OnInit {
       this.error = true;
       return;
     }
+    this.loading = true;
 
     const data = {
       ID_Solicitud: 0,
@@ -125,6 +126,7 @@ export class GenerateRequestsComponent implements OnInit {
 
     if (mutationResponse) {
       this.requestCreated = true;
+      this.loading = false;
     }
   }
 
@@ -132,19 +134,12 @@ export class GenerateRequestsComponent implements OnInit {
     this.error = false;
     this.noUser = false;
 
-    if(this.input === '' || this.input === null) {
-      this.error = true;
-      return;
-    }
-    if(this.employees.find(employee => employee.ID_Empleado === +this.input) === undefined ){
-      this.noUser = true;
-      return;
-    }
-    this.id = +this.input;
-    this.employee = this.employees.find(employee => employee.ID_Empleado === this.id) || EMPTY_USER;
-    this.selectedEmployees.push(this.employee);
-    this.showForm = true;
-    this.error = false;
+    this.publicQuery.getUserId(this.cookieHelper.getUsername()).subscribe((id) => {
+      this.id = id;
+      this.employee = this.employees.find(employee => employee.ID_Empleado === this.id) || EMPTY_USER;
+      this.selectedEmployees.push(this.employee);
+      this.loading = false;
+    });
   }
 
   public selectCity(city: ICity): void {
@@ -175,6 +170,7 @@ export class GenerateRequestsComponent implements OnInit {
     });
     this.publicQuery.getAllUsers().subscribe(({ data }) => {
       this.employees = data;
+      this.getId();
     });
   }
 }

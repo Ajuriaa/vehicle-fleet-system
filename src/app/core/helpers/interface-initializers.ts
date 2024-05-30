@@ -33,6 +33,7 @@ export const EMPTY_USER: IUser = {
 export const EMPTY_REQUEST: IRequest = {
   ID_Solicitud: 0,
   ID_Empleado: 0,
+  Departamento: "",
   Nombre_Empleado: "",
   Destino: "",
   Motivo: "",
@@ -116,6 +117,8 @@ export const EMPTY_LOG: ILog = {
 export const EMPTY_GAS_REFILL: IGasRefill = {
   ID_Llenado_Combustible: 0,
   Cantidad: 0,
+  Numero_Factura: 0,
+  Numero_Orden: 0,
   Estacion_Combustible: '',
   Kilometraje_Recarga: 0,
   Fecha: new Date(),

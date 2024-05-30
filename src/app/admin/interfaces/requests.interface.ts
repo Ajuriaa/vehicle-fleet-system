@@ -5,6 +5,7 @@ export interface IRequest {
   ID_Empleado: number;
   Nombre_Empleado: string;
   Nombres_Pasajeros?: string;
+  Departamento?: string;
   Destino: string;
   Motivo: string;
   Fecha: Date;

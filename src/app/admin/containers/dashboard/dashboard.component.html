@@ -44,7 +44,7 @@
   </section>
   <section class="info-container">
     <div class="chart-container">
-      <canvas baseChart class="chart"
+      <canvas #bar baseChart class="chart"
         [datasets]="kmsDatasets"
         [options]="barOptions"
         [labels]="kmsLabels"
@@ -53,7 +53,7 @@
       </canvas>
     </div>
     <div class="pie-container">
-      <canvas baseChart class="chart"
+      <canvas #pie baseChart class="chart"
         [datasets]="cityDatasets"
         [options]="pieOptions"
         [labels]="cityLabels"
@@ -63,7 +63,7 @@
     </div>
     <div class="chart-container">
       <div class="line-graph">
-        <canvas baseChart class="chart"
+        <canvas #line baseChart class="chart"
           [datasets]="costDatasets"
           [options]="lineOptions"
           [labels]="costLabels"
@@ -80,4 +80,8 @@
       </div>
     </div>
   </section>
+  <div class="report" (click)="generateReport()">
+    <p>Descargar Reporte</p>
+    <i class="uil uil-file-download-alt"></i>
+  </div>
 </div>
