@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { cookieHelper } from 'src/app/core/helpers';
 import { environment } from 'src/environments/environments';
 
 @Injectable({
@@ -9,7 +10,8 @@ import { environment } from 'src/environments/environments';
 export class VehicleMutations {
   constructor(
     private http: HttpClient,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    private cookieHelper: cookieHelper
   ) {}
 
   public deleteVehicle(id: number): Promise<boolean> {
@@ -77,7 +79,7 @@ export class VehicleMutations {
 
   public createVehicle(data: any): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      this.http.post<boolean>(`${environment.apiUrl}/create-vehicle`, data).subscribe(
+      this.http.post<boolean>(`${environment.apiUrl}/create-vehicle`, this.cookieHelper.dataToSend(data)).subscribe(
         (response: boolean) => {
           if (response) {
             this.toaster.success('Vehículo creado correctamente', 'Listo!');

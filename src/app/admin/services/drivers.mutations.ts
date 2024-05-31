@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { cookieHelper } from 'src/app/core/helpers';
 import { environment } from 'src/environments/environments';
 
 @Injectable({
@@ -9,7 +10,8 @@ import { environment } from 'src/environments/environments';
 export class DriverMutations {
   constructor(
     private http: HttpClient,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    private cookieHelper: cookieHelper
   ) {}
 
   public deleteDriver(id: number): Promise<boolean> {
@@ -35,7 +37,7 @@ export class DriverMutations {
 
   public createDriver(data: any): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      this.http.post<boolean>(`${environment.apiUrl}/create-driver`, data).subscribe(
+      this.http.post<boolean>(`${environment.apiUrl}/create-driver`, this.cookieHelper.dataToSend(data)).subscribe(
         (response: boolean) => {
           if (response) {
             this.toaster.success('Conductor creado correctamente', 'Listo!');
