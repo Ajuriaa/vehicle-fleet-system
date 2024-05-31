@@ -27,28 +27,28 @@
     <table mat-table [dataSource]="filteredDrivers | paginate: { itemsPerPage: 6, currentPage: page }" class="table" *ngIf="filteredDrivers.length > 0">
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">ID</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="driverInfo(element.ID_Conductor)">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer">
           {{ element.ID_Conductor }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Nombre</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="driverInfo(element.ID_Conductor)">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer">
           {{ element.Nombre }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="endedRequestCount">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Solicitudes finalizadas</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="driverInfo(element.ID_Conductor)">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer">
           {{ element.Solicitudes_Finalizadas }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="available">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Disponible</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer" (click)="driverInfo(element.ID_Conductor)">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer">
           {{ element.Disponible ? 'Si' : 'No' }}
         </td>
       </ng-container>

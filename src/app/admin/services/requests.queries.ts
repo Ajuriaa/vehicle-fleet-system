@@ -3,15 +3,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environments';
 import { IAvaliableForRequestResponse, IRequestResponse, IRequestsResponse, IRequestStatusResponse } from '../interfaces';
+import { cookieHelper } from 'src/app/core/helpers';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RequestQueries {
-  constructor(private http: HttpClient) {}
+  public username = this.cookieHelper.getUsername();
+  constructor(private http: HttpClient, private cookieHelper: cookieHelper) {}
 
   public getAllRequests(): Observable<IRequestsResponse> {
-    return this.http.get<IRequestsResponse>(`${environment.apiUrl}/requests`);
+    return this.http.get<IRequestsResponse>(`${environment.apiUrl}/requests/${this.username}`);
   }
 
   public getVehicleRequests(vehicleId: number): Observable<IRequestsResponse> {

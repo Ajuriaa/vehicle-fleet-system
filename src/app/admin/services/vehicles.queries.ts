@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environments';
 import { IBrandsResponse, IModelResponse, IStatusesReponse, ITypeResponse, IVehicleInfoResponse, IVehicleResponse, IVehiclesResponse } from '../interfaces';
+import { cookieHelper } from 'src/app/core/helpers';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VehicleQueries {
-  constructor(private http: HttpClient) {}
+  public username = this.cookieHelper.getUsername();
+  constructor(private http: HttpClient, private cookieHelper: cookieHelper) {}
 
   public getVehicle(id: number): Observable<IVehicleResponse> {
     return this.http.get<IVehicleResponse>(`${environment.apiUrl}/vehicle/${id}`);
@@ -19,7 +21,7 @@ export class VehicleQueries {
   }
 
   public getAllVehicles(): Observable<IVehiclesResponse> {
-    return this.http.get<IVehiclesResponse>(`${environment.apiUrl}/vehicles`);
+    return this.http.get<IVehiclesResponse>(`${environment.apiUrl}/vehicles/${this.username}`);
   }
 
   public getModels(): Observable<IModelResponse> {
