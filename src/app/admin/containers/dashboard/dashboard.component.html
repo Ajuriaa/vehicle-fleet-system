@@ -1,5 +1,8 @@
 <app-loading *ngIf="loading" class="loading"></app-loading>
-<div class="container" *ngIf="!loading">
+<div class="container" *ngIf="!loading && emptyInfo">
+  <app-no-result></app-no-result>
+</div>
+<div class="container" *ngIf="!loading && !emptyInfo">
   <section class="panel">
     <span class="item">
       <div>

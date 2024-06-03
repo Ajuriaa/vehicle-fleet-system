@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
-import { LoadingComponent, SideBarComponent } from 'src/app/shared';
+import { LoadingComponent, NoResultComponent, SideBarComponent } from 'src/app/shared';
 import { EMPTY_VEHICLE, PDFHelper } from 'src/app/core/helpers';
 import { CommonModule } from '@angular/common';
 import { ChartConfiguration } from 'chart.js';
@@ -62,7 +62,8 @@ const BAR_OPTIONS: ChartConfiguration['options'] = {
   standalone: true,
   imports: [
     SideBarComponent, BaseChartDirective, LoadingComponent,
-    CommonModule, BaseChartDirective, MatTooltipModule
+    CommonModule, BaseChartDirective, MatTooltipModule,
+    NoResultComponent
   ],
   providers: [vehicleInfoHelper, PDFHelper],
   templateUrl: './dashboard.component.html',
@@ -83,6 +84,7 @@ export class DashboardComponent implements OnInit {
   public costDatasets: any[] = [];
   public costLabels: string[] = [];
   public pieOptions = PIE_OPTIONS;
+  public emptyInfo = false;
   public lineOptions = LINE_OPTIONS;
   public barOptions = BAR_OPTIONS;
   @ViewChild('pie', { static: false }) public pie!: ElementRef<HTMLCanvasElement>;
@@ -98,6 +100,11 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.dashboardQuery.dashboardQuery().subscribe((data) => {
+      if (typeof data === 'number') {
+        this.loading = false;
+        this.emptyInfo = true;
+        return;
+      }
       this.currentMonthInfo = data.current_month;
       this.lastMonthInfo = data.last_month;
       this.kms = data.kms;

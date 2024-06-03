@@ -91,7 +91,8 @@ export class VehiclesComponent implements OnInit {
     this.router.navigate([`/admin/vehicle/`, vehicleId]);
   }
 
-  private getMaintenanceInfo(maintenance: { id: number, kms: number }): void {
+  private getMaintenanceInfo(maintenance: { id: number, kms: number } | undefined): void {
+    if (!maintenance) return;
     this.maintenance = maintenance;
     this.maintenanceVehicle = this.vehicles.find(vehicle => vehicle.ID_Vehiculo === maintenance.id) || EMPTY_VEHICLE;
   }

@@ -12,7 +12,7 @@ export class DashboardQueries {
   public username = this.cookieHelper.getUsername();
   constructor(private http: HttpClient, private cookieHelper: cookieHelper) {}
 
-  public dashboardQuery(): Observable<IDashboardQuery> {
-    return this.http.get<IDashboardQuery>(`${environment.apiUrl}/dashboard/${this.username}`);
+  public dashboardQuery(): Observable<IDashboardQuery | number> {
+    return this.http.get<IDashboardQuery | number>(`${environment.apiUrl}/dashboard/${this.username}`);
   }
 }
