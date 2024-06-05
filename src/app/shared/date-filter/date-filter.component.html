@@ -1,10 +1,17 @@
-<mat-form-field [formGroup]="dateForm">
-  <mat-label>Filtra por fecha</mat-label>
-  <mat-date-range-input [rangePicker]="picker">
-    <input matStartDate formControlName="startDate" placeholder="Fecha inicial">
-    <input matEndDate formControlName="endDate" placeholder="Fecha final">
-  </mat-date-range-input>
-  <mat-hint>DD/MM/YYYY - DD/MM/YYYY</mat-hint>
-  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-date-range-picker #picker></mat-date-range-picker>
-</mat-form-field>
+<div [formGroup]="dateForm" class="container">
+  <mat-form-field>
+    <mat-label>Fecha Inicial</mat-label>
+    <input matInput [matDatepicker]="startpicker" formControlName="startDate" placeholder="Fecha inicial">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="startpicker"></mat-datepicker-toggle>
+    <mat-datepicker #startpicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Fecha Final</mat-label>
+    <input matInput [matDatepicker]="endpicker" formControlName="endDate" placeholder="Fecha final">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="endpicker"></mat-datepicker-toggle>
+    <mat-datepicker #endpicker></mat-datepicker>
+  </mat-form-field>
+</div>

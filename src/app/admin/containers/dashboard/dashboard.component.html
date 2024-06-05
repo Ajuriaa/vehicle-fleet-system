@@ -88,3 +88,11 @@
     <i class="uil uil-file-download-alt"></i>
   </div>
 </div>
+<app-date-filter
+  *ngIf="!loading"
+  (dateRangeChanged)="filterDates($event)"
+  [startDate]="start"
+  [endDate]="end"
+  class="date-filter"
+>
+</app-date-filter>
