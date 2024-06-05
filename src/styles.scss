@@ -99,3 +99,10 @@ input[type=password]::-ms-clear
 {
   display: none;
 }
+
+.date-filter {
+  position: absolute;
+  z-index: 3;
+  left: 4rem;
+  bottom: 2rem;
+}

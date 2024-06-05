@@ -1,0 +1,10 @@
+<mat-form-field [formGroup]="dateForm">
+  <mat-label>Filtra por fecha</mat-label>
+  <mat-date-range-input [rangePicker]="picker">
+    <input matStartDate formControlName="startDate" placeholder="Fecha inicial">
+    <input matEndDate formControlName="endDate" placeholder="Fecha final">
+  </mat-date-range-input>
+  <mat-hint>DD/MM/YYYY - DD/MM/YYYY</mat-hint>
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-date-range-picker #picker></mat-date-range-picker>
+</mat-form-field>

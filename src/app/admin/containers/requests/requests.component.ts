@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
-import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
+import { DateFilterComponent, LoadingComponent, NoResultComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { SearchService } from 'src/app/core/services';
 import { MatDialog } from '@angular/material/dialog';
 import moment from 'moment';
@@ -15,6 +15,7 @@ import { IDriver, IRequest, IRequestStatus, IVehicle } from '../../interfaces';
 import { RequestQueries } from '../../services';
 import { NameHelper, vehicleInfoHelper } from '../../helpers';
 import { ConfirmComponentComponent, UpdateRequestComponent } from '../../components';
+import { MatSelectModule } from '@angular/material/select';
 
 const TABLE_COLUMNS = [
   'status', 'name', 'department', 'date', 'timeOut', 'timeIn', 'city', 'vehicle', 'driver', 'actions'
@@ -25,7 +26,8 @@ const TABLE_COLUMNS = [
   standalone: true,
   imports: [
     CommonModule, MatTableModule, FormsModule,
-    PrimaryButtonComponent, LoadingComponent, NgxPaginationModule
+    PrimaryButtonComponent, LoadingComponent, NgxPaginationModule,
+    MatSelectModule, NoResultComponent, DateFilterComponent
   ],
   providers: [RequestQueries, PDFHelper, vehicleInfoHelper, NameHelper],
   templateUrl: './requests.component.html',
@@ -42,6 +44,8 @@ export class RequestsComponent implements OnInit {
   public filteredRequests: IRequest[] = [];
   public requestStatuses: IRequestStatus[] = [];
   public page = 1;
+  public filterOptions = ['Todos', 'Pendiente por jefe', 'Pendiente por admin', 'Activo', 'Finalizada', 'Cancelada'];
+  public selectedFilter = 'Todos';
 
   constructor(
     public nameHelper: NameHelper,
@@ -57,6 +61,20 @@ export class RequestsComponent implements OnInit {
   ngOnInit(): void {
     this.getRequestStatus();
     this.getAllRequests();
+  }
+
+  public filterDates(dates: { startDate: Date | null, endDate: Date | null }): void {
+    if(dates.startDate && dates.endDate) {
+      this.filteredRequests = this.requests.filter(
+        (request) => {
+          const requestDate = moment.utc(request.Fecha).format('YYYY-MM-DD');
+          return moment(requestDate).isBetween(dates.startDate, dates.endDate, null, '[]');
+        }
+      );
+    } else {
+      this.filteredRequests = this.requests;
+    }
+    this.page = 1;
   }
 
   public onSearch(term: string): void {
@@ -135,6 +153,29 @@ export class RequestsComponent implements OnInit {
         this.getAllRequests();
       }
     });
+  }
+
+  public onFilterChange(filter: string): void {
+    switch(filter) {
+      case 'Todos':
+        this.filteredRequests = this.requests;
+        break;
+      case 'Pendiente por jefe':
+        this.filteredRequests = this.requests.filter(request => request.Estado_Solicitud.Estado === 'Pendiente por jefe');
+        break;
+      case 'Pendiente por admin':
+        this.filteredRequests = this.requests.filter(request => request.Estado_Solicitud.Estado === 'Pendiente por admin');
+        break;
+      case 'Activo':
+        this.filteredRequests = this.requests.filter(request => request.Estado_Solicitud.Estado === 'Activo');
+        break;
+      case 'Finalizada':
+        this.filteredRequests = this.requests.filter(request => request.Estado_Solicitud.Estado === 'Finalizada');
+        break;
+      case 'Cancelada':
+        this.filteredRequests = this.requests.filter(request => request.Estado_Solicitud.Estado === 'Cancelada');
+        break;
+    }
   }
 
   private getRequestStatus(): void {
