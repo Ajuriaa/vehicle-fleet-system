@@ -17,7 +17,7 @@ export class RequestQueries {
   }
 
   public getVehicleRequests(vehicleId: number): Observable<IRequestsResponse> {
-    return this.http.get<IRequestsResponse>(`${environment.apiUrl}/requests/${vehicleId}`);
+    return this.http.get<IRequestsResponse>(`${environment.apiUrl}/requests/${vehicleId}/${this.username}`);
   }
 
   public getRequest(id: number): Observable<IRequestResponse> {

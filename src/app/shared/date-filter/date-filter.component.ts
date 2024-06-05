@@ -21,9 +21,12 @@ export class DateFilterComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    const today = new Date();
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+
     this.dateForm = this._formBuilder.group({
-      startDate: new FormControl<Date | null>(null),
-      endDate: new FormControl<Date | null>(null),
+      startDate: new FormControl<Date | null>(firstDay),
+      endDate: new FormControl<Date | null>(today),
     });
     this.dateForm.valueChanges.subscribe(value => {
       this.dateRangeChanged.emit({ startDate: value.startDate, endDate: value.endDate });

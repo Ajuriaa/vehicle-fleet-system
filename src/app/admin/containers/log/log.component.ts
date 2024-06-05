@@ -3,7 +3,7 @@ import { EMPTY_VEHICLE, PDFHelper } from 'src/app/core/helpers';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingComponent, NoResultComponent, PrimaryButtonComponent } from 'src/app/shared';
+import { DateFilterComponent, LoadingComponent, NoResultComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
@@ -24,7 +24,7 @@ const TABLE_COLUMNS = [
   imports: [
     CommonModule, MatTableModule, FormsModule,
     PrimaryButtonComponent, LoadingComponent, NoResultComponent,
-    NgxPaginationModule
+    NgxPaginationModule, DateFilterComponent
   ],
   providers: [vehicleInfoHelper, PDFHelper],
   templateUrl: './log.component.html',
@@ -96,6 +96,20 @@ export class LogComponent implements OnInit {
 
   public goToVehicle(): void {
     this.router.navigate(['/admin/vehicle/', this.vehicle.ID_Vehiculo]);
+  }
+
+  public filterDates(dates: { startDate: Date | null, endDate: Date | null }): void {
+    if(dates.startDate && dates.endDate) {
+      this.filteredLogs = this.logs.filter(
+        (log) => {
+          const logDate = moment.utc(log.Fecha).format('YYYY-MM-DD');
+          return moment(logDate).isBetween(dates.startDate, dates.endDate, null, '[]');
+        }
+      );
+    } else {
+      this.filteredLogs = this.logs;
+    }
+    this.page = 1;
   }
 
   private getVehicle(): void {
