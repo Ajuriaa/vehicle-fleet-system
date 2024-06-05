@@ -77,7 +77,7 @@ export class PDFHelper {
     doc.output('dataurlnewwindow');
   }
 
-  public generateVehicleReport(vehicle: IVehicle, month: IVehicleInfo): void {
+  public generateVehicleReport(vehicle: IVehicle, month: IVehicleInfo, start: string, end: string): void {
     this.isFirstPageDrawn = false;
     const doc = new jsPDF('landscape');
     doc.setTextColor(40);
@@ -109,10 +109,14 @@ export class PDFHelper {
       'Kilometraje Entrada',
     ];
     // filter logs by the current month
+    const startDate = moment.utc(start, 'DD/MM/YYYY');
+    const endDate = moment.utc(end, 'DD/MM/YYYY');
+    console.log(startDate, endDate)
+
     const currentLogs = vehicle.Bitacoras.filter((log) => {
-      const logDate = moment(log.Fecha);
-      const now = moment();
-      return logDate.month() === now.month() && logDate.year() === now.year();
+      const logDate = moment.utc(log.Fecha);
+      console.log(logDate, logDate.isBetween(startDate, endDate, 'days', '[]'))
+      return logDate.isBetween(startDate, endDate, 'days', '[]');
     });
 
     const formattedLogs = this.formatLogsForPDF(currentLogs);
@@ -127,10 +131,7 @@ export class PDFHelper {
 
         doc.setFontSize(20);
         const pageSize = doc.internal.pageSize;
-        moment.locale('es');
-        const month = moment.utc().format('MMMM');
-        const capitalizedMonth = month.charAt(0).toUpperCase() + month.slice(1);
-        const title = 'Reporte de Vehículo' + ' - ' + capitalizedMonth;
+        const title = 'Reporte de Vehículo' + ' - ' + start + ' - ' + end;
         const centerX = pageSize.width / 2;
         const subtitle = this.vehicleInfoHelper.getModel(vehicle) + ' - ' + vehicle.Placa;
         doc.text(title, centerX - doc.getTextWidth(title) / 2, 25);

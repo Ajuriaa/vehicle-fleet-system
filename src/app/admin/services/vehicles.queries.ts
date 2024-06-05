@@ -16,8 +16,8 @@ export class VehicleQueries {
     return this.http.get<IVehicleResponse>(`${environment.apiUrl}/vehicle/${id}`);
   }
 
-  public getVehicleInfo(id: number): Observable<IVehicleInfoResponse> {
-    return this.http.get<IVehicleInfoResponse>(`${environment.apiUrl}/vehicle-info/${id}`);
+  public getVehicleInfo(id: number, start: string, end: string): Observable<IVehicleInfoResponse> {
+    return this.http.get<IVehicleInfoResponse>(`${environment.apiUrl}/vehicle-info/${id}/${start}/${end}`);
   }
 
   public getAllVehicles(): Observable<IVehiclesResponse> {

@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY_REQUEST, EMPTY_VEHICLE, PDFHelper } from 'src/app/core/helpers';
 import { CommonModule } from '@angular/common';
-import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
+import { DateFilterComponent, LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { ICoordinate, MapsService } from 'src/app/core/services';
 import { MarkerUrl, Report } from 'src/app/core/enums';
 import moment from 'moment';
@@ -24,13 +24,15 @@ const OPTIONS = {
   standalone: true,
   imports: [
     CommonModule, LoadingComponent, PrimaryButtonComponent,
-    BaseChartDirective, MatTooltipModule
+    BaseChartDirective, MatTooltipModule, DateFilterComponent
   ],
   providers: [vehicleInfoHelper, PDFHelper],
   templateUrl: './vehicle.component.html',
   styleUrl: './vehicle.component.scss'
 })
 export class VehicleComponent implements OnInit {
+  public end = new Date();
+  public start = new Date(this.end.getFullYear(), this.end.getMonth(), 1);
   public loading = true;
   public vehicleId = this.route.snapshot.params.id;
   public vehicle: IVehicle = EMPTY_VEHICLE;
@@ -49,6 +51,7 @@ export class VehicleComponent implements OnInit {
   public date = '';
   public datasets: any[] = [];
   public options = OPTIONS;
+  public loadingDate = false;
   @ViewChild('map', { static: true }) public mapRef!: ElementRef;
 
   constructor(
@@ -61,8 +64,13 @@ export class VehicleComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    const today = new Date();
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    const todayDate = moment.utc(today).format('YYYY-MM-DD');
+    const firstDayDate = moment.utc(firstDay).format('YYYY-MM-DD');
+
     this.getVehicle();
-    this.getGasAndMaintenanceInfo();
+    this.getGasAndMaintenanceInfo(firstDayDate, todayDate);
   }
 
   public goToLogs(): void {
@@ -90,7 +98,20 @@ export class VehicleComponent implements OnInit {
   }
 
   public printReport(): void {
-    this.pdfHelper.generateVehicleReport(this.vehicle, this.currentMonth);
+    const start = moment.utc(this.start).format('DD/MM/YYYY');
+    const end = moment.utc(this.end).format('DD/MM/YYYY');
+    this.pdfHelper.generateVehicleReport(this.vehicle, this.currentMonth, start, end);
+  }
+
+  public filterDates(dates: { startDate: Date | null, endDate: Date | null }): void {
+    if (dates.startDate && dates.endDate) {
+      this.loadingDate = true;
+      this.start = dates.startDate;
+      this.end = dates.endDate;
+      const start = moment.utc(dates.startDate).format('YYYY-MM-DD');
+      const end = moment.utc(dates.endDate).format('YYYY-MM-DD');
+      this.getGasAndMaintenanceInfo(start, end);
+    }
   }
 
   private getVehicle(): void {
@@ -105,8 +126,8 @@ export class VehicleComponent implements OnInit {
     });
   }
 
-  private getGasAndMaintenanceInfo(): void {
-    this.vehicleQuery.getVehicleInfo(this.vehicleId).subscribe((data) => {
+  private getGasAndMaintenanceInfo(start: string, end: string): void {
+    this.vehicleQuery.getVehicleInfo(this.vehicleId, start, end).subscribe((data) => {
       this.lastMonth = data.last;
       this.currentMonth = data.current;
       this.maintenanceInfo = data.maintenance;
@@ -116,6 +137,7 @@ export class VehicleComponent implements OnInit {
         label: 'kms recorridos'
       }];
       this.date = moment.utc(this.maintenanceInfo.date).format('DD/MM/YYYY');
+      this.loadingDate = false;
     });
   }
 

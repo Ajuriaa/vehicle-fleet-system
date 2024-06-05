@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -10,7 +11,7 @@ import { MatInputModule } from '@angular/material/input';
   standalone: true,
   imports: [
     MatDatepickerModule, MatFormFieldModule, ReactiveFormsModule,
-    MatInputModule
+    MatInputModule, CommonModule
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './date-filter.component.html',
@@ -18,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class DateFilterComponent implements OnInit {
   private today = new Date();
+  @Input() mini = false;
   @Input() endDate: Date | null = this.today;
   @Input() startDate: Date | null = new Date(this.today.getFullYear(), this.today.getMonth(), 1);;
   @Output() dateRangeChanged = new EventEmitter<{ startDate: Date | null, endDate: Date | null }>();

@@ -30,7 +30,8 @@
     </div>
   </section>
   <section class="info-container">
-    <div class="gas-container">
+    <app-loading class="loading small-loading" *ngIf="loadingDate"></app-loading>
+    <div class="gas-container" *ngIf="!loadingDate">
       <div class="first-row">
         <span class="item">
           <div>
@@ -57,7 +58,7 @@
           <i class="uil uil-arrow-circle-down down" [matTooltip]="'Mes Pasado: L.' + lastMonth.cost" *ngIf="!currentMonthBigger('cost')"></i>
         </span>
         <span class="item">
-          <div>
+          <div >
             <p>Distancia Recorrida</p>
             <p class="panel-label">{{ currentMonth.kms }} KM</p>
           </div>
@@ -99,3 +100,13 @@
     <div #map class="map"></div>
   </section>
 </div>
+<app-date-filter
+  *ngIf="!loading"
+  (dateRangeChanged)="filterDates($event)"
+  [mini]="true"
+  [startDate]="start"
+  [endDate]="end"
+  class="date-filter"
+>
+</app-date-filter>
+
