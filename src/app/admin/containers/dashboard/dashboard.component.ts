@@ -134,7 +134,9 @@ export class DashboardComponent implements OnInit {
     const pie = this.pie.nativeElement.toDataURL('image/png', 1.0);
     const bar = this.bar.nativeElement.toDataURL('image/png', 1.0);
     const line = this.line.nativeElement.toDataURL('image/png', 1.0);
-    this.pdfHelper.generateMainReport(this.vehicle, this.currentMonthInfo, bar, pie, line);
+    const start = moment.utc(this.start).format('DD/MM/YYYY');
+    const end = moment.utc(this.end).format('DD/MM/YYYY');
+    this.pdfHelper.generateMainReport(this.vehicle, this.currentMonthInfo, bar, pie, line, start, end);
   }
 
   public filterDates(dates: { startDate: Date | null, endDate: Date | null }): void {

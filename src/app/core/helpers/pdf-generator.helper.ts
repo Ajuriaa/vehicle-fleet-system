@@ -12,16 +12,13 @@ export class PDFHelper {
   private isFirstPageDrawn = false;
   constructor(private vehicleInfoHelper: vehicleInfoHelper) {}
 
-  public generateMainReport(vehicle: IVehicle, monthData: monthData, bar: string, pie: string, line: string): void {
+  public generateMainReport(vehicle: IVehicle, monthData: monthData, bar: string, pie: string, line: string, start: string, end: string): void {
     this.isFirstPageDrawn = false;
     const doc = new jsPDF('landscape');
     // Left stripe
     const pageSize = doc.internal.pageSize;
     const margin = 4;
-    moment.locale('es');
-    const month = moment.utc().format('MMMM');
-    const capitalizedMonth = month.charAt(0).toUpperCase() + month.slice(1);
-    const title = 'Reporte General' + ' - ' + capitalizedMonth;
+    const title = 'Reporte General' + ' - ' + start + ' - ' + end;
     const centerX = pageSize.width / 2;
     const subtitle = 'Sistema de Administración de Vehículos';
     doc.setFont('Helvetica', 'bold');
