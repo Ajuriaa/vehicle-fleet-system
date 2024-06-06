@@ -16,11 +16,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import moment from 'moment';
-import { PublicMutations, PublicQueries } from '../../services';
-import { ICity, IRequest, IRequestType, IUser } from '../../interfaces';
 import { FileUploadControl, FileUploadValidators } from '@iplab/ngx-file-upload';
 import { UploaderService } from 'src/app/admin/services';
 import { environment } from 'src/environments/environments';
+import { ICity, IRequest, IRequestType, IUser } from '../../interfaces';
+import { PublicMutations, PublicQueries } from '../../services';
 
 
 const FILE_BASE_URL = environment.filesUrl;
