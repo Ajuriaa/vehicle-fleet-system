@@ -111,11 +111,9 @@ export class PDFHelper {
     // filter logs by the current month
     const startDate = moment.utc(start, 'DD/MM/YYYY');
     const endDate = moment.utc(end, 'DD/MM/YYYY');
-    console.log(startDate, endDate)
 
     const currentLogs = vehicle.Bitacoras.filter((log) => {
       const logDate = moment.utc(log.Fecha);
-      console.log(logDate, logDate.isBetween(startDate, endDate, 'days', '[]'))
       return logDate.isBetween(startDate, endDate, 'days', '[]');
     });
 
