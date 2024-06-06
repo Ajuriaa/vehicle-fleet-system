@@ -1,3 +1,4 @@
 export enum Upload {
-  vehicle = 'vehicles'
+  vehicle = 'vehicles',
+  request = 'requests',
 }

@@ -43,7 +43,7 @@ export class PDFHelper {
     doc.addImage(pie, 'png', centerX - 40, 80, 80,80);
     doc.addImage(line, 'png', 190, 80, 102,80);
 
-    const vehicleLabel = 'Vehículo más usado: ' + this.vehicleInfoHelper.getModel(vehicle) + ' - ' + vehicle.Placa
+    const vehicleLabel = 'Vehículo más usado: ' + this.vehicleInfoHelper.getModel(vehicle) + ' - ' + vehicle.Placa;
     doc.setFontSize(20);
     doc.text(vehicleLabel, centerX - doc.getTextWidth(vehicleLabel)/2, 180);
 
@@ -166,7 +166,7 @@ export class PDFHelper {
       margin: { top: 45, right: 10, bottom: 20, left: 20 },
       styles: { halign: 'center', valign: 'middle' },
       headStyles: { fillColor: blue },
-      didDrawPage: (data: any) => {
+      didDrawPage: () => {
         const pageSize = doc.internal.pageSize;
         const centerX = pageSize.width / 2;
         doc.text('Llenados de Combustible', centerX - doc.getTextWidth('Llenados de Combustible')/2, 15);

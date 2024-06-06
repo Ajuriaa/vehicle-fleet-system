@@ -6,10 +6,10 @@ import { CommonModule } from '@angular/common';
 import { ChartConfiguration } from 'chart.js';
 import { Router } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import moment from 'moment';
 import { vehicleInfoHelper } from '../../helpers';
 import { IVehicle, monthData } from '../../interfaces';
 import { DashboardQueries } from '../../services';
-import moment from 'moment';
 
 const PIE_OPTIONS: ChartConfiguration['options'] = {
   plugins: {

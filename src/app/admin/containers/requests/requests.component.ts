@@ -11,11 +11,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PDFHelper } from 'src/app/core/helpers';
 import { Model, RequestStatus } from 'src/app/core/enums';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MatSelectModule } from '@angular/material/select';
 import { IDriver, IRequest, IRequestStatus, IVehicle } from '../../interfaces';
 import { RequestQueries } from '../../services';
 import { NameHelper, vehicleInfoHelper } from '../../helpers';
 import { ConfirmComponentComponent, UpdateRequestComponent } from '../../components';
-import { MatSelectModule } from '@angular/material/select';
 
 const TABLE_COLUMNS = [
   'status', 'name', 'department', 'date', 'timeOut', 'timeIn', 'city', 'vehicle', 'driver', 'actions'

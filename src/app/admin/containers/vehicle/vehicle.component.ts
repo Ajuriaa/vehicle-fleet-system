@@ -4,7 +4,7 @@ import { EMPTY_REQUEST, EMPTY_VEHICLE, PDFHelper } from 'src/app/core/helpers';
 import { CommonModule } from '@angular/common';
 import { DateFilterComponent, LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { ICoordinate, MapsService } from 'src/app/core/services';
-import { MarkerUrl, Report } from 'src/app/core/enums';
+import { MarkerUrl } from 'src/app/core/enums';
 import moment from 'moment';
 import { BaseChartDirective } from 'ng2-charts';
 import { MatTooltipModule } from '@angular/material/tooltip';

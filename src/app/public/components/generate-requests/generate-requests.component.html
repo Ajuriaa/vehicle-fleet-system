@@ -114,9 +114,24 @@
         </mat-option>
       </mat-autocomplete>
     </div>
+
+    <mat-form-field class="field">
+      <mat-label class="label">Número de memorandum</mat-label>
+      <input
+        matInput
+        required
+        formControlName="memo"
+        placeholder="Número de memorandum"
+      >
+    </mat-form-field>
   </form>
+  <div class="file-uploader">
+    <p class="label">Adjunte el memorandum</p>
+    <app-file-drop allowedExtensions=".pdf" (selectedFiles)="getFiles($event)"></app-file-drop>
+  </div>
   <mat-error class="error" *ngIf="error">Llene todos los campos requeridos</mat-error>
   <mat-error class="error" *ngIf="noUser">No existe un usuario con ese ID</mat-error>
+  <mat-error class="error" *ngIf="noFile">Adjunte el memorandum</mat-error>
   <div class="buttons">
     <app-primary-button class="btn" (btnClick)="onSubmit()">ENVIAR</app-primary-button>
   </div>

@@ -43,7 +43,9 @@ export const EMPTY_REQUEST: IRequest = {
   Ciudad: EMPTY_CITY,
   Estado_Solicitud: EMPTY_REQUEST_STATUS,
   Tipo_Solicitud: EMPTY_REQUEST_TYPE,
-  Pasajeros: ""
+  Pasajeros: "",
+  Documento_URL: "",
+  Numero_Memorando: ""
 };
 
 export const EMPTY_DRIVER: IDriver = {

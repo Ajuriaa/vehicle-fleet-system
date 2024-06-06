@@ -73,7 +73,6 @@ export class AuthService {
   }
 
   private isAdmin(roles: { modulo: string, rol: string }[]): boolean {
-    debugger;
     const role = +this.getRole(roles);
     return role === Role.admin;
   }

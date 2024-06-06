@@ -44,3 +44,16 @@
   font-weight: bold;
   font-size: 1.7rem;
 }
+
+.memo {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 3;
+
+  .uil {
+    font-size: 3rem;
+  }
+}

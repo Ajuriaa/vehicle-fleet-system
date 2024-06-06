@@ -63,6 +63,13 @@
           formControlName="type"
         >
       </mat-form-field>
+
+      <app-primary-button class="field" (btnClick)="openUpdateRequestModal()">EDITAR</app-primary-button>
+
+      <span class="field memo" (click)="goToLink()">
+        <i class="uil uil-file-search-alt"></i>
+        <p>Ver el memorandum</p>
+      </span>
     </div>
 
     <div class="second-column">
@@ -116,7 +123,15 @@
         >
       </mat-form-field>
 
-      <app-primary-button class="field" (btnClick)="openUpdateRequestModal()">EDITAR</app-primary-button>
+      <mat-form-field class="field">
+        <mat-hint class="hint">Número de memorando</mat-hint>
+        <input
+          matInput
+          readonly
+          type="text"
+          formControlName="memo"
+        >
+      </mat-form-field>
     </div>
 
   </form>

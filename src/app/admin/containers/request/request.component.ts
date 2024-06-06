@@ -61,6 +61,7 @@ export class RequestComponent implements OnInit {
       returnTime: [''],
       status: [''],
       vehicle: [''],
+      memo: [''],
       driver: ['']
     });
 
@@ -75,6 +76,10 @@ export class RequestComponent implements OnInit {
       this.loading = true;
       result ? this.getRequest() : this.loading = false;
     });
+  }
+
+  public goToLink(){
+    window.open(this.request.Documento_URL, "_blank");
   }
 
   private getRequest(): void {
@@ -109,6 +114,7 @@ export class RequestComponent implements OnInit {
       passengers: passengerShortNames,
       motive: this.request.Motivo,
       destination: this.request.Destino,
+      memo: this.request.Numero_Memorando,
       date: moment.utc(this.request.Fecha).format('DD/MM/YYYY'),
       departureTime: moment.utc(this.request.Hora_Salida).format('HH:mm A'),
       returnTime: moment.utc(this.request.Hora_Regreso).format('HH:mm A'),

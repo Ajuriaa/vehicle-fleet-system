@@ -9,6 +9,8 @@ export interface IRequest {
   Destino: string;
   Motivo: string;
   Fecha: Date;
+  Documento_URL: string;
+  Numero_Memorando: string;
   Hora_Salida: Date;
   Hora_Regreso: Date;
   Ciudad: ICity;
