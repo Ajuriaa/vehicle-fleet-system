@@ -140,8 +140,9 @@ export class GenerateRequestsComponent implements OnInit {
 
     if (this.selectedFile) {
       const fileName = this.fileNameHelper.getFileName(Upload.request, this.cookieHelper.getUsername() + '_' + moment().format('DD-MM-YYYY'), this.selectedFile);
+      const realFileName = this.fileNameHelper.getRealFileName(fileName);
       fileUploaded = await this.uploaderService.uploadFile(this.selectedFile, fileName);
-      file = this.fileUrl + 'requests/' + fileName;
+      file = this.fileUrl + 'requests/' + realFileName;
     }
 
     const data = {
