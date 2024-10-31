@@ -74,7 +74,7 @@ export class PDFHelper {
         footerHeight
       );
     }
-    doc.output('dataurlnewwindow');
+    doc.save('reporte_general.pdf');
   }
 
   public generateVehicleReport(vehicle: IVehicle, month: IVehicleInfo, start: string, end: string): void {
